@@ -1,354 +1,573 @@
-<!doctype html>
-<html lang="en">
 
+<!DOCTYPE html>
+<html class="no-js no-touch no-interaction" lang="en" prefix="og: http://ogp.me/ns#">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600,700,700i&display=swap" rel="stylesheet">
+  <script>
+    document.documentElement.classList.remove('no-js');
+    document.documentElement.classList.add('js');
+  </script>
+      <script src="https://egap.org/wp-content/themes/egap-chisel/dist/scripts/app-6fc23c3909.bundle.js" defer></script>
+  <title>10 Things to Know About Causal Inference &#8211; EGAP</title>
+<meta name='robots' content='max-image-preview:large' />
+<link rel="alternate" hreflang="en" href="https://egap.org/resource/10-things-to-know-about-causal-inference/" />
+<link rel="alternate" hreflang="es" href="https://egap.org/es/resource/10-cosas-que-debe-saber-sobre-la-inferencia-causal/" />
+<link rel="alternate" hreflang="fr" href="https://egap.org/fr/resource/10-choses-a-savoir-sur-linference-causale/" />
+<link rel='stylesheet' id='wp-block-library-css' href='https://egap.org/wp-includes/css/dist/block-library/style.min.css' type='text/css' media='all' />
+<style id='wp-block-library-theme-inline-css' type='text/css'>
+.wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-audio{margin:0 0 1em}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.wp-block-embed{margin:0 0 1em}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-image{margin:0 0 1em}.wp-block-pullquote{border-top:4px solid;border-bottom:4px solid;margin-bottom:1.75em;color:currentColor}.wp-block-pullquote__citation,.wp-block-pullquote cite,.wp-block-pullquote footer{color:currentColor;text-transform:uppercase;font-size:.8125em;font-style:normal}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;position:relative;font-style:normal}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote.is-style-plain{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-search__button{border:1px solid #ccc;padding:.375em .625em}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table{margin:"0 0 1em 0"}.wp-block-table thead{border-bottom:3px solid}.wp-block-table tfoot{border-top:3px solid}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video{margin:0 0 1em}.wp-block-template-part.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}
+</style>
+<link rel='stylesheet' id='classic-theme-styles-css' href='https://egap.org/wp-includes/css/classic-themes.min.css?ver=1' type='text/css' media='all' />
+<style id='global-styles-inline-css' type='text/css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--orange: #ff5900;--wp--preset--color--gray: #5f5e5e;--wp--preset--color--blue-darker: #234067;--wp--preset--color--navy-blue-darker: #1e262f;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 14px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--font-size--h-1: 50px;--wp--preset--font-size--h-2: 50px;--wp--preset--font-size--h-3: 30px;--wp--preset--font-size--h-4: 28px;--wp--preset--font-size--h-5: 23px;--wp--preset--font-size--h-6: 18px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel="https://api.w.org/" href="https://egap.org/wp-json/" /><link rel="alternate" type="application/json" href="https://egap.org/wp-json/wp/v2/resource/530" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://egap.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://egap.org/wp-includes/wlwmanifest.xml" />
+<link rel="canonical" href="https://egap.org/resource/10-things-to-know-about-causal-inference/" />
+<link rel='shortlink' href='https://egap.org/?p=530' />
+<link rel="alternate" type="application/json+oembed" href="https://egap.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fegap.org%2Fresource%2F10-things-to-know-about-causal-inference%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://egap.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fegap.org%2Fresource%2F10-things-to-know-about-causal-inference%2F&#038;format=xml" />
+<meta name="generator" content="WPML ver:4.3.12 stt:1,4,21,42,2;" />
+<link rel="icon" href="https://egap.org/wp-content/uploads/2020/06/cropped-favicon-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://egap.org/wp-content/uploads/2020/06/cropped-favicon-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://egap.org/wp-content/uploads/2020/06/cropped-favicon-180x180.png" />
+<meta name="msapplication-TileImage" content="https://egap.org/wp-content/uploads/2020/06/cropped-favicon-270x270.png" />
 
-    <title>Graeme Blair - Assistant Professor of Political Science at UCLA</title>
-
-    <!-- fonts and stylesheets -->
-    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">-->
-    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">-->
-    <script src="https://kit.fontawesome.com/c353c259e6.js" crossorigin="anonymous"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/academicons.min.css">
-
-    <style>
-      .abstract {
-        margin-top: -5px;
-        padding-left: 20px;
-        margin-bottom: 25px
-      }
-	    .bg-cover {
-    background-attachment: static;
-    background-position: center bottom;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-        .jumbotron {
-            /* background-color: #c1daff; */
-            /*background-image: url("img/bama.jpg");*/
-  /*opacity: 0.25; */
-  /*background-size: cover;*/
-  min-height: 300px;
-        }
-	    .hangingindent {
-  padding-left: 15px ;
-  text-indent: -15px ;
-}
-	a {
-	    color: #5f9fb8
-	}
-        body {
-            /* font-family: "IBM Plex Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif; */
-	    /*font-family: "Helvetica Neue UltraLight", "Helvetica Neue Thin", "Helvetica Neue Light", "Helvetica Light", "Helvetica", "Arial", "sans-serif";*/
-	    font-family: 'Lato', serif;;
-	    /*https://github.com/imanel/mirror_os/blob/master/app/assets/fonts/HelveticaNeue-UltraLight.eot*/
-        }
-    </style>
-
+  <link rel="stylesheet" property="stylesheet" href="https://egap.org/wp-content/themes/egap-chisel/dist/styles/main-7d13b0662a.css" type="text/css">
+      <script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","https://www.google-analytics.com/analytics.js","ga");ga("create", "UA-49686505-1", {"cookieDomain":"auto"});ga("set", "anonymizeIp", true);ga("send", "pageview");
+//--><!]]>
+</script>
 </head>
 
-<body>
+<body class="resource-template-default single single-resource postid-530">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-dark-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0.49803921568627" /><feFuncG type="table" tableValues="0 0.49803921568627" /><feFuncB type="table" tableValues="0 0.49803921568627" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.54901960784314 0.98823529411765" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.71764705882353 0.25490196078431" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-red"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 0.27843137254902" /><feFuncB type="table" tableValues="0.5921568627451 0.27843137254902" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-midnight"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0" /><feFuncG type="table" tableValues="0 0.64705882352941" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-magenta-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.78039215686275 1" /><feFuncG type="table" tableValues="0 0.94901960784314" /><feFuncB type="table" tableValues="0.35294117647059 0.47058823529412" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-green"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.65098039215686 0.40392156862745" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.44705882352941 0.4" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-orange"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.098039215686275 1" /><feFuncG type="table" tableValues="0 0.66274509803922" /><feFuncB type="table" tableValues="0.84705882352941 0.41960784313725" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg>
+  <svg id="svg-source" style="display: none;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="svg-twitter" viewBox="0 0 21.11 17.15" preserveAspectRatio="xMidYMid meet">
+    <path d="M18.94,4.27a5.43,5.43,0,0,1,0,.57A12.23,12.23,0,0,1,6.65,17.15,12.25,12.25,0,0,1,0,15.21a8.94,8.94,0,0,0,1,0,8.65,8.65,0,0,0,5.38-1.85,4.35,4.35,0,0,1-4-3,5.55,5.55,0,0,0,.82.07,4.75,4.75,0,0,0,1.14-.15A4.32,4.32,0,0,1,.86,6.08V6a4.37,4.37,0,0,0,2,.55A4.33,4.33,0,0,1,1.47.79,12.31,12.31,0,0,0,10.4,5.32a4.69,4.69,0,0,1-.11-1,4.33,4.33,0,0,1,7.49-3,8.43,8.43,0,0,0,2.74-1,4.3,4.3,0,0,1-1.9,2.39A9,9,0,0,0,21.11,2,9.19,9.19,0,0,1,18.94,4.27Z"/>
+  </symbol>
 
-    <main role="main">
+  <symbol id="svg-magnifier" viewBox="0 0 13.59 12" preserveAspectRatio="xMidYMid meet">
+    <path d="M5.28,9.4A5,5,0,0,1,0,4.7,5,5,0,0,1,5.28,0a5,5,0,0,1,5.27,4.7,4.33,4.33,0,0,1-.84,2.55l.14.11,3.44,3.1a.83.83,0,0,1,0,1.28,1.09,1.09,0,0,1-1.42,0L8.43,8.64a.52.52,0,0,1-.1-.11A5.67,5.67,0,0,1,5.28,9.4Zm0-1A4,4,0,0,0,9.44,4.7,4,4,0,0,0,5.28,1,4,4,0,0,0,1.11,4.7,4,4,0,0,0,5.28,8.41Z" fill-rule="evenodd"/><path d="M5.28,9.4A5,5,0,0,1,0,4.7,5,5,0,0,1,5.28,0a5,5,0,0,1,5.27,4.7,4.33,4.33,0,0,1-.84,2.55l.14.11,3.44,3.1a.83.83,0,0,1,0,1.28,1.09,1.09,0,0,1-1.42,0L8.43,8.64a.52.52,0,0,1-.1-.11A5.67,5.67,0,0,1,5.28,9.4Zm0-1A4,4,0,0,0,9.44,4.7,4,4,0,0,0,5.28,1,4,4,0,0,0,1.11,4.7,4,4,0,0,0,5.28,8.41Z" fill-rule="evenodd"/>
+  </symbol>
 
-        <div class="jumbotron bg-cover" style = "background-image: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%,rgba(255,255,255,0.3) 100%), url(img/maiduguri.jpg)">
-            <div class="container" style = "background-color: rgba(255, 255, 255, 0.9)">
-                <div class="row justify-content-md-center" style = "padding-top: 20px">
+  <symbol id="svg-logo" viewBox="0 0 134 48" preserveAspectRatio="xMidYMid meet">
+    <path d="M6.35,30.67A1.71,1.71,0,0,0,8.07,29a1.74,1.74,0,0,0-1.73-1.72A1.76,1.76,0,0,0,4.62,29,1.73,1.73,0,0,0,6.35,30.67Z" fill="#fb6a00"/><path d="M41.19,34a1.78,1.78,0,0,0-1.69-1.78,1.74,1.74,0,0,0-1.77,1.68,1.69,1.69,0,0,0,1.68,1.75A1.72,1.72,0,0,0,41.19,34Z" fill="#fb6a00"/><path d="M40,18.87a1.69,1.69,0,0,0,1.71,1.71,1.71,1.71,0,1,0,0-3.42A1.71,1.71,0,0,0,40,18.87Z" fill="#fb6a00"/><path d="M31.57,39a1.69,1.69,0,0,0-1.72,1.71,1.71,1.71,0,0,0,1.72,1.71,1.75,1.75,0,0,0,1.73-1.72A1.7,1.7,0,0,0,31.57,39Z" fill="#fb6a00"/><path d="M12.24,11.74A1.71,1.71,0,0,0,13.93,10a1.74,1.74,0,0,0-1.75-1.7,1.72,1.72,0,0,0-1.69,1.75A1.7,1.7,0,0,0,12.24,11.74Z" fill="#fb6a00"/><path d="M25.23,6A1.74,1.74,0,0,0,27,7.68a1.71,1.71,0,0,0,1.68-1.75,1.69,1.69,0,0,0-1.77-1.66A1.74,1.74,0,0,0,25.23,6Z" fill="#fb6a00"/><path d="M39.46,15.83a1.69,1.69,0,0,0,1.76-1.67,1.73,1.73,0,1,0-3.45-.06A1.67,1.67,0,0,0,39.46,15.83Z" fill="#fb6a00"/><path d="M7,13.93a1.71,1.71,0,0,0,1.72,1.71,1.68,1.68,0,0,0,1.69-1.73,1.66,1.66,0,0,0-1.7-1.7A1.69,1.69,0,0,0,7,13.93Z" fill="#fb6a00"/><path d="M7.37,23.78a1.71,1.71,0,0,0-1.72-1.72,1.72,1.72,0,1,0,0,3.44A1.69,1.69,0,0,0,7.37,23.78Z" fill="#fb6a00"/><path d="M36,36.14a1.75,1.75,0,0,0-1.71,1.74,1.73,1.73,0,0,0,3.46,0A1.76,1.76,0,0,0,36,36.14Z" fill="#fb6a00"/><path d="M23,42.09a1.74,1.74,0,0,0-1.7-1.75A1.72,1.72,0,1,0,23,42.09Z" fill="#fb6a00"/><path d="M11.9,36a1.71,1.71,0,0,0-1.73,1.7,1.68,1.68,0,0,0,1.68,1.73,1.74,1.74,0,0,0,1.76-1.68A1.78,1.78,0,0,0,11.9,36Z" fill="#fb6a00"/><path d="M36.09,11.9a1.71,1.71,0,0,0,1.68-1.75A1.74,1.74,0,0,0,36,8.46a1.76,1.76,0,0,0-1.69,1.77A1.72,1.72,0,0,0,36.09,11.9Z" fill="#fb6a00"/><path d="M29.9,7.36A1.78,1.78,0,0,0,31.62,9.1a1.74,1.74,0,0,0,1.74-1.7,1.68,1.68,0,0,0-1.7-1.72A1.72,1.72,0,0,0,29.9,7.36Z" fill="#fb6a00"/><path d="M16.63,9a1.76,1.76,0,0,0,1.76-1.69,1.73,1.73,0,0,0-3.45-.07A1.76,1.76,0,0,0,16.63,9Z" fill="#fb6a00"/><path d="M6.45,20.35a1.72,1.72,0,1,0,0-3.43,1.68,1.68,0,0,0-1.73,1.69A1.71,1.71,0,0,0,6.45,20.35Z" fill="#fb6a00"/><path d="M26.5,40.4a1.7,1.7,0,1,0,1.74,1.67A1.66,1.66,0,0,0,26.5,40.4Z" fill="#fb6a00"/><path d="M18,40.6a1.71,1.71,0,0,0-1.66-1.77,1.77,1.77,0,0,0-1.79,1.67,1.74,1.74,0,0,0,1.68,1.75A1.67,1.67,0,0,0,18,40.6Z" fill="#fb6a00"/><path d="M8.53,32a1.73,1.73,0,0,0-1.78,1.66,1.73,1.73,0,0,0,3.46.09A1.72,1.72,0,0,0,8.53,32Z" fill="#fb6a00"/><path d="M41.62,27.49a1.71,1.71,0,0,0-1.69,1.74,1.69,1.69,0,0,0,1.75,1.67,1.65,1.65,0,0,0,1.68-1.73A1.68,1.68,0,0,0,41.62,27.49Z" fill="#fb6a00"/><path d="M42.41,22.31A1.73,1.73,0,0,0,40.7,24a1.71,1.71,0,1,0,3.42,0A1.71,1.71,0,0,0,42.41,22.31Z" fill="#fb6a00"/><path d="M21.71,7.57a1.62,1.62,0,0,0,1.71-1.69,1.65,1.65,0,0,0-1.73-1.69A1.67,1.67,0,0,0,20,5.93,1.65,1.65,0,0,0,21.71,7.57Z" fill="#fb6a00"/><path d="M36.19,33.05a1.34,1.34,0,1,0-2.67.1,1.34,1.34,0,0,0,2.67-.1Z" fill="#fb6a00"/><path d="M11.14,19.53a1.34,1.34,0,0,0,1.32-1.35,1.33,1.33,0,0,0-2.66,0A1.35,1.35,0,0,0,11.14,19.53Z" fill="#fb6a00"/><path d="M34.59,15.93a1.33,1.33,0,1,0-1.34-1.33A1.33,1.33,0,0,0,34.59,15.93Z" fill="#fb6a00"/><path d="M30.51,35.76a1.32,1.32,0,0,0,2.64,0,1.32,1.32,0,1,0-2.64,0Z" fill="#fb6a00"/><path d="M36.69,21.8A1.33,1.33,0,1,0,38,20.47,1.33,1.33,0,0,0,36.69,21.8Z" fill="#fb6a00"/><path d="M32.81,12a1.35,1.35,0,0,0-1.35-1.32,1.33,1.33,0,0,0-1.3,1.36,1.31,1.31,0,0,0,1.3,1.28A1.36,1.36,0,0,0,32.81,12Z" fill="#fb6a00"/><path d="M36.84,16.62a1.39,1.39,0,0,0-1.36,1.25,1.35,1.35,0,0,0,1.28,1.39A1.32,1.32,0,0,0,38.15,18,1.38,1.38,0,0,0,36.84,16.62Z" fill="#fb6a00"/><path d="M20,9.19a1.34,1.34,0,0,0-1.33,1.26A1.33,1.33,0,1,0,20,9.19Z" fill="#fb6a00"/><path d="M13.37,32a1.31,1.31,0,1,0,0,2.62,1.31,1.31,0,1,0,0-2.62Z" fill="#fb6a00"/><path d="M8.7,22a1.31,1.31,0,1,0,2.61.11A1.27,1.27,0,0,0,10,20.75,1.3,1.3,0,0,0,8.7,22Z" fill="#fb6a00"/><path d="M24.14,39.39a1.31,1.31,0,0,0,1.36-1.3,1.34,1.34,0,0,0-1.33-1.34,1.37,1.37,0,0,0-1.33,1.35A1.33,1.33,0,0,0,24.14,39.39Z" fill="#fb6a00"/><path d="M21.5,37.55a1.34,1.34,0,0,0-1.35-1.32,1.33,1.33,0,0,0,0,2.65A1.37,1.37,0,0,0,21.5,37.55Z" fill="#fb6a00"/><path d="M12,14.83a1.31,1.31,0,1,0,1.34-1.32A1.29,1.29,0,0,0,12,14.83Z" fill="#fb6a00"/><path d="M16.35,10.85a1.33,1.33,0,1,0,0,2.65,1.3,1.3,0,0,0,1.26-1.31A1.29,1.29,0,0,0,16.35,10.85Z" fill="#fb6a00"/><path d="M26.44,10.38a1.32,1.32,0,1,0,2.64,0,1.32,1.32,0,0,0-2.64,0Z" fill="#fb6a00"/><path d="M24,8.61a1.32,1.32,0,0,0,0,2.64,1.34,1.34,0,0,0,1.3-1.3A1.31,1.31,0,0,0,24,8.61Z" fill="#fb6a00"/><path d="M16.48,37.24a1.34,1.34,0,0,0,1.31-1.36,1.31,1.31,0,0,0-1.29-1.29,1.29,1.29,0,0,0-1.33,1.31A1.33,1.33,0,0,0,16.48,37.24Z" fill="#fb6a00"/><path d="M28.2,38.79a1.34,1.34,0,0,0,1.3-1.36,1.33,1.33,0,1,0-1.3,1.36Z" fill="#fb6a00"/><path d="M39.4,25.8a1.32,1.32,0,0,0-1.28-1.31A1.31,1.31,0,1,0,39.4,25.8Z" fill="#fb6a00"/><path d="M37.06,31a1.32,1.32,0,0,0,1.26-1.33,1.29,1.29,0,0,0-1.4-1.27,1.3,1.3,0,1,0,.14,2.6Z" fill="#fb6a00"/><path d="M11.2,31.26a1.33,1.33,0,0,0,0-2.66,1.33,1.33,0,1,0,0,2.66Z" fill="#fb6a00"/><path d="M10.06,27.39a1.31,1.31,0,1,0-1.35-1.32A1.31,1.31,0,0,0,10.06,27.39Z" fill="#fb6a00"/><path d="M36,42.39a1.13,1.13,0,0,0,0,2.25,1.12,1.12,0,0,0,1.13-1.16A1.1,1.1,0,0,0,36,42.39Z" fill="#fb6a00"/><path d="M17,44.67a1.14,1.14,0,0,0-1.14,1.15,1.14,1.14,0,0,0,2.28,0A1.16,1.16,0,0,0,17,44.67Z" fill="#fb6a00"/><path d="M36.78,6.05A1.08,1.08,0,0,0,37.89,5a1.15,1.15,0,0,0-1.11-1.18,1.18,1.18,0,0,0-1.16,1.14A1.12,1.12,0,0,0,36.78,6.05Z" fill="#fb6a00"/><path d="M41.62,10.41a1.15,1.15,0,0,0,1.2-1.09,1.16,1.16,0,0,0-2.31,0A1.15,1.15,0,0,0,41.62,10.41Z" fill="#fb6a00"/><path d="M1.35,21.23a1.12,1.12,0,0,0,1.13-1.15A1.15,1.15,0,0,0,1.37,19,1.14,1.14,0,0,0,.21,20.1,1.09,1.09,0,0,0,1.35,21.23Z" fill="#fb6a00"/><path d="M2.31,26.66a1.14,1.14,0,0,0-1.16-1.14A1.13,1.13,0,0,0,0,26.67a1.17,1.17,0,0,0,1.12,1.1A1.17,1.17,0,0,0,2.31,26.66Z" fill="#fb6a00"/><path d="M30.8,3.27a1.13,1.13,0,1,0,0-2.25A1.07,1.07,0,0,0,29.7,2.17,1.11,1.11,0,0,0,30.8,3.27Z" fill="#fb6a00"/><path d="M30,45a1.15,1.15,0,0,0-1.13,1.08A1.13,1.13,0,0,0,30,47.23a1.15,1.15,0,0,0,1.18-1.11A1.18,1.18,0,0,0,30,45Z" fill="#fb6a00"/><path d="M18.25,3a1.13,1.13,0,0,0,1.13-1.15,1.1,1.1,0,0,0-1.1-1.1,1.14,1.14,0,0,0-1.18,1.1A1.17,1.17,0,0,0,18.25,3Z" fill="#fb6a00"/><path d="M2.91,31.84a1.11,1.11,0,0,0-1.2,1.07A1.13,1.13,0,1,0,4,33,1.12,1.12,0,0,0,2.91,31.84Z" fill="#fb6a00"/><path d="M6.26,37.42a1.13,1.13,0,0,0-1.15,1,1.16,1.16,0,0,0,1.08,1.21,1.14,1.14,0,0,0,1.19-1.1A1.12,1.12,0,0,0,6.26,37.42Z" fill="#fb6a00"/><path d="M44.83,32.78a1.16,1.16,0,0,0-1.19,1.11A1.13,1.13,0,0,0,44.78,35,1.12,1.12,0,0,0,45.92,34,1.14,1.14,0,0,0,44.83,32.78Z" fill="#fb6a00"/><path d="M23.46,45.74a1.17,1.17,0,0,0-1.09,1.13A1.11,1.11,0,0,0,23.52,48a1.13,1.13,0,0,0,1.13-1.15A1.2,1.2,0,0,0,23.46,45.74Z" fill="#fb6a00"/><path d="M3.4,15a1.14,1.14,0,0,0,1.1-1.19,1.12,1.12,0,0,0-1.2-1.07,1.1,1.1,0,0,0-1.06,1.14A1.13,1.13,0,0,0,3.4,15Z" fill="#fb6a00"/><path d="M11.1,41.82A1.14,1.14,0,0,0,10,43a1.13,1.13,0,0,0,1.18,1.1A1.08,1.08,0,0,0,12.22,43,1.1,1.1,0,0,0,11.1,41.82Z" fill="#fb6a00"/><path d="M24.73,2.26a1.13,1.13,0,0,0,1.19-1.09,1.14,1.14,0,0,0-2.27-.11A1.13,1.13,0,0,0,24.73,2.26Z" fill="#fb6a00"/><path d="M45.13,16a1.12,1.12,0,0,0,1.14-1.06,1.15,1.15,0,0,0-1.1-1.19A1.16,1.16,0,0,0,44,14.82,1.13,1.13,0,0,0,45.13,16Z" fill="#fb6a00"/><path d="M46.89,20a1.13,1.13,0,1,0,0,2.26A1.13,1.13,0,0,0,48,21.09,1.14,1.14,0,0,0,46.89,20Z" fill="#fb6a00"/><path d="M7,9.63a1.15,1.15,0,0,0,1.27-1,1.13,1.13,0,0,0-1-1.23A1.11,1.11,0,0,0,6,8.36,1.13,1.13,0,0,0,7,9.63Z" fill="#fb6a00"/><path d="M41.12,38.2A1.15,1.15,0,0,0,40,39.35a1.13,1.13,0,0,0,1.17,1.11,1.14,1.14,0,0,0,1.1-1.11A1.16,1.16,0,0,0,41.12,38.2Z" fill="#fb6a00"/><path d="M12.21,5.52a1.19,1.19,0,0,0,1.12-1.17,1.11,1.11,0,0,0-1.19-1.08,1.06,1.06,0,0,0-1.06,1.11A1.11,1.11,0,0,0,12.21,5.52Z" fill="#fb6a00"/><path d="M46.81,26.56a1.14,1.14,0,0,0-1.2,1.09,1.2,1.2,0,0,0,1.13,1.17,1.14,1.14,0,0,0,1.14-1.15A1.08,1.08,0,0,0,46.81,26.56Z" fill="#fb6a00"/><path d="M112.57,13.55h0l-.15,0c-1.23,0-2.47,0-3.7,0-.42,0-.58.14-.58.57a2.71,2.71,0,0,1-.11,1.28l-.49-.41a8,8,0,0,0-10-.31c-4.21,3.13-5,10-1.64,14.16s8.61,4.27,11.82,1.28c.1-.09.21-.23.39-.11l.07,1.34v.15c.18.27.46.15.69.15,1,0,2,0,3,0,.69,0,.82-.23.82-.86,0-5.5,0-11,0-16.5C112.7,14,112.8,13.75,112.57,13.55ZM101.84,27.67A5,5,0,0,1,98.43,23a5,5,0,0,1,2.51-5.16,5,5,0,0,1,7.42,4.23C108.35,26.29,105.36,28.66,101.84,27.67Z" fill="#2c394c"/><path d="M14.3,27.59a.93.93,0,1,0,0-1.86.86.86,0,0,0-.9.9A.88.88,0,0,0,14.3,27.59Z" fill="#fb6a00"/><path d="M30.54,30.67a.89.89,0,0,0-.94.88.9.9,0,0,0,.91,1,.87.87,0,0,0,1-.9C31.49,31,31.1,30.73,30.54,30.67Z" fill="#fb6a00"/><path d="M15.71,19.39a.91.91,0,0,0,.92-.85.93.93,0,0,0-.94-1,.89.89,0,0,0-.92.9A.92.92,0,0,0,15.71,19.39Z" fill="#fb6a00"/><path d="M26.27,33.88a.93.93,0,1,0-1.85,0,.89.89,0,0,0,.89.93A.91.91,0,0,0,26.27,33.88Z" fill="#fb6a00"/><path d="M15.51,28.35a.86.86,0,0,0-.92.88.89.89,0,0,0,.93.95.87.87,0,0,0,.92-.81A.91.91,0,0,0,15.51,28.35Z" fill="#fb6a00"/><path d="M21.88,14.07a.94.94,0,0,0,.94,1,.92.92,0,0,0,.93-.89.94.94,0,0,0-.86-1A1,1,0,0,0,21.88,14.07Z" fill="#fb6a00"/><path d="M28.09,32.19a.89.89,0,0,0-.92.9,1,1,0,0,0,.95,1,.89.89,0,0,0,.9-.86A.92.92,0,0,0,28.09,32.19Z" fill="#fb6a00"/><path d="M28.31,14a.94.94,0,0,0-1,1,.92.92,0,1,0,1.83-.07A.88.88,0,0,0,28.31,14Z" fill="#fb6a00"/><path d="M19.73,34a.94.94,0,0,0,.94-1,.87.87,0,0,0-.91-.83.9.9,0,0,0-.93.95A.87.87,0,0,0,19.73,34Z" fill="#fb6a00"/><path d="M32.47,19.57a.92.92,0,0,0,.14-1.83,1,1,0,0,0-1.05.93A.88.88,0,0,0,32.47,19.57Z" fill="#fb6a00"/><path d="M13.08,23.84a.94.94,0,0,0,1,.92.89.89,0,0,0,.87-.85.94.94,0,0,0-1-1A.89.89,0,0,0,13.08,23.84Z" fill="#fb6a00"/><path d="M32.75,21.27a.89.89,0,0,0,.85.9.94.94,0,0,0,1-.94.94.94,0,0,0-1.87,0Z" fill="#fb6a00"/><path d="M16.7,16.33a.87.87,0,0,0,.87.93.92.92,0,1,0,.11-1.84A.92.92,0,0,0,16.7,16.33Z" fill="#fb6a00"/><path d="M30.51,15.6a.82.82,0,0,0-.79.9.9.9,0,0,0,1,.92.88.88,0,0,0,.89-.92C31.56,15.94,31.17,15.58,30.51,15.6Z" fill="#fb6a00"/><path d="M17.34,30.52a.87.87,0,0,0-.9.84.92.92,0,0,0,.87,1,1,1,0,0,0,1-.91A.92.92,0,0,0,17.34,30.52Z" fill="#fb6a00"/><path d="M35,24.1a.94.94,0,1,0-1.88,0,.93.93,0,0,0,1,.88A.88.88,0,0,0,35,24.1Z" fill="#fb6a00"/><path d="M33.61,27.8a.91.91,0,1,0,0-1.82.83.83,0,0,0-.87.91A.85.85,0,0,0,33.61,27.8Z" fill="#fb6a00"/><path d="M21,14.85a.86.86,0,0,0-.89-.9A.91.91,0,1,0,20,15.77.88.88,0,0,0,21,14.85Z" fill="#fb6a00"/><path d="M15.38,21a.88.88,0,0,0-1-.9.85.85,0,0,0-.85,1,.88.88,0,0,0,.94.88A.9.9,0,0,0,15.38,21Z" fill="#fb6a00"/><path d="M32.4,28.54a.87.87,0,0,0-.89.91.93.93,0,0,0,1.85.09A1,1,0,0,0,32.4,28.54Z" fill="#fb6a00"/><path d="M25.69,15.08a.83.83,0,0,0,.9-.8.92.92,0,0,0-.92-1,.92.92,0,1,0,0,1.84Z" fill="#fb6a00"/><path d="M22.47,34.77a.88.88,0,0,0,.93-.87.92.92,0,0,0-1-1,.87.87,0,0,0-.87.87A.89.89,0,0,0,22.47,34.77Z" fill="#fb6a00"/><path d="M19.36,28.32a.57.57,0,0,0-.61-.61.6.6,0,0,0-.63.68.64.64,0,0,0,.67.59A.61.61,0,0,0,19.36,28.32Z" fill="#fb6a00"/><path d="M30.84,24.46a.59.59,0,0,0-.66.64.56.56,0,0,0,.62.6c.37,0,.58-.23.65-.62A.64.64,0,0,0,30.84,24.46Z" fill="#fb6a00"/><path d="M17.74,27.3c.38,0,.58-.25.63-.63a.6.6,0,0,0-.61-.62.58.58,0,0,0-.65.58A.57.57,0,0,0,17.74,27.3Z" fill="#fb6a00"/><path d="M28.67,19.57a.57.57,0,0,0,.6.68.6.6,0,0,0,.62-.61.59.59,0,0,0-.58-.64A.56.56,0,0,0,28.67,19.57Z" fill="#fb6a00"/><path d="M24.87,17.21a.63.63,0,1,0-1.25,0c0,.37.25.57.66.61A.63.63,0,0,0,24.87,17.21Z" fill="#fb6a00"/><path d="M26.79,17.52a.62.62,0,0,0-1.24,0,.57.57,0,0,0,.58.63A.58.58,0,0,0,26.79,17.52Z" fill="#fb6a00"/><path d="M30.32,20.64a.58.58,0,0,0-.62.62.6.6,0,0,0,.6.65.62.62,0,0,0,.62-.63A.58.58,0,0,0,30.32,20.64Z" fill="#fb6a00"/><path d="M30.84,22.53a.6.6,0,0,0-.63.61.56.56,0,0,0,.6.61.58.58,0,0,0,.66-.63A.6.6,0,0,0,30.84,22.53Z" fill="#fb6a00"/><path d="M17.92,20.4a.55.55,0,0,0-.65.56.57.57,0,0,0,.62.66.61.61,0,0,0,.63-.59A.59.59,0,0,0,17.92,20.4Z" fill="#fb6a00"/><path d="M17.29,23.47a.57.57,0,0,0,.6-.63.62.62,0,0,0-1.24,0A.57.57,0,0,0,17.29,23.47Z" fill="#fb6a00"/><path d="M27.79,17.71a.61.61,0,0,0-.6.63.58.58,0,0,0,.63.6.57.57,0,0,0,.61-.62C28.42,17.94,28.18,17.75,27.79,17.71Z" fill="#fb6a00"/><path d="M26.45,30.53a.59.59,0,0,0-.64-.57c-.37.06-.62.24-.61.62a.63.63,0,1,0,1.25,0Z" fill="#fb6a00"/><path d="M17.2,25.41a.6.6,0,0,0,.65-.58.59.59,0,0,0-.6-.63.56.56,0,0,0-.65.57A.58.58,0,0,0,17.2,25.41Z" fill="#fb6a00"/><path d="M22,31.11a.61.61,0,0,0,.64-.61.6.6,0,0,0-.65-.6.57.57,0,0,0-.62.61A.58.58,0,0,0,22,31.11Z" fill="#fb6a00"/><path d="M23.27,30.83a.57.57,0,0,0,.63.6.62.62,0,1,0,0-1.23A.57.57,0,0,0,23.27,30.83Z" fill="#fb6a00"/><path d="M21.7,17.43a.57.57,0,0,0,.61.61.58.58,0,0,0,.6-.62.55.55,0,0,0-.61-.6A.54.54,0,0,0,21.7,17.43Z" fill="#fb6a00"/><path d="M21.12,18.15a.59.59,0,0,0-.61-.58.56.56,0,0,0-.62.59.57.57,0,0,0,.6.62C20.88,18.8,21.06,18.55,21.12,18.15Z" fill="#fb6a00"/><path d="M29.75,28.53a.58.58,0,0,0-.62-.57.61.61,0,1,0,0,1.21C29.52,29.18,29.71,28.94,29.75,28.53Z" fill="#fb6a00"/><path d="M30.22,27.58a.58.58,0,0,0,.59-.64.61.61,0,1,0-1.22,0A.59.59,0,0,0,30.22,27.58Z" fill="#fb6a00"/><path d="M20.18,30.25c.37,0,.63-.19.63-.59a.57.57,0,0,0-.6-.62.56.56,0,0,0-.63.59C19.57,30,19.81,30.21,20.18,30.25Z" fill="#fb6a00"/><path d="M27,29.78a.61.61,0,0,0,1.22,0,.59.59,0,0,0-.61-.62A.55.55,0,0,0,27,29.78Z" fill="#fb6a00"/><path d="M19.6,19.41A.59.59,0,0,0,19,18.8a.54.54,0,0,0-.6.54A.56.56,0,0,0,19,20,.59.59,0,0,0,19.6,19.41Z" fill="#fb6a00"/><path d="M91.16,13.48c-.75,0-1.51,0-2.27,0-1.5,0-1.5,0-1.56,1.46a2.6,2.6,0,0,1-.06.41l-.61-.48a8.26,8.26,0,0,0-9.77-.44c-4.64,3.16-4.7,10.39-1.78,14,3.3,4,9.2,4,11.9,1.26a.2.2,0,0,1,.27-.06c.17,2-.32,3.2-1.55,4.06-1.44,1-5.59,1.24-7.27-.43a1,1,0,0,0-.73-.32c-1.36,0-2.72,0-4.08,0-.51,0-.53.17-.37.57a7.69,7.69,0,0,0,3.26,3.83A12.05,12.05,0,0,0,84,38.61c4.14-.39,7.19-2.55,7.74-7.22a53.42,53.42,0,0,0,.14-5.93c0-3.74,0-7.47,0-11.2C91.91,13.69,91.78,13.44,91.16,13.48Zm-8.53,14a4.94,4.94,0,0,1-5-5.18,5,5,0,1,1,9.93,0A4.81,4.81,0,0,1,82.63,27.48Z" fill="#2c394c"/><path d="M133.51,19.31A8.28,8.28,0,0,0,121.66,14a16.92,16.92,0,0,0-2,1.41c0-.49,0-.81,0-1.13.07-.57-.13-.8-.75-.78a26.21,26.21,0,0,1-2.94,0c-.72,0-.88.22-.88.9,0,5.78,0,11.57,0,17.36,0,1.9,0,3.81,0,5.71,0,.55.1.82.74.79,1,0,2,0,3,0,.62,0,.83-.15.82-.79,0-2.25,0-4.51,0-6.76,0-.26,0-.52,0-.87.24.17.39.26.52.37a8,8,0,0,0,11.1-.78C134.07,26.46,134.51,23,133.51,19.31Zm-4.63,5.76a4.91,4.91,0,0,1-5.94,2.61c-2.11-.58-3.47-2.64-3.46-5.66a4.68,4.68,0,0,1,2.68-4.26,4.81,4.81,0,0,1,5.08.3A5.68,5.68,0,0,1,128.88,25.07Z" fill="#2c394c"/><path d="M70.8,23.76a.39.39,0,0,0,0-.18h0s0,0,0,0h0a10.57,10.57,0,0,0-.68-4.73C68.68,15.05,65.35,13,61,13.05a8.63,8.63,0,0,0-8.24,5.21,9.46,9.46,0,0,0,1,10.23c2.27,3,5.48,3.81,9.07,3.51a8.92,8.92,0,0,0,6.5-3.39c.31-.38.35-.59-.18-.81-.95-.4-1.88-.85-2.8-1.3a.65.65,0,0,0-.86.11,6,6,0,0,1-2.61,1.3c-2.9.69-5.58-.64-6.43-3.21-.19-.58-.23-.76.07-.81l.33,0H70.39a.78.78,0,0,0,.22,0h0a.42.42,0,0,0,.14-.06Zm-5.26-3.47c-1.38,0-2.76,0-4.15,0s-2.91,0-4.37,0c-.49,0-.58-.14-.36-.56A5.32,5.32,0,0,1,66,19.59C66.34,20.18,66.14,20.31,65.54,20.29Z" fill="#2c394c"/>
+  </symbol>
 
-                    <div class="col-md-3">
-                        <figure class="figure">
-                            <img src="https://graemeblair.com/img/graeme.jpg" class="figure-img img-fluid rounded">
-                        </figure>
-                    </div>
+  <symbol id="svg-linkedin" viewBox="0 0 20.58 19.67" preserveAspectRatio="xMidYMid meet">
+    <path d="M2.46,4.58h0A2.3,2.3,0,1,1,2.49,0a2.3,2.3,0,1,1,0,4.58ZM4.68,19.67H.25V6.39H4.68Zm15.9,0H16.17v-7.1c0-1.79-.64-3-2.24-3a2.4,2.4,0,0,0-2.26,1.6,3.3,3.3,0,0,0-.15,1.09v7.41H7.11c.06-12,0-13.28,0-13.28h4.41V8.32h0a4.4,4.4,0,0,1,4-2.24c2.91,0,5.08,1.9,5.08,6Z"/>
+  </symbol>
 
-                    <div class="col-md-5 my-auto">
+  <symbol id="svg-github" viewBox="0 0 20.58 20.07" preserveAspectRatio="xMidYMid meet">
+    <path d="M20.58,10.29a10.32,10.32,0,0,1-7,9.77c-.52.09-.71-.23-.71-.5s0-1.45,0-2.83a2.41,2.41,0,0,0-.7-1.9c2.29-.25,4.7-1.12,4.7-5.08A4,4,0,0,0,15.8,7a3.77,3.77,0,0,0-.11-2.73c-.86-.27-2.83,1.06-2.83,1.06a9.61,9.61,0,0,0-5.14,0S5.75,4,4.89,4.26A3.77,3.77,0,0,0,4.78,7,4,4,0,0,0,3.72,9.75c0,3.94,2.4,4.83,4.69,5.08a2.26,2.26,0,0,0-.65,1.38,2.17,2.17,0,0,1-3-.86,2.19,2.19,0,0,0-1.58-1.06c-1,0-.07.63-.07.63.67.31,1.14,1.5,1.14,1.5.6,1.84,3.47,1.22,3.47,1.22,0,.86,0,1.67,0,1.92s-.18.59-.71.5a10.29,10.29,0,1,1,13.55-9.77ZM3.8,14.62c-.08,0-.14,0-.17,0s0,.12.09.16a.13.13,0,0,0,.18,0C3.93,14.72,3.89,14.66,3.8,14.62Zm.49.4c-.07-.07-.16-.1-.22,0s0,.13,0,.21.16.1.21,0S4.35,15.1,4.29,15Zm.43.56c-.06-.09-.16-.13-.23-.08s-.07.15,0,.24.17.14.23.1A.21.21,0,0,0,4.72,15.58Zm.51.56c-.1-.09-.22-.1-.27,0s0,.18,0,.26.22.11.27,0A.21.21,0,0,0,5.23,16.14Zm.64.38a.22.22,0,0,0-.26.09c0,.08.06.18.18.2s.23,0,.25-.08S6,16.56,5.87,16.52Zm.79.13c-.12,0-.22.07-.22.15s.1.16.23.15.22-.07.22-.15S6.78,16.64,6.66,16.65Zm.76-.1c-.12,0-.2.1-.19.2s.12.13.25.1.2-.1.18-.18S7.54,16.53,7.42,16.55Z"/>
+  </symbol>
 
-                        <h4 style="font-weight: 400">Graeme Blair</h4>
-                        <h5 style="font-weight: 200"> Assistant Professor of Political Science <br/> UCLA </h5>
+  <symbol id="svg-facebook" viewBox="0 0 20.58 20.58" preserveAspectRatio="xMidYMid meet">
+    <path d="M20.58,3.86V16.72a3.86,3.86,0,0,1-3.86,3.86H14.2v-8h2.67l.4-3.11H14.2v-2c0-.9.24-1.5,1.54-1.5l1.64,0V3.23A21.68,21.68,0,0,0,15,3.11a3.75,3.75,0,0,0-4,4.1V9.5H8.31v3.11H11v8H3.86A3.86,3.86,0,0,1,0,16.72V3.86A3.86,3.86,0,0,1,3.86,0H16.72A3.86,3.86,0,0,1,20.58,3.86Z"/>
+  </symbol>
+
+  <symbol id="svg-youtube" viewBox="0 0 25.6 18" preserveAspectRatio="xMidYMid meet">
+    <path d="M25.065 2.816A3.217 3.217 0 0022.8.538C20.8 0 12.8 0 12.8 0S4.795 0 2.8.538A3.217 3.217 0 00.537 2.816 33.744 33.744 0 000 9.018a33.744 33.744 0 00.535 6.2A3.169 3.169 0 002.8 17.462C4.795 18 12.8 18 12.8 18s8.005 0 10-.538a3.169 3.169 0 002.265-2.242 33.744 33.744 0 00.535-6.2 33.744 33.744 0 00-.535-6.204zM10.182 12.825V5.212l6.691 3.806z"/>
+  </symbol>
+
+  <symbol id="svg-cross" viewBox="0 0 15.35 14.21" preserveAspectRatio="xMidYMid meet">
+    <polygon points="15.35 1.48 14 0 7.67 5.75 1.35 0 0 1.48 6.19 7.1 0 12.73 1.35 14.21 7.67 8.46 14 14.21 15.35 12.73 9.16 7.1 15.35 1.48"/>
+  </symbol>
+
+  <symbol id="svg-chevron-thin" viewBox="0 0 11 6.5" preserveAspectRatio="xMidYMid meet">
+    <path d="M5.5,6.5a.51.51,0,0,1-.37-.16L.13.84A.5.5,0,1,1,.87.16L5.5,5.26,10.13.16a.5.5,0,1,1,.74.68l-5,5.5A.51.51,0,0,1,5.5,6.5Z"/>
+  </symbol>
+
+  <symbol id="svg-chevron-mobile" viewBox="0 0 14 9" preserveAspectRatio="xMidYMid meet">
+    <path d="M7,9a1.52,1.52,0,0,1-1.11-.49l-5.5-6a1.5,1.5,0,0,1,2.22-2L7,5.28,11.39.49a1.5,1.5,0,1,1,2.22,2l-5.5,6A1.52,1.52,0,0,1,7,9Z"/>
+  </symbol>
+
+  <symbol id="svg-chevron-big" viewBox="0 0 21 14" preserveAspectRatio="xMidYMid meet">
+    <path d="M3.94,0,0,3.82,10.5,14,21,3.82,17.06,0,10.5,6.36Z"/>
+  </symbol>
+</svg>
+
+      <header class="c-header">
+  <div class="c-header__inner o-wrapper">
+    <a class="c-header__logo" href="https://egap.org">
+      <svg width="134" height="48" class="c-header__logo-image" xmlns="http://www.w3.org/2000/svg"><use xlink:href="#svg-logo"></use></svg>
+    </a>
+    <div class="c-header__menu">
+        <ul class="c-main-nav o-list-bare">
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-347 menu-item-has-children c-main-nav__item">
+        <a href="https://egap.org/about/" class="c-main-nav__link">
+        <span class="o-expand o-expand--600" data-text="About">
+          <span class="o-expand__target">
+            About
+          </span>
+        </span>
+                      <svg class="c-main-nav__chevron" width="14" height="9">
+              <use class="u-hide-xlarge" xlink:href="#svg-chevron-mobile"></use>
+              <use class="u-show-xlarge" xlink:href="#svg-chevron-thin"></use>
+            </svg>
+                  </a>
+                  <ul class="c-main-nav__dropdown o-list-bare">
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-13536 c-main-nav__subitem">
+                <a href="https://egap.org/about/ourimpact/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Our Impact">
+                  <span class="o-expand__target">
+                    Our Impact
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-14954 c-main-nav__subitem">
+                <a href="https://egap.org/about/ouruniqueapproach/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Our Unique Approach">
+                  <span class="o-expand__target">
+                    Our Unique Approach
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-15011 c-main-nav__subitem">
+                <a href="https://egap.org/about/learn-more/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Learn More">
+                  <span class="o-expand__target">
+                    Learn More
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-15394 c-main-nav__subitem">
+                <a href="https://egap.org/current-opportunities/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Current Openings">
+                  <span class="o-expand__target">
+                    Current Openings
+                  </span>
+                </span>
+                </a>
+              </li>
+                      </ul>
+              </li>
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-3118 menu-item-has-children c-main-nav__item">
+        <a href="https://egap.org/our-work/" class="c-main-nav__link">
+        <span class="o-expand o-expand--600" data-text="Our Work">
+          <span class="o-expand__target">
+            Our Work
+          </span>
+        </span>
+                      <svg class="c-main-nav__chevron" width="14" height="9">
+              <use class="u-hide-xlarge" xlink:href="#svg-chevron-mobile"></use>
+              <use class="u-show-xlarge" xlink:href="#svg-chevron-thin"></use>
+            </svg>
+                  </a>
+                  <ul class="c-main-nav__dropdown o-list-bare">
+                          <li class=" menu-item menu-item-type-custom menu-item-object-custom menu-item-4134 c-main-nav__subitem">
+                <a href="https://egap.org/our-work/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Overview">
+                  <span class="o-expand__target">
+                    Overview
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-12965 c-main-nav__subitem">
+                <a href="https://egap.org/our-work/priority-themes/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Priority Themes">
+                  <span class="o-expand__target">
+                    Priority Themes
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-19 c-main-nav__subitem">
+                <a href="https://egap.org/our-work/the-metaketa-initiative/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Metaketa Initiative">
+                  <span class="o-expand__target">
+                    Metaketa Initiative
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-17552 c-main-nav__subitem">
+                <a href="https://egap.org/healthambassadors/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="The Mercury Project: Health Ambassadors">
+                  <span class="o-expand__target">
+                    The Mercury Project: Health Ambassadors
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-2171 c-main-nav__subitem">
+                <a href="https://egap.org/egap-meetings/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="EGAP Meetings &#038; Policy Events">
+                  <span class="o-expand__target">
+                    EGAP Meetings &#038; Policy Events
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-2170 c-main-nav__subitem">
+                <a href="https://egap.org/learning-days/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Learning Days">
+                  <span class="o-expand__target">
+                    Learning Days
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-10296 c-main-nav__subitem">
+                <a href="https://egap.org/our-work/research-grants/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Research Grants">
+                  <span class="o-expand__target">
+                    Research Grants
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-11428 c-main-nav__subitem">
+                <a href="https://egap.org/regional-hubs/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Regional Hubs">
+                  <span class="o-expand__target">
+                    Regional Hubs
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-18733 c-main-nav__subitem">
+                <a href="https://egap.org/our-work/protocols-policies/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Protocols &#038; Policies">
+                  <span class="o-expand__target">
+                    Protocols &#038; Policies
+                  </span>
+                </span>
+                </a>
+              </li>
+                      </ul>
+              </li>
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-14 c-main-nav__item">
+        <a href="https://egap.org/our-members/" class="c-main-nav__link">
+        <span class="o-expand o-expand--600" data-text="Members">
+          <span class="o-expand__target">
+            Members
+          </span>
+        </span>
+                  </a>
+              </li>
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-16 menu-item-has-children c-main-nav__item">
+        <a href="https://egap.org/resources/" class="c-main-nav__link">
+        <span class="o-expand o-expand--600" data-text="Resources">
+          <span class="o-expand__target">
+            Resources
+          </span>
+        </span>
+                      <svg class="c-main-nav__chevron" width="14" height="9">
+              <use class="u-hide-xlarge" xlink:href="#svg-chevron-mobile"></use>
+              <use class="u-show-xlarge" xlink:href="#svg-chevron-thin"></use>
+            </svg>
+                  </a>
+                  <ul class="c-main-nav__dropdown o-list-bare">
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-10755 c-main-nav__subitem">
+                <a href="https://egap.org/introduction-to-egap-resources/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Introduction to EGAP Resources">
+                  <span class="o-expand__target">
+                    Introduction to EGAP Resources
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-6841 c-main-nav__subitem">
+                <a href="https://egap.org/resources/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="All Resources">
+                  <span class="o-expand__target">
+                    All Resources
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-2173 c-main-nav__subitem">
+                <a href="https://egap.org/methods-guides/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Methods Guides">
+                  <span class="o-expand__target">
+                    Methods Guides
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-10863 c-main-nav__subitem">
+                <a href="https://egap.org/registry/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Registry">
+                  <span class="o-expand__target">
+                    Registry
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-2172 c-main-nav__subitem">
+                <a href="https://egap.org/policy-briefs/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Policy Briefs">
+                  <span class="o-expand__target">
+                    Policy Briefs
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-5975 c-main-nav__subitem">
+                <a href="https://egap.org/peer-response-tool/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Peer Response Tool">
+                  <span class="o-expand__target">
+                    Peer Response Tool
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-custom menu-item-object-custom menu-item-17926 c-main-nav__subitem">
+                <a href="https://egap.github.io/theory_and_practice_of_field_experiments/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Learning Days Coursebook">
+                  <span class="o-expand__target">
+                    Learning Days Coursebook
+                  </span>
+                </span>
+                </a>
+              </li>
+                          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-14369 c-main-nav__subitem">
+                <a href="https://egap.org/governanceloop/" class="c-main-nav__sublink">
+                <span class="o-expand o-expand--600" data-text="Governance Loop Podcast">
+                  <span class="o-expand__target">
+                    Governance Loop Podcast
+                  </span>
+                </span>
+                </a>
+              </li>
+                      </ul>
+              </li>
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-22 c-main-nav__item">
+        <a href="https://egap.org/contact/" class="c-main-nav__link">
+        <span class="o-expand o-expand--600" data-text="Contact">
+          <span class="o-expand__target">
+            Contact
+          </span>
+        </span>
+                  </a>
+              </li>
+      </ul>
+    </div>
+    <button class="o-hamburger c-header__hamburger u-hide-xlarge" type="button">
+  <span class="o-hamburger__wrapper">
+    <span class="o-hamburger__bar"></span>
+    <span class="o-hamburger__bar"></span>
+    <span class="o-hamburger__bar"></span>
+    <span class="o-hamburger__bar"></span>
+  </span>
+</button>
+  </div>
+</header>
+  
+    
+  <main class="c-main">
+      <section class="c-section o-wrapper-padding">
+  
+<section class="c-section__column">
+  
+<nav class="c-breadcrumbs u-fsz-smallest u-c-gray-dark">
+      <span class="c-breadcrumbs__item"><a href="https://egap.org/resources/">Featured Resources</a></span>
+  </nav>
 
 
-			<h6><span style = "line-height: 20px;">Ongoing collaborations</span><br/>
-			<a href="https://egap.org/our-work/the-metaketa-initiative/round4-community-policing">EGAP community policing metaketa</a><br/>
-                        <a href="https://declaredesign.org">DeclareDesign</a><br/>
-                        <a href="https://projectrg.org">Project on Resources and Governance</a></h6>
-
-                        <h5>
-                        <a href="GraemeBlair-CV.pdf" target="_blank" rel="noopener"><i class="ai ai-cv ai-1x"></i></a>
-
-                        <a href="mailto:graeme.blair@ucla.edu" target="_blank" rel="noopener"><i class="far fa-envelope fa-1x"></i></a>
-
-                  <a href="https://twitter.com/graemedblair" target="_blank" rel="noopener"><i class="fab fa-twitter fa-1x"></i></a>
-
-		  <a href="https://github.com/graemeblair" target="_blank" rel="noopener"><i class="fab fa-github fa-1x"></i></a>
-
-		  <a href="https://orcid.org/0000-0001-9164-2102" target="_blank" rel="noopener"><i class="ai ai-orcid ai-1x"></i></a>
-
-                  <a href="https://scholar.google.com/citations?user=0hbap6YAAAAJ" target="_blank" rel="noopener"><i class="ai ai-google-scholar ai-1x"></i></a></h5>
-                    </div>
-
-                    <div class="col-md-4 my-auto">
-
-			    <p><u>Latest publications</u></p>
-			    
-			    <p><a href='/papers/prices.pdf'>Do commodity price shocks cause armed conflict? Evidence from a meta-analysis</a>, American Political Science Review (2020)</p>
-
-			    <p><a href='/papers/sensitivity.pdf'>When to worry about sensitivity bias: Theory and evidence from 30 years of list experiments</a>, American Political Science Review (2020)</p>
 
 
-                    </div>
-                </div>
 
-            </div>
+</section>
 
+
+<section class="c-section__columns is-resource-row is-header-row">
+  
+
+<div class="is-layout-flow wp-block-column is-vertically-aligned-bottom">
+<div class="is-layout-flow wp-block-group"><div class="wp-block-group__inner-container"><h1 class="c-page-title is-style-smaller o-h2">
+  10 Things to Know About Causal Inference
+</h1>
+</div></div>
+
+
+
+<p class="o-generic-links"><a href="https://egap.org/fr/resource/10-choses-a-savoir-sur-linference-causale/">En Français</a></p>
+
+
+
+<p class="o-generic-links"><a href="https://egap.org/es/resource/10-cosas-que-debe-saber-sobre-la-inferencia-causal/">En Español</a></p>
+</div>
+
+
+
+<div class="is-layout-flow wp-block-column is-vertically-aligned-bottom">
+<p class="o-generic-links">Author: <a href="#" data-member-trigger="1270" target="_blank" rel="noreferrer noopener">Macartan Humphreys</a></p>
+</div>
+
+
+</section>
+
+
+<section class="c-section__columns">
+  
+
+<div class="is-layout-flow wp-block-column"></div>
+
+
+
+<div class="is-layout-flow wp-block-column">
+<iframe src="https://rawcdn.githack.com/egap/methods-guides/89f107f569dbc76a1770b75be806ab825c9296fd/causal-inference/causal-inference.html" style="width: 100%;"></iframe>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js" integrity="sha512-dnvR4Aebv5bAtJxDunq3eE8puKAJrY9GBJYl9GC6lTOEC76s1dbDfJFcL9GyzpaDW4vlI/UjR8sKbc1j6Ynx6w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+  iFrameResize({inPageLinks: true});
+</script>
+</div>
+
+
+</section>
+
+
+<section class="c-section__column">
+  
+
+
+</section>
+
+
+</section>
+
+
+      </main>
+
+    
+      <footer class="c-footer">
+    <form class="c-footer__newsletter" action="https://egap.us15.list-manage.com/subscribe/post?u=d2648e78dd791aeedcc8d6525&amp;id=847cab4af0" method="post" target="_blank">
+    <div class="c-footer__newsletter-inner o-wrapper">
+      <div class="c-footer__newsletter-copy">
+        <h3 class="c-footer__newsletter-title u-c-heading o-h4">Subscribe</h3>
+        <div class="c-footer__newsletter-text u-c-heading">Be the first to hear about EGAP’s featured projects, events, and opportunities.</div>
+      </div>
+      <div class="c-footer__newsletter-inputs">
+        <div class="c-footer__newsletter-column">
+          <label class="u-hidden-visually" for="footer-name">Full Name</label>
+          <input class="c-footer__newsletter-input" name="FNAME" type="text" required placeholder="Full Name" id="footer-name">
         </div>
-
-        <div class="container">
-
-		<div class="row justify-content-md-center">
-			<div class="col-md-8 my-auto">
-
-
-	<h5 style="line-height: 25pt;">I use experiments, field research, and statistics to study three questions:</h5>
-				
-	<h5 style="line-height: 30pt;"><i class="fas fa-angle-right"></i> &nbsp; What are the causes and consequences of crime and violence?</h5>
-
-        <h5 style="line-height: 30pt;"><i class="fas fa-angle-right"></i> &nbsp; How can people act to prevent violence and improve governance?</h5>
-
-	<h5 style="line-height: 30pt; padding-bottom:5px"><i class="fas fa-angle-right"></i> &nbsp; How can we learn what works to address major social problems?</h5>
-				
-	<h5 style="line-height: 25pt; padding-bottom: 5px">I work primarily in Nigeria, often in partnership with government, civil society, or international organizations.</h5>
-	
-	<h5 style="line-height: 20pt;">I teach and advise students in comparative politics and experimental design.</h5>
-
-	<!--<p>My <a href="#design">methodological work</a> has led to a new way of learning about and improving research designs, as well as new designs and analysis strategies for survey experiments to study sensitive questions. I have published widely-used, award-winning software to implement these methods.</p>-->
-
-	<!--<p>My research appears in two book manuscripts, one under advanced contract at Princeton University Press and one at Cambridge University Press. My papers have been published in leading journals such as the <i>American Political Science Review</i>, <i>American Journal of Political Science</i>, <i>Journal of Politics</i>, <i>Journal of the American Statistical Association</i>, <i>Political Analysis</i>, and <i>Science Advances</i>. I am grateful for funding from the Hewlett Foundation, the Arnold Foundation, the National Science Foundation, and the U.K. Department for International Development, among others.</p>-->
-
-	<!--<p>I received my Ph.D. in political science in 2016 from Princeton University and was a pre/postdoctoral fellow at Columbia University with Evidence in Governance and Politics (EGAP) before joining UCLA.-->
-
-	<p align="center"><hr></p> <!--Jump to: <a href="#substantive">Substantive research</a> - <a href="#design">Methods research</a> - <a href="#teaching">Teaching</a> - <a href="#advising">Prospective students</a></p>-->
-
-			</div>
-		</div>
-
-
-
-	    <!-- spacer -->
-	    <div class="row" style="margin-bottom:15px">
-                &nbsp; <a name="substantive"></a>
-            </div>
-
-            <!-- Example row of columns -->
-            <div class="row justify-content-md-center">
-
-                <div class="col-md-8">
-		<p><h4>Conflict, crime, and governance research</h4></p>
-
-                    <!--<p><i>How does armed conflict shape civilian attitudes and behaviors? What is different about conflicts involving violent extremist groups? What role do natural resources play in instigating armed conflict?</i></p>-->
-
-		   <p><b>Book</b></p>
-
-		<p> <i>Crime, insecurity, and community policing: Experiments on building trust</i>. Under advanced contract, <b>Cambridge University Press</b>. Lead author with Fotini Christia, Jeremy Weinstein, Eric Arias, Emile Badran, Robert A. Blair, Ali Cheema, Thiemo Fetzer, Guy Grossman, Dotan Haim, Rebecca Hanson, Ali Hasanain, Ben Kachero, Dorothy Kronick, Benjamin Morse, Robert Muggah, Matthew Nanes, Tara Slough, Nico Ravanilla, Jacob N. Shapiro, Barbara Silva, Pedro C. L. Souza, Lily Tsai, and Anna Wilke. Book conference scheduled in March 2021.
-			<br> <a href="https://egap.org/our-work/the-metaketa-initiative/round4-community-policing/"><i class="fas fa-globe-americas"></i> Metaketa project</a></p>
-
-
-		    <p style = "padding-top: 10px"><b>Journal articles</b></p>
-
-		    <p>&ldquo;How does armed conflict shape investment? Evidence from the mining sector.&rdquo; 2020. Forthcoming, <b>Journal of Politics</b>. With Darin Christensen and Valerie Wirtschafter.
-                        <br><a href = "#" data-toggle="collapse" data-target="#prospectingAbstract" aria-expanded="false" aria-controls="prospectingAbstract"><i class="far fa-arrow-alt-circle-down"></i> Abstract</a>&nbsp; <a href="/papers/prospecting.pdf"><i class="far fa-file-pdf"></i> PDF</a>&nbsp; <a href="https://graemeblair.com/papers/prospecting-supporting.pdf"><i class="far fa-file-alt"></i> Appendices</a> &nbsp;<a href="http://hdl.handle.net/10.7910/DVN/8Y6BR1"><i class="fas fa-table"></i> Replication</a></p>
-                    </p>
-
-        <p class="collapse abstract" id="prospectingAbstract">How does conflict affect firms’ investment decisions? Past results are mixed: a third of studies we reviewed report null or mixed correlations; some suggest conflict increases investment. We rationalize these results, arguing that armed conflict has divergent effects depending on firms’ exposure to violence. Conflict can deter investment by disrupting production or raising uncertainty. Yet, conflict can encourage investment by hampering government oversight. We argue each mechanism operates over different geographic extents. We use data from the mining sector to test these claims and report three main results. Firms operating at conflict sites dramatically reduce investments. By contrast, firms operating in territory surrounding conflict, but at a remove from fighting, actually increase investment. Firms far from violence see a small negative effect. These divergent responses cannot be inferred from aggregate flows: we show conflict depresses aggregate investment, but this reflects responses among firms far from fighting.</p>
-
-		    
-		    <p>&ldquo;Do commodity price shocks cause armed conflict? Evidence from a meta-analysis.&rdquo; 2020. Forthcoming, <b>American Political Science Review</b>. With Darin Christensen and Aaron Rudkin.
-                        <br><a href = "#" data-toggle="collapse" data-target="#pricesAbstract" aria-expanded="false" aria-controls="pricesAbstract"><i class="far fa-arrow-alt-circle-down"></i> Abstract</a>&nbsp; <a href="/papers/prices.pdf"><i class="far fa-file-pdf"></i> PDF</a>&nbsp; <a href="https://graemeblair.com/papers/prices-supporting.pdf"><i class="far fa-file-alt"></i> Appendices</a>&nbsp; <a href="http://www.egap.org/registration/4993"><i class="far fa-file-alt"></i> Preanalysis plan</a> &nbsp;<a href="https://doi.org/10.7910/DVN/BGCVOW"><i class="fas fa-table"></i> Replication</a>
-                    </p>
-		    
-		     <p class="collapse abstract" id="pricesAbstract">Scholars of the resource curse argue that reliance on primary commodities destabilizes governments: price fluctuations generate windfalls or periods of austerity that provoke or intensify conflict. 350 quantitative studies test this claim, but prominent results point in different directions, making it difficult to discern which results reliably hold across contexts. We conduct a meta-analysis of 46 natural experiments that use difference-in-difference designs to estimate the causal effect of international commodity price changes on armed conflict. We show commodity price changes, on average, do not change conflict risks. However, this overall effect comprises cross-cutting effects by commodity type. In line with theory, we find price increases in labor-intensive agricultural commodities reduce conflict, while increases in the price of oil, a capital-intensive commodity, provoke conflict. We also find that prices changes for lootable artisanal minerals provoke conflict. Our meta-analysis consolidates existing evidence, but also highlights gaps for future research to fill.</p>
-
-		    
-  		    <p>&ldquo;Motivating the adoption of new community-minded behaviors: An empirical test in Nigeria.&rdquo; <b>Science Advances</b>, 2019. With Rebecca Littman and Elizabeth Levy Paluck.
-			<br><a href = "#" data-toggle="collapse" data-target="#nollywoodAbstract" aria-expanded="false" aria-controls="nollywoodAbstract"><i class="far fa-arrow-alt-circle-down"></i> Abstract</a>&nbsp; <a href="https://advances.sciencemag.org/content/advances/5/3/eaau5175.full.pdf"><i class="far fa-file-pdf"></i> PDF</a> &nbsp;<a href="http://waterofgoldstudy.com/"><i class="fas fa-globe-americas"></i> Project</a> &nbsp;<a href="https://egap.org/resource/reporting-corruption-in-nigeria-testing-the-effects-of-norms-nudges/"><i class="far fa-file-alt"></i> Policy brief</a> &nbsp;<a href="http://dx.doi.org/10.17605/OSF.IO/9A7H5"><i class="fas fa-table"></i> Replication</a> &nbsp;<a href="http://egap.org/registration/629"><i class="far fa-file-alt"></i> Preanalysis plan</a> &nbsp;<a href="http://advances.sciencemag.org/highwire/filestream/212034/field_highwire_adjunct_files/0/aau5175_SM.pdf"><i class="far fa-file-alt"></i> Appendices</a></p>
-
-      <p class="collapse abstract" id="nollywoodAbstract">Social scientists have long sought to explain why people donate resources for the good of a community. Less experiment in Nigeria, we tested two campaigns that encouraged people to try reporting corruption by text message. Psychological theories about how to shift perceived norms and how to reduce barriers to action drove the design of each campaign. The first, a film featuring actors reporting corruption, and the second, a mass text message reducing the effort required to report, caused a total of 1181 people in 106 communities to text, including 241 people who sent concrete corruption reports. Psychological theories of social norms and behavior change can illuminate the early stages of the evolution of cooperation and collective action, when adoption is still relatively rare.</p>
-
-                    <p>&ldquo;Explaining support for combatants during wartime: A survey experiment in Afghanistan.&rdquo; <b>American Political Science Review</b>, 2013. With Jason Lyall and Kosuke Imai.
-                        <br><a href = "#" data-toggle="collapse" data-target="#afghanAbstract" aria-expanded="false" aria-controls="afghanAbstract"><i class="far fa-arrow-alt-circle-down"></i> Abstract</a>&nbsp; <a href="/papers/afghan.pdf"><i class="far fa-file-pdf"></i> PDF</a> &nbsp;<a href="https://www.mpsanet.org/awards-and-funding/awards/award-recipient-archive"><i class="fas fa-trophy"></i> MPSA Pi Sigma Alpha Award</a> &nbsp;<a href="http://hdl.handle.net/1902.1/20368"><i class="fas fa-table"></i> Replication</a> </p>
-
-                        <p class="collapse abstract" id="afghanAbstract">How are civilian attitudes toward combatants affected by wartime victimization? Are these effects conditional on which combatant inflicted the harm? We investigate the determinants of wartime civilian attitudes towards combatants using a survey experiment across 204 villages in five Pashtun-dominated provinces of Afghanistan—the heart of the Taliban insurgency. We use endorsement experiments to indirectly elicit truthful answers to sensitive questions about support for different combatants. We demonstrate that civilian attitudes are asymmetric in nature. Harm inflicted by the International Security Assistance Force (ISAF) is met with reduced support for ISAF and increased support for the Taliban, but Taliban-inflicted harm does not translate into greater ISAF support. We combine a multistage sampling design with hierarchical modeling to estimate ISAF and Taliban support at the individual, village, and district levels, permitting a more fine-grained analysis of wartime attitudes than previously possible.</p>
-
-                    <p>&ldquo;Poverty and support for militant politics: Evidence from Pakistan.&rdquo; <b>American Journal of Political Science</b>, 2013. With Christine Fair, Neil Malhotra, and Jacob N. Shapiro.
-                        <br><a href = "#" data-toggle="collapse" data-target="#pakistanAbstract" aria-expanded="false" aria-controls="pakistanAbstract"><i class="far fa-arrow-alt-circle-down"></i> Abstract</a>&nbsp; <a href="/papers/pakistan.pdf"><i class="far fa-file-pdf"></i> PDF</a> &nbsp;<a href="http://hdl.handle.net/1902.1/17042"><i class="fas fa-table"></i> Replication</a> &nbsp;<a href="https://graemeblair.com/papers/pakistan-supporting.pdf"><i class="far fa-file-alt"></i> Appendices</a> </p>
-
-                        <p class="collapse abstract" id="pakistanAbstract">Policy debates on strategies to end extremist violence frequently cite poverty as a root cause of support for the perpetrating groups. There is little evidence to support this contention, particularly in the Pakistani case. Pakistan’s urban poor are more exposed to the negative externalities of militant violence and may in fact be less supportive of the groups. To test these hypotheses we conducted a 6,000-person, nationally representative survey of Pakistanis that measured affect toward four militant organizations. By applying a novel measurement strategy, we mitigate the item nonresponse and social desirability biases that plagued previous studies due to the sensitive nature of militancy. Contrary to expectations, poor Pakistanis dislike militants more than middle-class citizens. This dislike is strongest among the urban poor, particularly those in violent districts, suggesting that exposure to terrorist attacks reduces support for militants. Long-standing arguments tying support for violent organizations to income may require substantial revision.</p>
-
-			<p style = "padding-top: 10px"><b>Under review and in progress</b></p>
-
-		    <p> &ldquo;Does Community Policing Build Trust in Police and Reduce Crime? Evidence from Six Coordinated Field Experiments in the Global South.&rdquo; 2020. Lead author with Jeremy Weinstein, Fotini Christia, Eric Arias, Emile Badran, Robert A. Blair, Ali Cheema, Thiemo Fetzer, Guy Grossman, Dotan Haim, Rebecca Hanson, Ali Hasanain, Ben Kachero, Dorothy Kronick, Benjamin Morse, Robert Muggah, Matthew Nanes, Tara Slough, Nico Ravanilla, Jacob N. Shapiro, Barbara Silva, Pedro C. L. Souza, Lily Tsai, and Anna Wilke. Under review. Available upon request.
-			<br> <a href="https://egap.org/our-work/the-metaketa-initiative/round4-community-policing/"><i class="fas fa-globe-americas"></i> Metaketa project</a> &nbsp;<a href="http://egap.org/registration/5154"><i class="far fa-file-alt"></i> Preanalysis plan</a></p>
-
-      <p>&ldquo;Religious leaders can change minds and shift norms.&rdquo; 2020. With Mohammed Bukar, Rebecca Littman, Elizabeth Nugent, Rebecca Wolfe, Benjamin Crisman, Anthony Etim, and Chad Hazlett. Under review.
-           <!--<br> <a href="/papers/repentance.pdf"><i class="far fa-file-pdf"></i> PDF</a> -->
-                       </p>
-
-		    <p class = "hanging-indent">&ldquo;Demonstrating genuine change increases victim’s willingness to reconcile with transgressors: Experimental evidence from Nigeria.&rdquo; 2020. With Rebecca Littman, Rebecca Wolfe, Mohammed Bukar, Jiyoung Kim, Yunusa Aina, Yetcha Ajimi Badu, Fatima Abba Kurama, and Ahmed Umar Lawan.
-                        <!--<br> <a href="/papers/repentance.pdf"><i class="far fa-file-pdf"></i> PDF</a>-->
-		    </p>
-
-
-                </div>
-
-            </div>
-
-
-            <div class="row" style="margin-bottom:15px">
-                &nbsp; <a name="design"></a>
-            </div>
-
-            <div class="row justify-content-md-center">
-
-                <div class="col-md-8">
-		    <p><h4>Research design and methodology research</h4></p>
-
-                    <!--<p><i>How can we improve our research designs before we implement them? How do we know if we have selected a good research design?</i></p>-->
-
-		    <p><a href="https://www.bitss.org/relationships/leamer-rosenthal-prize-recipient-2016/"><i class="fas fa-trophy"></i> BITSS Leamer-Rosenthal Prize</a>; <a href="https://improvingpsych.org/mission/awards/"><i class="fas fa-trophy"></i> SIPS Commendation</a></p>
-
-						<p><b>Book</b></p>
-
-
-                   <p><i>Research design: Declaration, diagnosis, redesign.</i> Under advance contract, <b>Princeton University Press</b>. With Alexander Coppock and Macartan Humphreys. Book conference held December 2020.
-
-			   			<p style = "padding-top: 10px"><b>Journal articles</b></p>
-
-
-                    <p> &ldquo;When to worry about sensitivity bias: A social reference theory and evidence from 30 years of list experiments.&rdquo; <b>American Political Science Review</b>, 2020. With Alexander Coppock and Margaret Moor.
-                        <br><a href = "#" data-toggle="collapse" data-target="#sensitivityAbstract" aria-expanded="false" aria-controls="sensitivityAbstract"><i class="far fa-arrow-alt-circle-down"></i> Abstract</a>&nbsp; <a href="papers/sensitivity.pdf"><i class="far fa-file-pdf"></i> PDF</a> &nbsp;<a href="https://doi.org/10.7910/DVN/YUXHZT"><i class="fas fa-table"></i> Replication</a> &nbsp; <a href="https://graemeblair.com/papers/sensitivity-supporting.pdf"><i class="far fa-file-alt"></i> Appendices</a></p>
-
-                        <p class="collapse abstract" id="sensitivityAbstract">Eliciting honest answers to sensitive questions is frustrated if subjects withhold the truth for fear that others will judge or punish them. The resulting bias is commonly referred to as social desirability bias, a subset of what we label sensitivity bias. We make three contributions. First, we propose a social reference theory of sensitivity bias to structure expectations about survey responses on sensitive topics. Second, we explore the bias-variance trade-off inherent in the choice between direct and indirect measurement technologies. Third, to estimate the extent of sensitivity bias, we meta-analyze the set of published and unpublished list experiments (a.k.a., the item count technique) conducted to date and compare the results with direct questions. We find that sensitivity biases are typically smaller than 10 percentage points and in some domains are approximately zero.</p>
-
-                    <p>&ldquo;Declaring and diagnosing research designs.&rdquo; <b>American Political Science Review</b>, 2019. With Jasper Cooper, Alexander Coppock, Macartan Humphreys.
-                        <br><a href = "#" data-toggle="collapse" data-target="#declareAbstract" aria-expanded="false" aria-controls="declareAbstract"><i class="far fa-arrow-alt-circle-down"></i> Abstract</a>&nbsp; <a href="https://declaredesign.org/declare.pdf"><i class="far fa-file-pdf"></i> PDF</a> &nbsp;<a href="https://doi.org/10.7910/DVN/XYT1VB"><i class="fas fa-table"></i> Replication</a>  &nbsp;<a href="https://declaredesign.org/declare_SI.pdf"><i class="far fa-file-alt"></i> Appendices</a> </p>
-
-                        <p class="collapse abstract" id="declareAbstract">Researchers need to select high-quality research designs and communicate those designs clearly to readers. Both tasks are difficult. We provide a framework for formally “declaring” the analytically relevant features of a research design in a demonstrably complete manner, with applications to qualitative, quantitative, and mixed methods research. The approach to design declaration we describe requires defining a model of the world (M), an inquiry (I), a data strategy (D), and an answer strategy (A). Declaration of these features in code provides sufficient information for researchers and readers to use Monte Carlo techniques to diagnose properties such as power, bias, accuracy of qualitative causal inferences, and other “diagnosands.” Ex ante declarations can be used to improve designs and facilitate preregistration, analysis, and reconciliation of intended and actual analyses. Ex post declarations are useful for describing, sharing, reanalyzing, and critiquing existing designs. We provide open-source software, DeclareDesign, to implement the proposed approach.</p>
-
-
-                    <p> &ldquo;List experiments with measurement error.&rdquo; <b>Political Analysis</b>, 2019. With Winston Chou and Kosuke Imai.
-                        <br><a href = "#" data-toggle="collapse" data-target="#listerrorAbstract" aria-expanded="false" aria-controls="listerrorAbstract"><i class="far fa-arrow-alt-circle-down"></i> Abstract</a>&nbsp; <a href="papers/listerror.pdf"><i class="far fa-file-pdf"></i> PDF</a>&nbsp; <a href="https://doi.org/10.7910/DVN/L3GWNP"><i class="fas fa-table"></i> Replication</a> </p>
-
-                        <p class="collapse abstract" id="listerrorAbstract">Measurement error threatens the validity of survey research, especially when studying sensitive questions. Although list experiments can help discourage deliberate misreporting, they may also suer from nonstrategic measurement error due to flawed implementation and respondents’ inattention. Such error runs against the assumptions of the standard maximum likelihood regression (MLreg) estimator for list experiments and can result in misleading inferences, especially when the underlying sensitive trait is rare. We address this problem by providing new tools for diagnosing and mitigating measurement error in list experiments. First, we demonstrate that the nonlinear least squares regression (NLSreg) estimator proposed in Imai (2011) is robust to nonstrategic measurement error. Second, we oer a general model misspecification test to gauge the divergence of the MLreg and NLSreg estimates. Third, we show how to model measurement error directly, proposing new estimators that preserve the statistical eiciency of MLreg while improving robustness. Last, we revisit empirical studies shown to exhibit nonstrategic measurement error, and demonstrate that our tools readily diagnose and mitigate the bias. We conclude this article with a number of practical recommendations for applied researchers. The proposed methods are implemented through an open-source software package.</p>
-
-                    <p> &ldquo;Design and analysis of the randomized response technique.&rdquo; <b>Journal of the American Statistical Association</b>, 2015. With Kosuke Imai, Yang-Yang Zhou.
-                        <br><a href = "#" data-toggle="collapse" data-target="#randrespAbstract" aria-expanded="false" aria-controls="randrespAbstract"><i class="far fa-arrow-alt-circle-down"></i> Abstract</a>&nbsp; <a href="papers/randresp.pdf"><i class="far fa-file-pdf"></i> PDF</a> &nbsp;<a href="http://dx.doi.org/10.7910/DVN/AIO5BR"><i class="fas fa-table"></i> Replication</a> </p>
-
-                        <p class="collapse abstract" id="randrespAbstract">About a half century ago, in 1965, Warner proposed the randomized response method as a survey technique to reduce potential bias due to nonresponse and social desirability when asking questions about sensitive behaviors and beliefs. This method asks respondents to use a randomization device, such as a coin flip, whose outcome is unobserved by the interviewer. By introducing random noise, the method conceals individual responses and protects respondent privacy. While numerous methodological advances have been made, we find surprisingly few applications of this promising survey technique. In this article, we address this gap by (1) reviewing standard designs available to applied researchers, (2) developing various multivariate regression techniques for substantive analyses, (3) proposing power analyses to help improve research designs, (4) presenting new robust designs that are based on less stringent assumptions than those of the standard designs, and (5) making all described methods available through open-source software. We illustrate some of these methods with an original survey about militant groups in Nigeria.</p>
-
-                    <p> &ldquo;Comparing and combining list and endorsement experiments: Evidence from Afghanistan.&rdquo; <b>American Journal of Political Science</b>, 2014. With Kosuke Imai and Jason Lyall.
-                        <br><a href = "#" data-toggle="collapse" data-target="#listendorseAbstract" aria-expanded="false" aria-controls="listendorseAbstract"><i class="far fa-arrow-alt-circle-down"></i> Abstract</a>&nbsp; <a href="papers/listendorse.pdf"><i class="far fa-file-pdf"></i> PDF</a> &nbsp;<a href="http://hdl.handle.net/1902.1/21243"><i class="fas fa-table"></i> Replication</a> </p>
-
-                        <p class="collapse abstract" id="listendorseAbstract">List and endorsement experiments are becoming increasingly popular among social scientists as indirect survey techniques for sensitive questions. When studying issues such as racial prejudice and support for militant groups, these survey methodologies may improve the validity of measurements by reducing nonresponse and social desirability biases. We develop a statistical test and multivariate regression models for comparing and combining the results from list and endorsement experiments. We demonstrate that when carefully designed and analyzed, the two survey experiments can produce substantively similar empirical findings. Such agreement is shown to be possible even when these experiments are applied to one of the most challenging research environments: contemporary Afghanistan. We find that both experiments uncover similar patterns of support for the International Security Assistance Force (ISAF) among Pashtun respondents. Our findings suggest that multiple measurement strategies can enhance the credibility of empirical conclusions. Open-source software is available for implementing the proposed methods.</p>
-
-                    <p> &ldquo;Statistical analysis of list experiments.&rdquo; <b>Political Analysis</b>, 2012. With Kosuke Imai.
-                        <br><a href = "#" data-toggle="collapse" data-target="#listAbstract" aria-expanded="false" aria-controls="listAbstract"><i class="far fa-arrow-alt-circle-down"></i> Abstract</a>&nbsp; <a href="papers/list.pdf"><i class="far fa-file-pdf"></i> PDF</a> &nbsp;<a href="http://hdl.handle.net/1902.1/17040"><i class="fas fa-table"></i> Replication</a> &nbsp;<a href="https://graemeblair.com/papers/list-supporting.pdf"><i class="far fa-file-alt"></i> Appendices</a></p>
-
-                        <p class="collapse abstract" id="listAbstract">The validity of empirical research often relies upon the accuracy of self-reported behavior and beliefs. Yet eliciting truthful answers in surveys is challenging, especially when studying sensitive issues such as racial prejudice, corruption, and support for militant groups. List experiments have attracted much attention recently as a potential solution to this measurement problem. Many researchers, however, have used a simple difference-in-means estimator, which prevents the efficient examination of multivariate relationships between respondents’ characteristics and their responses to sensitive items. Moreover, no systematic means exists to investigate the role of underlying assumptions. We fill these gaps by developing a set of new statistical methods for list experiments. We identify the commonly invoked assumptions, propose new multivariate regression estimators, and develop methods to detect and adjust for potential violations of key assumptions. For empirical illustration, we analyze list experiments concerning racial prejudice. Open-source software is made available to implement the proposed methodology.</p>
-
-		    	<p style = "padding-top: 10px"><b>Invited contributions</b></p>
-		    
-		    <p>&ldquo;Experiments in multiple contexts.&rdquo; In Donald P. Green and James Druckman, <b>Handbook of Experimental Political Science</b>, forthcoming, Cambridge University Press. With Gwyneth McClendon.
-			<br><a href = "#" data-toggle="collapse" data-target="#contextsAbstract" aria-expanded="false" aria-controls="contextsAbstract"><i class="far fa-arrow-alt-circle-down"></i> Abstract</a>&nbsp; <a href="/papers/contexts.pdf"><i class="far fa-file-pdf"></i> PDF</a></p>
-
-      <p class="collapse abstract" id="contextsAbstract">In an effort to assess the generalizability of treatment effects across contexts, scholars (or teams of scholars) are increasingly conducting experiments around the same research questions in multiple country and subnational contexts. In this chapter, we categorize recent and ongoing efforts to conduct cross-context experiments into three types: “uncoordinated,” “coordinated, sequential,” and “coordinated, simultaneous.” We discuss some practical trade-offs across these types, arguing that coordinated cross-context designs offer the most promise for meta-analyses. We then draw attention to four areas in which the current approaches arguably all fall short in facilitating cumulative learning about treatment effects and treatment effect heterogeneity across contexts. We conclude by proposing some ways forward to continue improving our approach to learning about generalizability across contexts.</p>
-
-		    <p>&ldquo;Survey methods for sensitive topics.&rdquo; <b>APSA Comparative Politics Newsletter</b>. 
-			<br> <a href="/papers/sensitive.pdf"><i class="far fa-file-pdf"></i> PDF</a></p>
-		    
-		    <p style = "padding-top: 10px"><b>Research software</b></p>
-		  
-		    <p><a href="https://www.cambridge.org/core/membership/spm/about-us/awards/statistical-software-award"><i class="fas fa-trophy"></i> Polmeth Statistical Software Award</a></p>
-
-                    <p>&ldquo;DeclareDesign: Declare and Diagnose Research Designs.&rdquo; R package. With Jasper Cooper, Alexander Coppock, Macartan Humphreys, and Neal Fultz.
-                        <br> <a href="https://declaredesign.org/r/declaredesign/"><i class="fas fa-globe-americas"></i> Web</a> &nbsp;<a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/declaredesign.pdf"><i class="fas fa-info-circle"></i> Cheatsheet</a> &nbsp; ~20,000 downloads</p>
-
-                <p>&ldquo;estimatr: Fast Estimators for Design-Based Inference.&rdquo; R package. With Jasper Cooper, Alexander Coppock, Macartan Humphreys, and Luke Sonnet.
-                        <br> <a href="https://declaredesign.org/r/estimatr/"><i class="fas fa-globe-americas"></i> Web</a> &nbsp;<a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/estimatr.pdf"><i class="fas fa-info-circle"></i> Cheatsheet</a> &nbsp; ~84,000 downloads</p>
-
-                <p>&ldquo;fabricatr</tt>: Imagine Your Data Before You Collect It.&rdquo; R package. With Jasper Cooper, Alexander Coppock, Macartan Humphreys, Aaron Rudkin, and Neal Fultz.
-                        <br> <a href="https://declaredesign.org/r/estimatr/"><i class="fas fa-globe-americas"></i> Web</a> &nbsp; ~29,000 downloads</p>
-
-                    <p>&ldquo;list: Statistical Methods for the Item Count Technique and List Experiment.&rdquo; R package. With Kosuke Imai.
-                        <br> <a href="https://list.sensitivequestions.org/"><i class="fas fa-globe-americas"></i> Web</a> &nbsp; ~41,000 downloads</p>
-
-                <p> &ldquo;rr: Statistical Methods for the Randomized Response Technique.&rdquo; R package. With Yang-Yang Zhou and Kosuke Imai.
-                        <br> <a href="https://rr.sensitivequestions.org/"><i class="fas fa-globe-americas"></i> Web</a> &nbsp; ~19,000 downloads</p>
-
-		    
-                </div>
-
-            </div>
-
-	    <div class="row">
-                &nbsp; <a name="advising"></a>
-            </div>
-
-            <div class="row justify-content-md-center">
-
-                <div class="col-md-8">
-
-                        <h4>Advising</h4> <br/>
-
-		    <p>I actively advise and collaborate with graduate students in the political science Ph.D. program at UCLA. I meet weekly in the Politics of Order and Development Lab with all of my students. If you think you might be a good fit for the lab, send me an email and we can set up a time to meet. I'm also always happy to talk to other UCLA Ph.D. students even if I'm not advising you (<a href = "https://calendly.com/graemeblair/meeting">sign up for office hours</a>). <a href = "mailto:graeme.blair@ucla.edu">Email me</a> if you can't find a time.</p>
-
-                    <p><b>Prospective graduate students:</b> You can find information about <a href="https://polisci.ucla.edu/academics/graduate/applying-to-the-ph-d-program/">applying to the UCLA Ph.D. program here</a>. Our department, like most in political science, does not admit students to work with specific faculty. Admissions decisions are made by a committee, which I am not currently sitting on. However, you are welcome to mention my name in your personal statement in order to ensure it is sent to me during the admission process. <b>Following the example of <a href="http://www.betsylevypaluck.com/for-students">Betsy Paluck</a>, I no longer have personal conversations with prospective students, in order to avoid favoring students who have received advice to connect with faculty or who have connections with my colleagues.</b> If you are admitted, I will be eager to talk about working with you at UCLA.</p>
-
-		    <p>In preparing your application, I encourage you to read Jessica Calarco's excellent <a href="https://bookshop.org/books/a-field-guide-to-grad-school-uncovering-the-hidden-curriculum/9780691201092">Field Guide to Grad School</a>, the advice from <a href="https://chrisblattman.com/about/contact/gradschool/">Chris Blattman</a> and <a href="http://macartan.nyc/teaching/applying-for-a-phd/">Macartan Humphreys</a>. Josh Kertzer has compiled a set of <a href ="https://people.fas.harvard.edu/~jkertzer/prospective.html">excellent additional writing</a> on applying to social science Ph.D. programs.</p>
-
-                </div>
-
-            </div>
-
-            <div class="row">
-                &nbsp; <a name="teaching"></a>
-            </div>
-
-            <div class="row justify-content-md-center">
-
-                <div class="col-md-8">
-
-                    <h4>Teaching</h4> <br/>
-
-                    <p>POL SCI 50: Comparative Politics (undergraduate lecture). Next Spring 2022. <a href="teaching/UCLA_PS50_Syllabus.pdf">Syllabus</a></p>
-
-                    <p>POL SCI 200E: Experimental Design for Social Science (Ph.D. seminar). Next Spring 2022. <a href="teaching/UCLA_PS200E_Syllabus.pdf">Syllabus</a></p>
-
-		    <p>POL SCI 292: Research Design (Ph.D. seminar). Next Winter 2022. </p>
-			
-                    <p>POL SCI 240a/b: Comparative Politics Field Seminar (Ph.D. seminar). Fall-Winter 2019-20. <a href="teaching/UCLA_PS240a_Fall2016.pdf">Syllabus</a></p>
-
-		    <p>Improving Designs in the Social Sciences (Ph.D. workshop), 2016-2018 (Co-convener)</p>
-
-		    <p>Politics of Order and Development Lab (Ph.D. workshop), 2018- (Co-convener)</p>
-                </div>
-
-            </div>
-
-            <div class="row">
-                &nbsp;
-            </div>
-
+        <div class="c-footer__newsletter-column">
+          <label class="u-hidden-visually" for="footer-email">Email</label>
+          <input class="c-footer__newsletter-input" name="EMAIL" type="email" required placeholder="Email" id="footer-email">
         </div>
-        <!-- /container -->
+        <div class="c-footer__newsletter-column u-mb-0">
+          <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_d2648e78dd791aeedcc8d6525_847cab4af0" tabindex="-1" value=""></div>
+          <input type="hidden" name="subscribe" value="Subscribe">
+          <button class="c-footer__newsletter-submit o-btn o-btn--primary">Send</button>
+        </div>
+        <div class="c-footer__newsletter-message o-generic-links"></div>
+      </div>
+    </div>
+  </form>
+    <div class="c-footer__top">
+    <div class="c-footer__top-inner o-wrapper">
+      <a class="c-footer__logo" href="https://egap.org">
+        <svg width="110" height="40" class="c-footer__logo-image" xmlns="http://www.w3.org/2000/svg"><use xlink:href="#svg-logo"></use></svg>
+      </a>
+            <div class="c-footer__top-columns">
+                  <div class="c-footer__menus u-c-heading">
+                            <ul class="c-footer-nav o-list-bare">
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-36 c-footer-nav__item">
+        <a href="https://egap.org/our-work/the-metaketa-initiative/" class="c-footer-nav__link">
+          Metaketa Initiative
+        </a>
+              </li>
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-38 c-footer-nav__item">
+        <a href="https://egap.org/egap-meetings/" class="c-footer-nav__link">
+          EGAP Meetings &#038; Policy Events
+        </a>
+              </li>
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-3312 c-footer-nav__item">
+        <a href="https://egap.org/learning-days/" class="c-footer-nav__link">
+          Learning Days
+        </a>
+              </li>
+      </ul>
+                            <ul class="c-footer-nav o-list-bare">
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-3314 c-footer-nav__item">
+        <a href="https://egap.org/?page_id=31" class="c-footer-nav__link">
+          Registry
+        </a>
+              </li>
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-40 c-footer-nav__item">
+        <a href="https://egap.org/methods-guides/" class="c-footer-nav__link">
+          Methods Guides
+        </a>
+              </li>
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-41 c-footer-nav__item">
+        <a href="https://egap.org/policy-briefs/" class="c-footer-nav__link">
+          Policy Briefs
+        </a>
+              </li>
+      </ul>
+                            <ul class="c-footer-nav o-list-bare">
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-3316 c-footer-nav__item">
+        <a href="https://egap.org/our-members/" class="c-footer-nav__link">
+          Members
+        </a>
+              </li>
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-44 c-footer-nav__item">
+        <a href="https://egap.org/resources/" class="c-footer-nav__link">
+          Featured Resources
+        </a>
+              </li>
+          <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-43 c-footer-nav__item">
+        <a href="https://egap.org/contact/" class="c-footer-nav__link">
+          Contact
+        </a>
+              </li>
+      </ul>
+                      </div>
+                          <nav class="c-footer__social-links o-links-orange u-c-blue-darker">
+                          <a class="c-footer__social-links-link c-footer__social-links-link--twitter" href="https://twitter.com/egaptweets" target="_blank" rel="noopener">
+                <svg width="24" height="24" class="c-footer__social-links-icon" xmlns="http://www.w3.org/2000/svg"><use xlink:href="#svg-twitter"></use></svg>
+              </a>
+                          <a class="c-footer__social-links-link c-footer__social-links-link--linkedin" href="https://www.linkedin.com/company/evidence-in-governance-and-politics/" target="_blank" rel="noopener">
+                <svg width="24" height="24" class="c-footer__social-links-icon" xmlns="http://www.w3.org/2000/svg"><use xlink:href="#svg-linkedin"></use></svg>
+              </a>
+                      </nav>
+              </div>
+          </div>
+  </div>
+  <div class="c-footer__bottom o-wrapper-padding o-links-orange"><p>© EGAP 2020 | <a href="#">Terms &amp; Conditions</a> | <a href="https://egap.org/privacy-policy/">Privacy Policy</a> | Designed by <a href="https://elefintdesigns.com/" target="_blank" rel="noopener">Elefint</a></p></div>
+</footer>
+  
+      <script>
+      var APP_DATA = {"ajax_url":"https:\/\/egap.org\/wp-admin\/admin-ajax.php","post_id":530};
+    </script>
+  
+  <aside class="c-overlay u-no-scroll-bar u-no-overscroll-y" data-overlay-close>
+  <div class="c-overlay__inner">
+    <button class="c-overlay__close o-btn o-btn--primary" data-overlay-close>
+      <svg width="10" height="10" class="c-overlay__close-icon" xmlns="http://www.w3.org/2000/svg"><use xlink:href="#svg-cross"></use></svg>
+    </button>
 
-    </main>
+    
+  </div>
+</aside>
 
+
+  
+	            <script type="text/javascript">
+	            	/**
+	            	* We define our custom disqus configs here. This function is invoked from:
+	            	* /disqus-comment-system/public/js/comment_embed.js by variable `disqus_config_custom`
+					*/
+	                var disqus_config = function () {
+	                	this.language = "en";
+	                };
+	            </script>
+
+  
+</body>
 </html>
