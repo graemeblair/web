@@ -22,7 +22,10 @@
 	<script>hljs.highlightAll();</script>
     
      <style>
-    @import url('https://fonts.googleapis.com/css2?family=Lato:ital@0;1&family=Merriweather:ital@0;1&display=swap');
+/*      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> */
+
+     
+    @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital@0;1&display=swap');
 
     h1 {
       font-family: 'Merriweather', serif !important; font-size: 15pt
@@ -109,8 +112,8 @@
                   <a href="https://scholar.google.com/citations?user=0hbap6YAAAAJ" target="_blank" rel="noopener"><i style="vertical-align: middle" class="ai ai-google-scholar ai-1x"></i></a>
 
 
-			   &nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#exampleModalCenter" style = "font-size: 10pt; vertical-align: middle">Short bio</a>
-			   &nbsp;&nbsp;<a href="https://calendar.app.google/DGCtdjq6jVPccZ19A"  style = "font-size: 10pt; vertical-align: middle">Appointments</a>
+			   &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#exampleModalCenter" style = "font-size: 10pt; vertical-align: middle"><i class="fa-solid fa-user fa-1x"></i> &nbsp;Bio</a>
+			   &nbsp;&nbsp;&nbsp;<a href="https://calendar.app.google/DGCtdjq6jVPccZ19A"  style = "font-size: 10pt; vertical-align: middle"><i class="fa-solid fa-magnifying-glass-chart fa-1x"></i> &nbsp;Appointments</a>
 			   </span>
 			   
 
@@ -153,17 +156,17 @@ I use experiments, field research, and statistics to study how to reduce violenc
 
 <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
   <li class="nav-item">
-  	    <a class="nav-link active" id="research-tab" data-toggle="tab" href="#research" role="tab" aria-controls="research" aria-selected="true">Research</a>
+  	    <a class="nav-link active" id="research-tab" data-toggle="tab" href="#research" role="tab" aria-controls="research" aria-selected="true"><i class="fa-solid fa-book"></i> &nbsp;Research</a>
 
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="software-tab" data-toggle="tab" href="#software" role="tab" aria-controls="teaching" aria-selected="false">Software</a>
+    <a class="nav-link" id="software-tab" data-toggle="tab" href="#software" role="tab" aria-controls="teaching" aria-selected="false"><i class="fa-solid fa-magnifying-glass-chart"></i> &nbsp;Software</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="teaching-tab" data-toggle="tab" href="#teaching" role="tab" aria-controls="teaching" aria-selected="false">Teaching</a>
+    <a class="nav-link" id="teaching-tab" data-toggle="tab" href="#teaching" role="tab" aria-controls="teaching" aria-selected="false"><i class="fa-solid fa-chalkboard-user"></i> &nbsp;Teaching</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="students-tab" data-toggle="tab" href="#students" role="tab" aria-controls="students" aria-selected="false">For students</a>
+    <a class="nav-link" id="students-tab" data-toggle="tab" href="#students" role="tab" aria-controls="students" aria-selected="false"><i class="fa-solid fa-circle-info"></i> &nbsp;For students</a>
   </li>
 </ul>
 
@@ -355,20 +358,20 @@ I use experiments, field research, and statistics to study how to reduce violenc
 	</div>
 	<div class="col-1">
 	</div>
-	<div class="col-6">
+	<div class="col-6"><p></p>
 	<p><pre><code class="language-r">library(DeclareDesign)
-
-sample_size <- 100
 
 # Declare a two-arm trial in code
 two_arm_trial <-
-  declare_model(N = sample_size,
+  declare_model(N = 100,
                 U = rnorm(N),
                 potential_outcomes(Y ~ 0.2 * Z + U)) +
   declare_inquiry(ATE = mean(Y_Z_1 - Y_Z_0)) +
   declare_assignment(Z = complete_ra(N, prob = 0.5)) +
   declare_measurement(Y = reveal_outcomes(Y ~ Z)) +
   declare_estimator(Y ~ Z, inquiry = "ATE")</pre></p>
+  
+  <p></p>
   
   <img src="https://declaredesign.org/index_files/figure-html/unnamed-chunk-12-1.png" width="100%">
 	</code>
@@ -411,10 +414,10 @@ two_arm_trial <-
 		    <p>I actively advise and collaborate with graduate students in the political science Ph.D. program at UCLA. I'm also always happy to talk to other UCLA Ph.D. students even if I'm not advising you.</p>
 		    <p><a href="https://calendar.app.google/DGCtdjq6jVPccZ19A"><button type="button" class="btn btn-outline-info">Sign up for student hours</button></a></p>
 			
-			<h1>Undergraduate researchers</h1>
+			<p><h1>Undergraduate researchers</h1></p>
 			
 		<p>I regularly work with undergraduate student researchers at UCLA. Many other faculty also work with undergraduate researchers. The best way to find out who is to email faculty with common interests and to regularly check the <a href="https://be.my.ucla.edu/urportal.aspx">Undergraduate Research Portal</a> and talk with counselors from the <a href = "https://hass.ugresearch.ucla.edu/">Undergraduate Research Center</a>.</p>
-		<p><a href="https://forms.gle/27H3jshTnuTnjDbb9"><button type="button" class="btn btn-outline-info">Fill out my researcher interest form</button></a></p>
+		<p><a href="https://forms.gle/27H3jshTnuTnjDbb9"><button type="button" class="btn btn-outline-info">Fill out researcher interest form</button></a></p>
 		
 		<p><h1>Recommendation letters</h1></p>
 			
