@@ -10,14 +10,24 @@
     <script src="https://kit.fontawesome.com/c353c259e6.js" crossorigin="anonymous"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/academicons.min.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+	<script>hljs.highlightAll();</script>
+    
+     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:ital@0;1&family=Merriweather:ital@0;1&display=swap');
 
-    <style>
+    h1 {
+      font-family: 'Merriweather', serif !important; font-size: 15pt
+    }
+
       .abstract {
         margin-top: -5px;
         padding-left: 20px;
@@ -35,6 +45,7 @@
             /*background-image: url("img/bama.jpg");*/
   /*opacity: 0.25; */
   /*background-size: cover;*/
+
   border-radius:0;
   min-height: 300px;
         }
@@ -48,7 +59,7 @@
         body {
             /* font-family: "IBM Plex Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif; */
 	    /*font-family: "Helvetica Neue UltraLight", "Helvetica Neue Thin", "Helvetica Neue Light", "Helvetica Light", "Helvetica", "Arial", "sans-serif";*/
-	    font-family: 'Lato', serif;;
+      font-family: 'Lato', sans-serif !important;
 	    /*https://github.com/imanel/mirror_os/blob/master/app/assets/fonts/HelveticaNeue-UltraLight.eot*/
         }
     </style>
@@ -71,7 +82,7 @@
 
                     <div class="col-md-5 my-auto align-top ">
 
-                        <h4 style="font-weight: 400">Graeme Blair</h4>
+                        <h1 style="font-weight: 400; font-family: 'Merriweather', serif !important; font-size: 20pt	">Graeme Blair</h1>
                         <h5 style="font-weight: 200"> Associate Professor of Political Science, UCLA </h5>
 			
 			<h6 style="font-weight: 200"> Co-Director of Training and Methods,<br>Evidence in Governance and Politics </h6>
@@ -95,7 +106,11 @@
                   <a href="https://scholar.google.com/citations?user=0hbap6YAAAAJ" target="_blank" rel="noopener"><i style="vertical-align: middle" class="ai ai-google-scholar ai-1x"></i></a>
 
 
-			   &nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#exampleModalCenter" style = "font-size: 10pt; vertical-align: middle">Short bio</a></span>
+			   &nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#exampleModalCenter" style = "font-size: 10pt; vertical-align: middle">Short bio</a>
+			   &nbsp;&nbsp;<a href="https://calendar.app.google/DGCtdjq6jVPccZ19A"  style = "font-size: 10pt; vertical-align: middle">Appointments</a>
+			   </span>
+			   
+
 			    
 			    </h5>
 
@@ -107,14 +122,20 @@
 
                     <div class="col-md-4 my-auto">
 
-			    <p><u>Recent publications</u></p>
+			   <!-- 
+ <p><u>Recent publications</u></p>
 
 			    <p><a href='/papers/mkiv.pdf'>Community policing does not build citizen trust in police or reduce crime in the Global South</a>, Science (2021)</p>
 			    
 			    <p><a href='https://www.pnas.org/content/pnas/118/42/e2105570118.full.pdf'>Trusted authorities can change minds and shift norms during conflict</a>, Proceedings of the National Academy of Sciences (2021)</p>
+ -->
 
-			    <!--<p><a href='/papers/prices.pdf'>Do commodity price shocks cause armed conflict? Evidence from a meta-analysis</a>, American Political Science Review (2021)</p>-->
+						<!-- <p><b>New book at Princeton University Press</b></p>
+						<p><a href="https://book.declaredesign.org"><img src="img/rdss-cover.avif" style="border: 1px solid #555;margin-right:25px;float:left;width:125px;height=178.54"></a>
+						<q>The authors provide an ingenious framework for thinking about the process by which social science questions are posed and answered.</q><br>&mdash; Donald P. Green, Columbia University</p>
+-->
 
+I use experiments, field research, and statistics to study how to reduce violence and how to make social science more credible and impactful.
 
                     </div>
                 </div>
@@ -123,20 +144,37 @@
 
         </div>
 
-        <div class="container">
+        <div class="container"> <!--  d-flex justify-content-center -->
+        
+                        <div> <!-- class="col-md-8" -->
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+  	    <a class="nav-link active" id="research-tab" data-toggle="tab" href="#research" role="tab" aria-controls="research" aria-selected="true">Research</a>
+
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="software-tab" data-toggle="tab" href="#software" role="tab" aria-controls="teaching" aria-selected="false">Software</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="teaching-tab" data-toggle="tab" href="#teaching" role="tab" aria-controls="teaching" aria-selected="false">Teaching</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="students-tab" data-toggle="tab" href="#students" role="tab" aria-controls="students" aria-selected="false">Student info.</a>
+  </li>
+</ul>
 
 
+<br>
+<div class="tab-content" id="nav-tabContent">
 
-	    <!-- spacer -->
-	    <div class="row" style="margin-bottom:15px">
-                &nbsp; <a name="substantive"></a>
-            </div>
-
-            <!-- Example row of columns -->
-            <div class="row justify-content-md-center">
-
-                <div class="col-md-8">
-		<p><h4>Conflict, crime, and governance research</h4></p>
+  <div class="tab-pane fade show active" id="research" role="tabpanel" aria-labelledby="research-tab">
+  
+  <div class="row">
+  
+  <div class="col">
+  
+  <p><h1>Conflict, crime, and governance</h1></p>
 
                     <!--<p><i>How does armed conflict shape civilian attitudes and behaviors? What is different about conflicts involving violent extremist groups? What role do natural resources play in instigating armed conflict?</i></p>-->
 
@@ -203,31 +241,11 @@
 
 	<p class="collapse abstract" id="whereAbstract">Armed conflict is a well-studied symptom of the resource curse: oil revenues constitute a lucrative prize, leading acquisitive rebel groups to fight for control of resource-rich territory. Yet, we find that rebels rarely attack oil wells or export terminals --- the sites with the most oil below and above ground. To explain this fact, we develop a new model with elements of crisis-bargaining and Blotto games and apply it to a setting where government seeks to defend, and rebels endeavor to sabotage, oil infrastructure. We use geo-spatial data on the location of oil infrastructure (fields, wells, terminals, and pipelines) and armed conflict events to assess the model's observable implications. First, we show that rebels focus their attacks on new pipelines, and that the construction of more valuable infrastructure (e.g., oil wells and terminals) has no discernible effect on armed conflict. Rebels anticipate government defenses at critical infrastructure, so they instead attack pipelines which are softer targets. Second, to prevent government from thwarting their attacks, we find that rebels randomize where they strike. Third, we find that increases in the world price of oil raise the likelihood of attacks along pipelines (though not around critical infrastructure). Our model and analysis uncovers offsetting effects of increased oil prices: as the black-market price increases, so too do the returns to oil theft; yet, as the export price increases, government is more eager to "bargain away'' conflict. Our argument and findings contribute to a better understanding of where and why rebels stage attacks: groups sabotage pipelines both because they expect these sites to be vulnerable and because such disruption can compel government to address their demands.
 			
-		
-
-
-	    	    <p>
-
-
-
-		    <!--<p class = "hanging-indent">&ldquo;Demonstrating genuine change increases victim’s willingness to reconcile with transgressors: Experimental evidence from Nigeria.&rdquo; With Rebecca Littman, Rebecca Wolfe, Mohammed Bukar, Jiyoung Kim, Yunusa Aina, Yetcha Ajimi Badu, Fatima Abba Kurama, and Ahmed Umar Lawan.
-                        <!--<br> <a href="/papers/repentance.pdf"><i class="far fa-file-pdf"></i> PDF</a>
-		    </p>-->
-
-
-                </div>
-
-            </div>
-
-
-            <div class="row" style="margin-bottom:15px">
-                &nbsp; <a name="design"></a>
-            </div>
-
-            <div class="row justify-content-md-center">
-
-                <div class="col-md-8">
-		    <p><h4>Research design and methodology research</h4></p>
+  
+  </div>
+  <div class = "col">
+  
+   <p><h1>Research design and methodology</h1></p>
 
                     <!--<p><i>How can we improve our research designs before we implement them? How do we know if we have selected a good research design?</i></p>-->
 
@@ -294,10 +312,24 @@
 
                         <p class="collapse abstract" id="listAbstract">The validity of empirical research often relies upon the accuracy of self-reported behavior and beliefs. Yet eliciting truthful answers in surveys is challenging, especially when studying sensitive issues such as racial prejudice, corruption, and support for militant groups. List experiments have attracted much attention recently as a potential solution to this measurement problem. Many researchers, however, have used a simple difference-in-means estimator, which prevents the efficient examination of multivariate relationships between respondents’ characteristics and their responses to sensitive items. Moreover, no systematic means exists to investigate the role of underlying assumptions. We fill these gaps by developing a set of new statistical methods for list experiments. We identify the commonly invoked assumptions, propose new multivariate regression estimators, and develop methods to detect and adjust for potential violations of key assumptions. For empirical illustration, we analyze list experiments concerning racial prejudice. Open-source software is made available to implement the proposed methodology.</p>
 
-		  
-		    <p style = "padding-top: 10px"><b>Research software</b></p>
+	</div> <!-- end col -->
+	
+	</div> <!-- end row -->
+  
+  </div>
+  
+  
+  <div class="tab-pane fade" id="software" role="tabpanel" aria-labelledby="software-tab">
 
-		    <p><a href="https://www.cambridge.org/core/membership/spm/about-us/awards/statistical-software-award"><i class="fas fa-trophy"></i> Polmeth Statistical Software Award</a></p>
+
+  <div class="row">
+  
+  <div class="col-5">
+  
+   <h1>Research Software</h1> 
+ 
+ 		    <p><a href="https://www.cambridge.org/core/membership/spm/about-us/awards/statistical-software-award"><i class="fas fa-trophy"></i> Polmeth Statistical Software Award</a></p>
+
 
                     <p>&ldquo;DeclareDesign: Declare and Diagnose Research Designs.&rdquo; R package. With Jasper Cooper, Alexander Coppock, Macartan Humphreys, and Neal Fultz.
                         <br> <a href="https://declaredesign.org/r/declaredesign/"><i class="fas fa-globe-americas"></i> Web</a> &nbsp;<a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/declaredesign.pdf"><i class="fas fa-info-circle"></i> Cheatsheet</a> &nbsp; ~28,000 downloads</p>
@@ -314,73 +346,33 @@
                 <p> &ldquo;rr: Statistical Methods for the Randomized Response Technique.&rdquo; R package. With Yang-Yang Zhou and Kosuke Imai.
                         <br> <a href="https://rr.sensitivequestions.org/"><i class="fas fa-globe-americas"></i> Web</a> &nbsp; ~23,000 downloads</p>
 
-
-                </div>
-
-            </div>
-
-	    <div class="row">
-                &nbsp; <a name="advising"></a>
-            </div>
-
-            <div class="row justify-content-md-center">
-
-                <div class="col-md-8">
-
-                        <h4>Graduate advising</h4> <br/>
-
-		    <p>I actively advise and collaborate with graduate students in the political science Ph.D. program at UCLA. I meet weekly with all of my primary advisees. I'm also always happy to talk to other UCLA Ph.D. students even if I'm not advising you (<a href = "https://calendar.app.google/DGCtdjq6jVPccZ19A">sign up for office hours</a>). <a href = "mailto:graeme.blair@gmail.com">Email me</a> if you can't find a time.</p>
-			
-                    <p><b>Prospective graduate students:</b> You can find information about <a href="https://polisci.ucla.edu/academics/graduate/applying-to-the-ph-d-program/">applying to the UCLA Ph.D. program here</a>. Our department, like most in political science, does not admit students to work with specific faculty. Admissions decisions are made by a committee, which I am not currently sitting on. However, you are welcome to mention my name in your personal statement in order to ensure it is sent to me during the admission process. <b>Following the example of <a href="http://www.betsylevypaluck.com/for-students">Betsy Paluck</a>, I no longer have personal conversations with prospective students, in order to avoid favoring students who have received advice to connect with faculty or who have connections with my colleagues.</b> If you are admitted, I will be eager to talk about working with you at UCLA.</p>
-
-		    <p>In preparing your application, I encourage you to read Jessica Calarco's excellent <a href="https://bookshop.org/books/a-field-guide-to-grad-school-uncovering-the-hidden-curriculum/9780691201092">Field Guide to Grad School</a>, the advice from <a href="https://chrisblattman.com/about/contact/gradschool/">Chris Blattman</a> and <a href="http://macartan.nyc/teaching/applying-for-a-phd/">Macartan Humphreys</a>. Josh Kertzer has compiled a set of <a href ="https://people.fas.harvard.edu/~jkertzer/prospective.html">excellent additional writing</a> on applying to social science Ph.D. programs.</p>
-
-			<p><a href="https://calendar.app.google/DGCtdjq6jVPccZ19A">Book an appointment</a></p>
-			
-			      </div>
-
-            </div>
-
-	    <div class="row">
-                &nbsp; <a name="undergrads"></a>
-            </div>
-
-            <div class="row justify-content-md-center">
-
-                <div class="col-md-8">
-			
-		<h4>Undergraduate researchers</h4> <br/>
-			
-		<p>I regularly work with undergraduate student researchers at UCLA. If you're interested, please fill out <a href="https://forms.gle/27H3jshTnuTnjDbb9">my form</a>. Many other faculty also work with undergraduate researchers. The best way to find out who is to email faculty with common interests and to regularly check the <a href="https://be.my.ucla.edu/urportal.aspx">Undergraduate Research Portal</a> and talk with counselors from the <a href = "https://hass.ugresearch.ucla.edu/">Undergraduate Research Center</a>.</p>
-			
-          </div>
 	</div>
-		    
-		     <div class="row">
-                &nbsp; <a name="letters"></a>
-            </div>
+	<div class="col-1">
+	</div>
+	<div class="col-6">
+	<pre><code class="language-r">library(DeclareDesign)
 
-            <div class="row justify-content-md-center">
+sample_size <- 100
 
-                <div class="col-md-8">
-			
-		<h4>Recommendation letters</h4> <br/>
-			
-		<p>I'm happy to write letters for current and past students and research assistants. I need your materials two weeks in advance to submit, at a minimum. Please fill out <a href="https://forms.gle/MqFA1ZRtVgue5bEU7">my recommendation form</a>.</p>
-			
-          </div>
+# Declare a two-arm trial in code
+two_arm_trial <-
+  declare_model(N = sample_size,
+                U = rnorm(N),
+                potential_outcomes(Y ~ 0.2 * Z + U)) +
+  declare_inquiry(ATE = mean(Y_Z_1 - Y_Z_0)) +
+  declare_assignment(Z = complete_ra(N, prob = 0.5)) +
+  declare_measurement(Y = reveal_outcomes(Y ~ Z)) +
+  declare_estimator(Y ~ Z, inquiry = "ATE")</pre>
+  
+  <img src="https://declaredesign.org/index_files/figure-html/unnamed-chunk-12-1.png" width="100%">
+	</code></div>
+	</div>
 
-            </div>
+  </div>
+  
+  <div class="tab-pane fade" id="teaching" role="tabpanel" aria-labelledby="teaching-tab">
 
-            <div class="row">
-                &nbsp; <a name="teaching"></a>
-            </div>
-
-            <div class="row justify-content-md-center">
-
-                <div class="col-md-8">
-
-                    <h4>Teaching</h4> <br/>
+	<h1>Teaching</h1> 
 
                     <p>POL SCI 179: Randomized Trials for Social Change (undergraduate). Spring 2022. <a href="teaching/UCLA_PS179_Syllabus.pdf">Syllabus</a></p>
 
@@ -393,15 +385,53 @@
 		    <p>Improving Designs in the Social Sciences (Ph.D. workshop), 2016-2018 (Co-convener)</p>
 
 			<p>Politics of Order and Development Lab (Ph.D. workshop), 2018-2021 (Co-convener)</p>
-                </div>
 
-            </div>
+  </div>
+  
+  <div class="tab-pane fade" id="students" role="tabpanel" aria-labelledby="students-tab">
 
-            <div class="row">
-                &nbsp;
-            </div>
 
-        </div>
+  <div class="row">
+  
+  <div class="col">
+  
+ <h1>Graduate advising</h1> 
+
+		    <p>I actively advise and collaborate with graduate students in the political science Ph.D. program at UCLA. I'm also always happy to talk to other UCLA Ph.D. students even if I'm not advising you.</p>
+		    <p><a href="https://calendar.app.google/DGCtdjq6jVPccZ19A"><button type="button" class="btn btn-outline-info">Sign up for student hours</button></a></p>
+			
+			<h1>Undergraduate researchers</h1>
+			
+		<p>I regularly work with undergraduate student researchers at UCLA. Many other faculty also work with undergraduate researchers. The best way to find out who is to email faculty with common interests and to regularly check the <a href="https://be.my.ucla.edu/urportal.aspx">Undergraduate Research Portal</a> and talk with counselors from the <a href = "https://hass.ugresearch.ucla.edu/">Undergraduate Research Center</a>.</p>
+		<p><a href="https://forms.gle/27H3jshTnuTnjDbb9"><button type="button" class="btn btn-outline-info">Fill out my researcher interest form</button></a></p>
+		
+		<h1>Recommendation letters</h1>
+			
+		<p>I'm happy to write letters for current and past students and research assistants. I need your materials two weeks in advance to submit, at a minimum.</p>
+				<p><a href="https://forms.gle/MqFA1ZRtVgue5bEU7"><button type="button" class="btn btn-outline-info">Request a letter</button></a></p>
+
+                    
+			</div>
+			<div class="col">
+			
+			<h1>Prospective graduate students</h1> 
+			
+			You can find information about <a href="https://polisci.ucla.edu/academics/graduate/applying-to-the-ph-d-program/">applying to the UCLA Ph.D. program here</a>. Our department, like most in political science, does not admit students to work with specific faculty. Admissions decisions are made by a committee, which I am not currently sitting on. However, you are welcome to mention my name in your personal statement in order to ensure it is sent to me during the admission process. <b>Following the example of <a href="http://www.betsylevypaluck.com/for-students">Betsy Paluck</a>, I no longer have personal conversations with prospective students, in order to avoid favoring students who have received advice to connect with faculty or who have connections with my colleagues.</b> If you are admitted, I will be eager to talk about working with you at UCLA.</p>
+
+		    <p>In preparing your application, I encourage you to read Jessica Calarco's excellent <a href="https://bookshop.org/books/a-field-guide-to-grad-school-uncovering-the-hidden-curriculum/9780691201092">Field Guide to Grad School</a>, the advice from <a href="https://chrisblattman.com/about/contact/gradschool/">Chris Blattman</a> and <a href="http://macartan.nyc/teaching/applying-for-a-phd/">Macartan Humphreys</a>. Josh Kertzer has compiled a set of <a href ="https://people.fas.harvard.edu/~jkertzer/prospective.html">excellent additional writing</a> on applying to social science Ph.D. programs.</p>
+
+			
+    </div>
+    
+    </div>
+    
+  </div>
+
+
+</div> <!-- end row -->
+        </div> <!-- end container -->
+        
+        <p>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
