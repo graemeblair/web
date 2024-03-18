@@ -21,8 +21,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 	<script>hljs.highlightAll();</script>
 	
-
-
     
      <style>
 /*      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> */
@@ -112,10 +110,7 @@ $(document).ready(function() {
         // Toggle the icon classes
         $(this).find('i').toggleClass('fa-arrow-alt-circle-down fa-arrow-alt-circle-up');
     });
-    if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
-    return $('a[data-toggle="tab"]').on('shown', function(e) {
-      return location.hash = $(e.target).attr('href').substr(1);
-    });
+    
 });
 </script>
 
@@ -386,7 +381,7 @@ I use experiments, field research, and statistics to study how to reduce violenc
 
   <div class="row">
   
-  <div class="col-md-5">
+  <div class="col-md-7">
   
    <p><h1>Research Software</h1></p>
  
@@ -418,9 +413,10 @@ I use experiments, field research, and statistics to study how to reduce violenc
                         <div class="collapse abstract" id="rrAbstract"><p class="paper-links"> <a href="https://rr.sensitivequestions.org/"><i class="fas fa-globe-americas paper-icon"></i>Web</a></p></div>
 
 	</div>
-	<div class="col-md-1">
-	</div>
-	<div class="col-md-6"><p></p>
+	
+	
+	
+	<div class="col-md-5"><p></p>
 	
 <div class="card mb-3" style="max-width: 540px;">
   <div class="row no-gutters">
