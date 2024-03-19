@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Demo - Citation.js</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <meta name="theme-color" content="#FFC107" />
+
+<!-- 
+    <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+    <link rel="icon" type="image/png" href="/favicon.png"/>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/highlight.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/demo.css" />
+ -->
+
+<!--     <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <script type="application/javascript" src="https://citation.js.org/src/citation.js"></script>
+    <script type="application/javascript">
+    
+    $(window).on('load', function () {
+  var Cite = require('citation-js')
+
+// function getType (element) {
+//     var type = Cite.plugins.input.type(element.textContent)
+//     if (type.slice(-4) === 'json' || type.slice(-6) === 'object') {
+//       return 'json'
+//     } else if (type.includes('@bibtex') || type.includes('@biblatex')) {
+//       return 'bib'
+//     } else if (type.slice(-3) === 'url' || type.includes('api')) {
+//       return 'url'
+//     }
+//   }
+
+  // Update
+  var data
+  var old = {}
+  function updateInput () {
+    var text = $('#input').text()
+    var options = { generateGraph: false }
+
+    var type = $('#input-type').val()
+    if (type) {
+      options.forceType = type
+    }
+
+    if (text !== old.text || type !== old.type) {
+      old = { text: text, type: type }
+      Cite.async(text, options).then(function (result) {
+        data = result
+        $('#input-error').text('')
+        updateOutput()
+      }).catch(function (error) {
+        $('#input-error').text(error.message)
+      })
+    }
+  }
+
+  function updateOutput () {
+    var format = $('#format').val()
+    if (format === 'bibliography') {
+      $('#output').html(data.format(format, {
+        template: $('#style').val(),
+        lang: $('en-US').val(),
+        format: 'html'
+      }))
+      return
+    }
+
+    var type = $('text').val()
+    if (type === 'object') {
+      var object = data.format(format, { type: type })
+      $('#output').html('<pre>' + JSON.stringify(object, null, 2) + '</pre>')
+    } else {
+      $('#output').html('<pre>' + data.format(format, {
+        type: type
+      }) + '</pre>')
+    }
+
+    // Highlight
+    if (type === 'object' || format === 'data') {
+      $('#output pre').attr('data-type', 'json')
+      $('#output pre').data('type', 'json')
+      $('#output pre').highlight()
+    } else if (format === 'bibtex' || format === 'biblatex') {
+      $('#output pre').attr('data-type', 'bib')
+      $('#output pre').data('type', 'bib')
+      $('#output pre').highlight()
+    }
+  }
+
+  // Display info
+  $('#info-version').html(Cite.version.cite)
+  $('#info-plugins').html(Cite.plugins.list().join(', '))
+  var types = Cite.plugins.input.list()
+  for (var i = 0; i < types.length; i++) {
+    var parts = types[i].split('/')
+    var scope = parts[0]
+    var type = parts[1]
+    var optgroup
+    while (!(optgroup = $('#input-type optgroup[label="' + scope + '"]')).length) {
+      $('#input-type').append('<optgroup label="' + scope + '"></optgroup>')
+    }
+    optgroup.append('<option value="' + scope + '/' + type + '">' + type + '</option>')
+  }
+
+  // Highlight all code
+  $('#input').highlight()
+  $('#input').focus(function () {
+    $(this).find('span').each(function () {
+      $(this).after(this.textContent)
+      $(this).remove()
+    })
+  })
+  $('#input').blur(function () {
+    var type = 'bib'
+    $(this).attr('data-type', type)
+    $(this).data('type', type)
+    $(this).highlight()
+  })
+
+  // Interactive forms
+  $('#format').change(function () {
+    if ($(this).val() === 'bibliography') {
+      $('#fieldset-bibliography').show()
+      $('#fieldset-files').hide()
+    } else {
+      $('#fieldset-bibliography').hide()
+      $('#fieldset-files').show()
+    }
+  })
+
+  $('#input').blur(updateInput)
+  $('#input-type').change(updateInput)
+  $('#format, #style').change(updateOutput)
+  updateInput()
+  
+  
+  // change the modal contents
+  $('#citationModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('.modal-body input').val(recipient)
+})
+})
+    
+    
+    </script>
+    <script type="application/javascript" src="https://citation.js.org/static/js/highlight.js"></script>
+    <script>$(function(){
+      $('.code').load('/static/code.html', function () {
+        $('.code pre code').highlight()
+      })
+    })</script>
+  </head>
+  <body>
+
+    <article>
+    
+    <a href="#" data-toggle="modal" data-target="#citationModal" style = "margin-left:15px;font-size: 10pt; vertical-align: middle" class="text-nowrap"><i class="fa-solid fa-user fa-1x" style="margin-right:7px"></i>Bio</a>
+    
+      <section>
+        <h2>Input</h2>
+
+        <p>
+          <label for="input-type">Input format</label>
+          <select id="input-type">
+            <option value="">Automatic</option>
+          </select>
+        </p>
+
+        <div id="input" hidden=TRUE data-type="bib">@article{Willighagen_2019_Citation,
+  title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
+  author = {Willighagen, Lars G.},
+  year = 2019,
+  month = aug,
+  keywords = {Bibliography, Javascript},
+  volume = 5,
+  pages = {e214},
+  journal = {PeerJ Computer Science},
+  issn = {2376-5992},
+  url = {https://doi.org/10.7717/peerj-cs.214},
+  doi = {10.7717/peerj-cs.214}
+}</div>
+
+<!--         <blockquote id="input-error"></blockquote> -->
+      </section>
+
+      <!-- 
+<section>
+        <h2>Output</h2>
+
+        <p>
+          <label for="format">Output format</label>
+          <select id="format">
+            <option value="bibliography">Formatted bibliography</option>
+            <option value="bibtex">BibTeX</option>
+            <option value="biblatex">BibLaTeX</option>
+            <option value="data">CSL-JSON</option>
+            <option value="ris">RIS</option>
+          </select>
+          <!~~ 
+<fieldset id="fieldset-files" hidden>
+            <label for="type">File or JSON representation</label>
+            <select id="type">
+              <option value="text">File</option>
+              <option value="object">JSON</option>
+            </select>
+          </fieldset>
+ ~~>
+          <fieldset id="fieldset-bibliography">
+            <label for="style">Style</label>
+            <select id="style">
+              <option value="apa">APA</option>
+              <option value="vancouver">Vancouver</option>
+              <option value="harvard1">Harvard</option>
+            </select>
+            <!~~ 
+<label for="lang">Language</label>
+            <select id="lang">
+              <option value="en-US">English</option>
+              <option value="fr-FR">French</option>
+              <option value="es-ES">Spanish</option>
+              <option value="de-DE">German</option>
+              <option value="nl-NL">Dutch</option>
+            </select>
+ ~~>
+          </fieldset>
+        </p>
+
+        <div id="output"></div>
+      </section>
+ -->
+      
+      
+      <div class="modal fade" id="citationModal" tabindex="-1" role="dialog" aria-labelledby="citationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="citationModalLabel">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        
+<!--         start     -->
+        
+        <p>
+          <label for="format">Output format</label>
+          <select id="format">
+            <option value="bibliography">Formatted bibliography</option>
+            <option value="bibtex">BibTeX</option>
+            <option value="biblatex">BibLaTeX</option>
+            <option value="data">CSL-JSON</option>
+            <option value="ris">RIS</option>
+          </select>
+          <!-- 
+<fieldset id="fieldset-files" hidden>
+            <label for="type">File or JSON representation</label>
+            <select id="type">
+              <option value="text">File</option>
+              <option value="object">JSON</option>
+            </select>
+          </fieldset>
+ -->
+          <fieldset id="fieldset-bibliography">
+            <label for="style">Style</label>
+            <select id="style">
+              <option value="apa">APA</option>
+              <option value="vancouver">Vancouver</option>
+              <option value="harvard1">Harvard</option>
+            </select>
+            <!-- 
+<label for="lang">Language</label>
+            <select id="lang">
+              <option value="en-US">English</option>
+              <option value="fr-FR">French</option>
+              <option value="es-ES">Spanish</option>
+              <option value="de-DE">German</option>
+              <option value="nl-NL">Dutch</option>
+            </select>
+ -->
+          </fieldset>
+        </p>
+
+        <div id="output"></div>
+        
+<!--         end       -->
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="copyCitation()">Copy Citation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+      
+      
+      
+      
+    </article>
+  </body>
+</html>
