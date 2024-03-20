@@ -26,6 +26,7 @@
 
     <script type="application/javascript" src="https://citation.js.org/src/citation.js"></script>
     <script type="application/javascript">
+
     
     $(window).on('load', function () {
   var Cite = require('citation-js')
@@ -142,21 +143,61 @@
   $('#input').blur(updateInput)
   $('#input-type').change(updateInput)
   $('#format, #style').change(updateOutput)
+  $('#input').change(updateOutput)
   updateInput()
   
-  
-  // change the modal contents
-  $('#citationModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var recipient = button.data('whatever') // Extract info from data-* attributes
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-  var modal = $(this)
-  modal.find('.modal-title').text('New message to ' + recipient)
-  modal.find('.modal-body input').val(recipient)
-})
-})
+  const citations = [];
+  citations["Willighagen_2019_Citation"] = "@article{Willighagen_2019_Citation, title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line}, author = {Willighagen, Lars G.}, year = 2019, month = aug, keywords = {Bibliography, Javascript}, volume = 5, pages = {e214}, journal = {PeerJ Computer Science}, issn = {2376-5992}, url = {https://doi.org/10.7717/peerj-cs.214}, doi = {10.7717/peerj-cs.214}";
+
+    function updateModalContent(citationText) {
+       // Assuming 'citationText' is the raw citation text that you want to format and display
+       var options = { generateGraph: false };
+       
+       // If you have specific formatting options or types, set them here
+       var formatOptions = {
+         template: 'apa', // or any other formatting style you prefer
+         lang: 'en-US',
+         format: 'html'
+       };
+     
+       Cite.async(citationText, options).then(function (result) {
+         // Assuming 'result' is the processed citation data
+         var formattedCitation = result.format('bibliography', formatOptions);
+         $('#output').html(formattedCitation);
+       }).catch(function (error) {
+         console.error("Error formatting citation: ", error);
+         $('#output').text(citationText);
+       });
+     }
+
     
+      $('#citationModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('cite') // Extract info from data-* attributes
+        var citationText = citations[recipient] || "No citation found for " + recipient; // Fallback text
+
+        var modal = $(this)
+//         modal.find('.modal-title').text("ding")
+//         modal.find('#input').text(citationText)
+        updateModalContent(citationText);
+      });
+
+})
+   //  $(document).ready(function(){
+//     
+//       const citations = [];
+// 	  citations["Willighagen_2019_Citation"] = "@article{Willighagen_2019_Citation, title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line}, author = {Willighagen, Lars G.}, year = 2019, month = aug, keywords = {Bibliography, Javascript}, volume = 5, pages = {e214}, journal = {PeerJ Computer Science}, issn = {2376-5992}, url = {https://doi.org/10.7717/peerj-cs.214}, doi = {10.7717/peerj-cs.214}";
+// 
+//     
+//       $('#citationModal').on('show.bs.modal', function (event) {
+//         var button = $(event.relatedTarget) // Button that triggered the modal
+//         var recipient = button.data('cite') // Extract info from data-* attributes
+//         var modal = $(this)
+//         modal.find('.modal-title').text("ding")
+// //         modal.find('.modal-cite-input').text("billybob")
+//         updateCitationOutput(citations[recipient]);
+//       });
+//     });
     
     </script>
     <script type="application/javascript" src="https://citation.js.org/static/js/highlight.js"></script>
@@ -170,7 +211,7 @@
 
     <article>
     
-    <a href="#" data-toggle="modal" data-target="#citationModal" style = "margin-left:15px;font-size: 10pt; vertical-align: middle" class="text-nowrap"><i class="fa-solid fa-user fa-1x" style="margin-right:7px"></i>Bio</a>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#citationModal" data-cite="Willighagen_2019_Citation">Cite</button>
     
       <section>
         <h2>Input</h2>
@@ -182,7 +223,8 @@
           </select>
         </p>
 
-        <div id="input" hidden=TRUE data-type="bib">@article{Willighagen_2019_Citation,
+        <!-- 
+<div id="input" hidden=TRUE data-type="bib">@article{Willighagen_2019_Citation,
   title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
   author = {Willighagen, Lars G.},
   year = 2019,
@@ -195,6 +237,7 @@
   url = {https://doi.org/10.7717/peerj-cs.214},
   doi = {10.7717/peerj-cs.214}
 }</div>
+ -->
 
 <!--         <blockquote id="input-error"></blockquote> -->
       </section>
@@ -251,12 +294,26 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="citationModalLabel">Cite</h5>
+        <div id="input" class="modal-cite-input">@article{Willighagen_2019_Citation,
+  title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
+  author = {test},
+  year = 2019,
+  month = aug,
+  keywords = {Bibliography, Javascript},
+  volume = 5,
+  pages = {e214},
+  journal = {PeerJ Computer Science},
+  issn = {2376-5992},
+  url = {https://doi.org/10.7717/peerj-cs.214},
+  doi = {10.7717/peerj-cs.214}
+}</div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        
+<!--         		<div id="input" class="modal-cite-input" hidden=TRUE data-type="bib"></div> -->
+
         
 <!--         start     -->
         

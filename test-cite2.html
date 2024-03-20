@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Demo - Citation.js</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="theme-color" content="#FFC107">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://citation.js.org/dist/citation.min.js"></script>
+</head>
+<body>
+
+<article>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#citationModal" data-cite="Willighagen_2019_Citation">Cite</button>
+
+    <div class="modal fade" id="citationModal" tabindex="-1" role="dialog" aria-labelledby="citationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="citationModalLabel">Cite</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="citationInput" class="form-control" value="">
+                    <div id="output"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="copyCitation()">Copy Citation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<script>
+$(document).ready(function(){
+    const citations = {
+        "Willighagen_2019_Citation": "@article{Willighagen_2019_Citation, title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line}, author = {Willighagen, Lars G.}, year = 2019, month = aug, keywords = {Bibliography, Javascript}, volume = 5, pages = {e214}, journal = {PeerJ Computer Science}, issn = {2376-5992}, url = {https://doi.org/10.7717/peerj-cs.214}, doi = {10.7717/peerj-cs.214}}"
+    };
+
+    $('#citationModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var recipient = button.data('cite');
+        var modal = $(this);
+        var citation = citations[recipient];
+        modal.find('#citationInput').val(citation);
+        updateCitationOutput(citation);
+    });
+
+    function updateCitationOutput(citation) {
+        var Cite = require('citation-js');
+        var example = new Cite(citation);
+        var output = example.format('bibliography', {
+            format: 'html',
+            template: 'apa',
+            lang: 'en-US'
+        });
+        $('#output').html(output);
+    }
+
+    window.copyCitation = function() {
+        var citationText = $('#output').text();
+        navigator.clipboard.writeText(citationText).then(function() {
+            alert('Citation copied to clipboard');
+        }, function() {
+            alert('Failed to copy citation');
+        });
+    };
+});
+</script>
+
+</body>
+</html>
