@@ -1,0 +1,30 @@
+/* This code is copied from view-source:https://citation.js.org/static/css/highlight.css */
+/* JavaScript/JSON */
+[data-type="json"] span.default { font-weight: normal; color: #000000; }
+[data-type="json"] span.important { text-decoration: underline}
+[data-type="json"] span.key { font-weight: normal; color: #0057ae; }
+[data-type="json"] span.function { font-weight: normal; color: #644a9b; }
+[data-type="json"] span.native { font-weight: bold; color: #000; }
+[data-type="json"] span.object { font-weight: normal; color: #006e28; }
+[data-type="json"] span.comment,
+[data-type="json"] span.comment span { font-weight: normal; color: #888; }
+[data-type="json"] span.string,
+[data-type="json"] span.string span { font-weight: normal; color: #bf0303; }
+[data-type="json"] span.digit { font-weight: normal; color: #b08000; }
+[data-type="json"] span.normal { font-weight: normal; color: #000; }
+[data-type="json"] span.delimiter: after,
+[data-type="json"] span.delimiter: before { content: ' '}
+
+/* BibTeX */
+[data-type="bib"] span.default { font-weight: normal; color: #000000; }
+[data-type="bib"] span.entrytype { font-weight: bold; color: #000000; }
+[data-type="bib"] span.label { font-weight: bold; color: #006e28; }
+[data-type="bib"] span.property { font-weight: normal; color: #0057ae; }
+[data-type="bib"] span.string { font-weight: normal; color: #bf0303; }
+[data-type="bib"] span.digit { font-weight: normal; color: #b08000; }
+
+/* URL */
+[data-type="url"] span.protocol { color: #888; }
+[data-type="url"] span.domain { color: #000}
+[data-type="url"] span.path { color: #888; }
+[data-type="url"] span.parameters { color: #888; }
