@@ -125,7 +125,7 @@ $(document).ready(function() {
         var href = $target.getAttribute('href');
         var element = href ? document.querySelector(href) : false;
         if (element) {
-            history.pushState({}, '', href);
+            history.pushState({}, '', href.replace('#', '#!'));
         }
     });
 
@@ -133,7 +133,7 @@ $(document).ready(function() {
      * Check and activate tab content if the URL contains a valid tab ID (hash).
      * Tab is switched before Bootstrap is loaded.
      * */
-    var hash = window.location.hash;
+    var hash = window.location.hash.toString().replace('#!', '#');
     var $tabTrigger = $('#myTab').find('a[href="'+hash+'"]');
     var $tabContent = $('#nav-tabContent');
     if ($tabTrigger.length) {
