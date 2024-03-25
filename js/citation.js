@@ -82,7 +82,6 @@
         var format = $('#citation-format').val();
         if (format === 'bibliography') {
             $('#fieldset-bibliography').show();
-            $('#fieldset-files').hide();
             $('#citation-output').html(data.format(format, {
                 template: $('#citation-style').val(),
                 lang: 'en-US',
@@ -91,9 +90,8 @@
             return;
         }
         $('#fieldset-bibliography').hide();
-        $('#fieldset-files').show();
 
-        var type = $('#citation-type').val()
+        var type = 'text';
         if (type === 'object') {
             var object = data.format(format, { type: type })
             $('#citation-output').html('<pre>' + JSON.stringify(object, null, 2) + '</pre>')
