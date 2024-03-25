@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Graeme Blair - Associate Professor of Political Science at UCLA</title>
+
+    <script src="https://kit.fontawesome.com/c353c259e6.js" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<!-- <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/academicons.min.css">
+
+    <!-- These are not required because these were originally used in the demo to highlight the code in the input div -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/default.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script> -->
+	<!-- <script>hljs.highlightAll();</script> -->
+
+    <!-- Citation Library -->
+    <script src="https://cdn.jsdelivr.net/npm/citation-js@0.7.9/build/citation.min.js" defer></script>
+    <!-- Own script related to citations -->
+    <script src="./js/citation.js" defer></script>
+    <link rel="stylesheet" href="./css/citation-highlight.css" />
+
+     <style>
+/*      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> */
+
+
+    @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital@0;1&display=swap');
+
+    h1 {
+      font-family: 'Merriweather', serif !important; font-size: 15pt
+    }
+
+.abstracttext{
+  margin-bottom: 35px
+}
+
+.paper-links a{
+margin-right: 10px
+}
+
+.paper-links i{
+margin-right: 4px
+}
+.paper-icon {
+margin-right: 4px
+}
+.no-indent {
+  text-indent: 0
+}
+
+
+.bg-cover {
+    background-attachment: static;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius:0;
+}
+
+.abstract {
+	padding-left: 0.6em
+}
+
+.paper-title {
+/*   text-indent: -0.35em;  */
+  padding-left: 0.6em ;
+  text-indent: -1em ;
+}
+/* @supports (hanging-punctuation: first) { */
+  /*
+.paper-title {
+    text-indent: -22;
+    hanging-punctuation: first;
+  }
+ */
+/* } */
+
+.paper-journal {
+margin-top: -13px;
+  padding-left: 1em ;
+  text-indent: -1em ;
+}
+
+		.nav-item{
+			font-family: 'Merriweather', serif !important; font-size: 17px
+		}
+        .jumbotron {
+
+  border-radius:0;
+  min-height: 300px;
+        }
+
+
+	a {
+	    color: #5f9fb8
+	}
+        body {
+      font-family: 'Lato', sans-serif !important;
+        }
+
+        #citation-output > .csl-bib-body,
+        #citation-output > pre{
+            padding: 10px 15px;
+            background: #f3f3f3;
+        }
+    </style>
+
+    <script>
+$(document).ready(function() {
+    $('a[data-toggle="collapse"]').click(function() {
+        // Toggle the icon classes
+        $(this).find('i').toggleClass('fa-arrow-alt-circle-down fa-arrow-alt-circle-up');
+    });
+    /** Add hash to the URL to support changing tab on page reload */
+    $('#myTab').on('click', 'a', function (e) {
+        var $target = e.target;
+        var href = $target.getAttribute('href');
+        var element = href ? document.querySelector(href) : false;
+        if (element) {
+            history.pushState({}, '', href);
+        }
+    });
+
+    /**
+     * Check and activate tab content if the URL contains a valid tab ID (hash).
+     * Tab is switched before Bootstrap is loaded.
+     * */
+    var hash = window.location.hash;
+    var $tabTrigger = $('#myTab').find('a[href="'+hash+'"]');
+    var $tabContent = $('#nav-tabContent');
+    if ($tabTrigger.length) {
+        $('#myTab').find('.nav-link.active').removeClass('active');
+        $tabContent.find('.tab-pane.active').removeClass('active').removeClass('show');
+        $tabTrigger.parents('.nav-link').addClass('active');
+        $tabContent.find('.tab-pane'+hash).addClass('active').addClass('show');
+        $tabTrigger.addClass('active');
+    }
+});
+</script>
+
+</head>
+
+<body>
+
+    <main role="main">
+
+        <div class="jumbotron bg-cover" style = "background-image: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%,rgba(255,255,255,0.3) 100%), url(img/maiduguri.jpg)">
+            <div class="container" style = "background-color: rgba(255, 255, 255, 0.9)">
+                <div class="row justify-content-md-center" style = "padding-top: 20px">
+
+                    <div class="col-md-3">
+                        <figure class="figure">
+                            <img src="https://graemeblair.com/img/graeme.jpg" class="figure-img img-fluid rounded" height=500px>
+                        </figure>
+                    </div>
+
+                    <div class="col-md-5 my-auto align-top ">
+
+                        <h1 style="font-weight: 400; font-family: 'Merriweather', serif !important; font-size: 20pt	">Graeme Blair</h1>
+                        <h5 style="font-weight: 200"> Associate Professor of Political Science, UCLA </h5>
+
+			<h6 style="font-weight: 200"> Co-Director of Training and Methods,<br>Evidence in Governance and Politics </h6>
+
+
+			<!--<h6><span style = "line-height: 20px;">Research groups</span><br>
+			<a href="https://pod.polisci.ucla.edu">UCLA Politics of Order and Development Lab</a><br>
+			<a href="https://egap.org/our-work/the-metaketa-initiative/round4-community-policing">EGAP community policing metaketa</a><br>
+                        <a href="https://declaredesign.org">DeclareDesign</a><br>
+                        <a href="https://projectrg.org">Project on Resources and Governance</a></h6>-->
+
+                        <h5 style="margin-top: 15px"><span style="vertical-align: middle">
+                        <a href="GraemeBlair-CV.pdf" target="_blank" rel="noopener"><i style="vertical-align: middle" class="ai ai-cv ai-1x"></i></a>
+
+                        <a href="mailto:graeme.blair@gmail.com" target="_blank" rel="noopener"><i style="vertical-align: middle" class="far fa-envelope fa-1x"></i></a>
+
+		  <a href="https://github.com/graemeblair" target="_blank" rel="noopener"><i style="vertical-align: middle" class="fab fa-github fa-1x"></i></a>
+
+		  <a href="https://orcid.org/0000-0001-9164-2102" target="_blank" rel="noopener"><i style="vertical-align: middle" class="ai ai-orcid ai-1x"></i></a>
+
+                  <a href="https://scholar.google.com/citations?user=0hbap6YAAAAJ" target="_blank" rel="noopener"><i style="vertical-align: middle" class="ai ai-google-scholar ai-1x"></i></a>
+
+
+			   <a href="#" data-toggle="modal" data-target="#exampleModalCenter" style = "margin-left:15px;font-size: 10pt; vertical-align: middle" class="text-nowrap"><i class="fa-solid fa-user fa-1x" style="margin-right:7px"></i>Bio</a>
+			  <a href="https://calendar.app.google/DGCtdjq6jVPccZ19A"  style = "margin-left:10px; font-size: 10pt; vertical-align: middle" class="text-nowrap"><i style="margin-right:7px" class="fa-regular fa-calendar-days"></i>Appointments</a>
+			   </span>
+
+
+
+			    </h5>
+
+
+
+			</div>
+
+
+
+                    <div class="col-md-4 my-auto">
+<p style="margin-top:5px; margin-bottom:15px; line-height: 1.5">
+I use experiments, field research, and statistics to study how to reduce violence and how to make social science more credible, ethical, and useful.
+</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="container"> <!--  d-flex justify-content-center -->
+
+                        <div> <!-- class="col-md-8" -->
+
+<ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+  <li class="nav-item">
+  	    <a class="nav-link active" id="research-tab" data-toggle="tab" href="#research" role="tab" aria-controls="research" aria-selected="true"><i class="fa-solid fa-book paper-icon"></i>&nbsp;Writing</a>
+
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="software-tab" data-toggle="tab" href="#software" role="tab" aria-controls="teaching" aria-selected="false"><i class="fa-solid fa-magnifying-glass-chart paper-icon"></i>&nbsp;Software</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="group-tab" data-toggle="tab" href="#group" role="tab" aria-controls="group" aria-selected="false"><i class="fa-solid fa-people-group paper-icon"></i>&nbsp;Research group</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="teaching-tab" data-toggle="tab" href="#teaching" role="tab" aria-controls="teaching" aria-selected="false"><i class="fa-solid fa-chalkboard-user paper-icon"></i>&nbsp;Teaching</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="students-tab" data-toggle="tab" href="#students" role="tab" aria-controls="students" aria-selected="false"><i class="fa-solid fa-circle-info paper-icon"></i>&nbsp;For students</a>
+  </li>
+</ul>
+
+
+<br>
+<div class="tab-content" id="nav-tabContent">
+
+  <div class="tab-pane fade show active" id="research" role="tabpanel" aria-labelledby="research-tab">
+
+  <div class="row">
+
+  <div class="col-md-6">
+
+  <h1>Conflict, crime, and governance</h1>
+
+
+		   <p style="font-size: 18px"><b>Book</b></p>
+
+		   <div style=" border: 1px solid darkgray;margin-right:25px;float:left;width:100px;height:142.83333px; text-align:center; padding:5px; align:middle; display: flex; align-items: center; justify-content: center; color: darkgray">
+		   Forthcoming September 2024
+		   </div>
+
+		<p class = "paper-title"> <i>Crime, insecurity, and community policing: Experiments on building trust</i>. <b>Cambridge University Press</b>, Studies in Comparative Politics. With Fotini Christia and Jeremy M. Weinstein (eds.).
+		&nbsp;<a href = "#" data-toggle="collapse" data-target="#mkivbookAbstract" aria-expanded="false" aria-controls="mkivbookAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a> </p>
+
+<div class="collapse abstract" id="mkivbookAbstract"><p class="paper-links"><a href="https://www.cambridge.org/us/universitypress/subjects/politics-international-relations/comparative-politics/crime-insecurity-and-community-policing-experiments-building-trust?format=PB"><i class="fa-solid fa-shop paper-icon"></i>Press</a><a href="https://egap.org/our-work/the-metaketa-initiative/round4-community-policing/"><i class="fas fa-globe-americas paper-icon"></i>Project</a>&nbsp <i class="fas fa-book"></i> Contact for manuscript</p><p>With Eric Arias, Emile Badran, Robert A. Blair, Ali Cheema, Thiemo Fetzer, Guy Grossman, Dotan Haim, Rebecca Hanson, Ali Hasanain, Ben Kachero, Dorothy Kronick, Benjamin Morse, Robert Muggah, Matthew Nanes, Tara Slough, Nico Ravanilla, Jacob N. Shapiro, Barbara Silva, Pedro C. L. Souza, Lily Tsai, and Anna Wilke. </p><p class="abstracttext">How can societies effectively reduce crime without exacerbating adversarial relationships between the police and citizens? In recent decades, perhaps the most celebrated innovation in police reform has been the introduction of community policing, where citizens are involved in building channels of dialogue and improving police-citizen collaboration. Despite the widespread adoption of community policing in the United States and increasingly in the developing world, there is still limited credible evidence about whether it realistically increases trust in the police or reduces crime. Through simultaneously coordinated field experiments in a diversity of political contexts, this book presents the outcome of a major research initiative into the efficacy of community policing. Scholars from around the world uncover whether, and under what conditions, this highly influential strategy for tackling crime and insecurity is effective. With its highly innovative approach to cumulative learning, this project represents a new frontier in the study of police reform.</p></div>
+
+		    <p style = "clear: both; padding-top: 20px; font-size: 18px"><b>Articles</b></p>
+
+            <p class="paper-title">&ldquo;Accessing justice for survivors of violence against women.&rdquo; <b>Science</b>, 2022. With Nirvikar Jassal.
+                &nbsp;<a href = "#" data-toggle="collapse" data-target="#helpdesksAbstract" aria-expanded="false" aria-controls="helpdesksAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a>
+            </p>
+
+            <div class="collapse abstract" id="helpdesksAbstract"><p class="paper-links"><a href="/papers/helpdesks.pdf"><i class="far fa-file-pdf"></i>PDF</a></p><p class="abstracttext">In an effort to increase women's access to justice for crimes of violence against them, governments globally have implemented reforms including gender quotas in police hiring, women-run counseling centers, and mandates for women officers to exclusively handle cases of gender-based violence. The paper discusses the outcomes of such reforms, using a study conducted in Madhya Pradesh, India, as an example. This study introduced "women's help desks" in police stations, spaces designated for women officers to interact with women complainants. The results were mixed: while more incidents were reported and some police attitudes shifted, the reforms didn't significantly increase crime reporting by women or the arrest rates. The paper highlights the spectrum of gender-based reforms from integration (mixing women and men officers) to separation (exclusive spaces or stations for women), noting mixed results in effectiveness. It suggests that while certain reforms may increase report filings, they may not always result in arrests or change in police action, highlighting the complexity of addressing violence against women within the justice system.</p></div>
+
+	    <p class="paper-title">&ldquo;How does armed conflict shape investment? Evidence from the mining sector.&rdquo; <b>Journal of Politics</b>, 2022. With Darin Christensen and Valerie Wirtschafter.
+                        &nbsp;<a href = "#" data-toggle="collapse" data-target="#prospectingAbstract" aria-expanded="false" aria-controls="prospectingAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+        <div class="collapse abstract" id="prospectingAbstract"><p class="paper-links"><a href="/papers/prospecting.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="https://graemeblair.com/papers/prospecting-supporting.pdf"><i class="far fa-file-alt paper-icon"></i>Appendices</a><a href="http://hdl.handle.net/10.7910/DVN/8Y6BR1"><i class="fas fa-table paper-icon"></i>Replication</a></p><p class="abstracttext">How does conflict affect firms' investment decisions? Past results are mixed: a third of studies we reviewed report null or mixed correlations; some suggest conflict increases investment. We rationalize these results, arguing that armed conflict has divergent effects depending on firms’ exposure to violence. Conflict can deter investment by disrupting production or raising uncertainty. Yet, conflict can encourage investment by hampering government oversight. We argue each mechanism operates over different geographic extents. We use data from the mining sector to test these claims and report three main results. Firms operating at conflict sites dramatically reduce investments. By contrast, firms operating in territory surrounding conflict, but at a remove from fighting, actually increase investment. Firms far from violence see a small negative effect. These divergent responses cannot be inferred from aggregate flows: we show conflict depresses aggregate investment, but this reflects responses among firms far from fighting.</p></div>
+
+		    <p class="paper-title">&ldquo;Community policing does not build citizen trust in police or reduce crime in the Global South.&rdquo; <b>Science</b>, 2021. Lead author with Jeremy M. Weinstein, Fotini Christia, & ...
+			&nbsp;<a href = "#" data-toggle="collapse" data-target="#mkivAbstract" aria-expanded="false" aria-controls="mkivAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+	<div class="collapse abstract" id="mkivAbstract"><p class="paper-authors">Eric Arias, Emile Badran, Robert A. Blair, Ali Cheema, Thiemo Fetzer, Guy Grossman, Dotan Haim, Rebecca Hanson, Ali Hasanain, Ben Kachero, Dorothy Kronick, Benjamin Morse, Robert Muggah, Matthew Nanes, Tara Slough, Nico Ravanilla, Jacob N. Shapiro, Barbara Silva, Pedro C. L. Souza, Lily Tsai, and Anna Wilke.</p><p class="paper-links"><a href="/papers/mkiv.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="https://egap.org/our-work/the-metaketa-initiative/round4-community-policing/"><i class="fas fa-globe-americas paper-icon"></i>Project</a><a href="https://doi.org/10.17605/OSF.IO/2JUYZ"><i class="fas fa-table paper-icon"></i>Replication</a><a href="http://egap.org/registration/5154"><i class="far fa-file-alt paper-icon"></i>Preanalysis plan</a><a href="https://www.science.org/doi/suppl/10.1126/science.abd3446/suppl_file/science.abd3446_sm.pdf"><i class="far fa-file-alt paper-icon"></i>Appendices</a></p>
+
+	<p class="paper-title" style="margin-left: 0.6em">Commentary: <a href="https://www.science.org/doi/10.1126/science.abm4112">&ldquo;Community policing in the developing world.&rdquo;</a> By Santiago Tob&oacute;n. <b>Science</b>.</p>
+
+	<p class="abstracttext">Is it possible to reduce crime without exacerbating adversarial relationships between police and citizens? Community policing is a celebrated reform with that aim, now adopted on every continent. Yet, the evidence base is limited, studying reform components in isolation in a limited set of countries, and largely silent on citizen-police trust. We designed six field experiments with  Global South police agencies to study locally-designed models of community policing, with coordinated measures of crime and the attitudes and behaviors of citizens and police. In a preregistered meta-analysis, we find that these interventions led to mixed implementation, largely failed to improve citizen-police relations, and do not reduce crime. Structural changes may be required for incremental police reforms such as community policing to succeed.</p></div>
+
+	    	          <p class="paper-title">&ldquo;Trusted authorities can change minds and shift norms during conflict.&rdquo; <b>Proceedings of the National Academy of Sciences</b>, 2021. With Rebecca Littman, Elizabeth Nugent, Rebecca Wolfe, & ... <!--Mohammed Bukar, Benjamin Crisman, Anthony Etim, Chad Hazlett, and Jiyoung Kim.-->
+                        &nbsp;<a href = "#" data-toggle="collapse" data-target="#leadersAbstract" aria-expanded="false" aria-controls="pricesAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a>
+	    	    </p>
+
+	    	    <div class="collapse abstract" id="leadersAbstract"><p class="paper-links"><a href="https://www.pnas.org/content/pnas/118/42/e2105570118.full.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="https://www.poverty-action.org/study/improving-community-acceptance-returnees-boko-haram-nigeria-what-role-do-trusted-authorities"><i class="far fa-file-alt paper-icon"></i>Policy brief</a><a href="https://www.pnas.org/doi/suppl/10.1073/pnas.2105570118/suppl_file/pnas.2105570118.sapp.pdf"><i class="far fa-file-alt paper-icon"></i>Appendices</a><a href="https://osf.io/km49f"><i class="far fa-file-alt paper-icon"></i>Preanalysis plan</a><a href="https://doi.org/10.17605/OSF.IO/PU5YR"><i class="fas fa-table paper-icon"></i>Replication</a></p><p class="abstracttext">The reintegration of former members of violent extremist groups is a pressing policy challenge. Governments and policymakers often have to change minds among reticent populations and shift perceived community norms in order to pave the way for peaceful reintegration. How can they do so on a mass scale? Previous research shows that messages from trusted authorities can be effective in creating attitude change and shifting perceptions of social norms. In this study, we test whether messages from religious leaders – trusted authorities in many communities worldwide – can change minds and shift norms around an issue related to conflict resolution: the reintegration of former members of violent extremist groups. Our study takes place in Maiduguri, Nigeria, the birthplace of the violent extremist group Boko Haram. Participants were randomly assigned to listen to either a placebo radio message or to a treatment message from a religious leader emphasizing the importance of forgiveness, announcing the leader’s forgiveness of repentant fighters, and calling on followers to forgive. Participants were then asked about their attitudes, intended behaviors, and perceptions of social norms surrounding the reintegration of an ex-Boko Haram fighter. The religious leader message significantly increased support for reintegration and willingness to interact with the ex-fighter in social, political, and economic life (8 to 10 percentage points). It also shifted people’s beliefs that others in their community were more supportive of reintegration (6 to 10 percentage points). Our findings suggest that trusted authorities such as religious leaders can be effective messengers for promoting peace.</p></div>
+
+
+		    <p class="paper-title">&ldquo;Do commodity price shocks cause armed conflict? Evidence from a meta-analysis.&rdquo; <b>American Political Science Review</b>, 2021. With Darin Christensen and Aaron Rudkin.
+                        &nbsp;<a href = "#" data-toggle="collapse" data-target="#pricesAbstract" aria-expanded="false" aria-controls="pricesAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a>
+                    </p>
+
+		     <div class="collapse abstract" id="pricesAbstract"><p class="paper-links"><a href="/papers/prices.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="https://graemeblair.com/papers/prices-supporting.pdf"><i class="far fa-file-alt paper-icon"></i>Appendices</a><a href="http://www.egap.org/registration/4993"><i class="far fa-file-alt paper-icon"></i>Preanalysis plan</a><a href="https://doi.org/10.7910/DVN/BGCVOW"><i class="fas fa-table paper-icon"></i>Replication</a></p><p class="abstracttext">Scholars of the resource curse argue that reliance on primary commodities destabilizes governments: price fluctuations generate windfalls or periods of austerity that provoke or intensify conflict. 350 quantitative studies test this claim, but prominent results point in different directions, making it difficult to discern which results reliably hold across contexts. We conduct a meta-analysis of 46 natural experiments that use difference-in-difference designs to estimate the causal effect of international commodity price changes on armed conflict. We show commodity price changes, on average, do not change conflict risks. However, this overall effect comprises cross-cutting effects by commodity type. In line with theory, we find price increases in labor-intensive agricultural commodities reduce conflict, while increases in the price of oil, a capital-intensive commodity, provoke conflict. We also find that prices changes for lootable artisanal minerals provoke conflict. Our meta-analysis consolidates existing evidence, but also highlights gaps for future research to fill.</p></div>
+
+  		    <p class="paper-title">&ldquo;Motivating the adoption of new community-minded behaviors: An empirical test in Nigeria.&rdquo; <b>Science Advances</b>, 2019. With Rebecca Littman and Elizabeth Levy Paluck.
+			&nbsp;<a href = "#" data-toggle="collapse" data-target="#nollywoodAbstract" aria-expanded="false" aria-controls="nollywoodAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a> </p>
+
+      <div class="collapse abstract" id="nollywoodAbstract"><p class="paper-links"><a href="https://www.science.org/doi/pdf/10.1126/sciadv.aau5175"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="https://egap.org/resource/reporting-corruption-in-nigeria-testing-the-effects-of-norms-nudges/"><i class="far fa-file-alt paper-icon"></i>Policy brief</a><a href="http://dx.doi.org/10.17605/OSF.IO/9A7H5"><i class="fas fa-table paper-icon"></i>Replication</a><a href="http://egap.org/registration/629"><i class="far fa-file-alt paper-icon"></i>Preanalysis plan</a><a href="https://www.science.org/doi/suppl/10.1126/sciadv.aau5175/suppl_file/aau5175_sm.pdf"><i class="far fa-file-alt paper-icon"></i>Appendices</a></p><p class="abstracttext">Social scientists have long sought to explain why people donate resources for the good of a community. Less experiment in Nigeria, we tested two campaigns that encouraged people to try reporting corruption by text message. Psychological theories about how to shift perceived norms and how to reduce barriers to action drove the design of each campaign. The first, a film featuring actors reporting corruption, and the second, a mass text message reducing the effort required to report, caused a total of 1181 people in 106 communities to text, including 241 people who sent concrete corruption reports. Psychological theories of social norms and behavior change can illuminate the early stages of the evolution of cooperation and collective action, when adoption is still relatively rare.</p></div>
+
+                    <p class="paper-title">&ldquo;Explaining support for combatants during wartime: A survey experiment in Afghanistan.&rdquo; <b>American Political Science Review</b>, 2013. With Jason Lyall and Kosuke Imai.
+                        &nbsp;<a href = "#" data-toggle="collapse" data-target="#afghanAbstract" aria-expanded="false" aria-controls="afghanAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a> </p>
+
+                        <div class="collapse abstract" id="afghanAbstract"><p class="paper-links"><a href="/papers/afghan.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="https://www.mpsanet.org/professional-resources/awards/award-recipient-archive/"><i class="fas fa-trophy paper-icon"></i>MPSA Pi Sigma Alpha Award</a><a href="http://hdl.handle.net/1902.1/20368"><i class="fas fa-table paper-icon"></i>Replication</a></p><p class="abstracttext">How are civilian attitudes toward combatants affected by wartime victimization? Are these effects conditional on which combatant inflicted the harm? We investigate the determinants of wartime civilian attitudes towards combatants using a survey experiment across 204 villages in five Pashtun-dominated provinces of Afghanistan—the heart of the Taliban insurgency. We use endorsement experiments to indirectly elicit truthful answers to sensitive questions about support for different combatants. We demonstrate that civilian attitudes are asymmetric in nature. Harm inflicted by the International Security Assistance Force (ISAF) is met with reduced support for ISAF and increased support for the Taliban, but Taliban-inflicted harm does not translate into greater ISAF support. We combine a multistage sampling design with hierarchical modeling to estimate ISAF and Taliban support at the individual, village, and district levels, permitting a more fine-grained analysis of wartime attitudes than previously possible.</p></div>
+
+                    <p class="paper-title">&ldquo;Poverty and support for militant politics: Evidence from Pakistan.&rdquo; <b>American Journal of Political Science</b>, 2013. With Christine Fair, Neil Malhotra, and Jacob N. Shapiro.
+                        &nbsp;<a href = "#" data-toggle="collapse" data-target="#pakistanAbstract" aria-expanded="false" aria-controls="pakistanAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+                        <div class="collapse abstract" id="pakistanAbstract"><p class="paper-links"><a href="/papers/pakistan.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="http://hdl.handle.net/1902.1/17042"><i class="fas fa-table paper-icon"></i>Replication</a><a href="https://graemeblair.com/papers/pakistan-supporting.pdf"><i class="far fa-file-alt paper-icon"></i>Appendices</a> </p><p class="abstracttext">Policy debates on strategies to end extremist violence frequently cite poverty as a root cause of support for the perpetrating groups. There is little evidence to support this contention, particularly in the Pakistani case. Pakistan’s urban poor are more exposed to the negative externalities of militant violence and may in fact be less supportive of the groups. To test these hypotheses we conducted a 6,000-person, nationally representative survey of Pakistanis that measured affect toward four militant organizations. By applying a novel measurement strategy, we mitigate the item nonresponse and social desirability biases that plagued previous studies due to the sensitive nature of militancy. Contrary to expectations, poor Pakistanis dislike militants more than middle-class citizens. This dislike is strongest among the urban poor, particularly those in violent districts, suggesting that exposure to terrorist attacks reduces support for militants. Long-standing arguments tying support for violent organizations to income may require substantial revision.</p></div>
+
+			<!--<p style = "padding-top: 10px"><b>Under review</b></p>-->
+
+	           <p style = "padding-top: 10px; font-size: 18px"><b>Working papers</b></p>
+
+		    <p class="paper-title">&ldquo;The point of attack: Where and why does oil cause armed conflict in Africa?&rdquo; Revise & resubmit, <b>Journal of Politics</b>. With Darin Christensen and Michael Gibilisco.
+			&nbsp;<a href = "#" data-toggle="collapse" data-target="#whereAbstract" aria-expanded="false" aria-controls="whereAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+	<div class="collapse abstract" id="whereAbstract"><p class="paper-links"><a href="/papers/where.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a></p><p class="abstracttext">Armed conflict is a well-studied symptom of the resource curse: oil revenues constitute a lucrative prize, leading acquisitive rebel groups to fight for control of resource-rich territory. Yet, we find that rebels rarely attack oil wells or export terminals --- the sites with the most oil below and above ground. To explain this fact, we develop a new model with elements of crisis-bargaining and Blotto games and apply it to a setting where government seeks to defend, and rebels endeavor to sabotage, oil infrastructure. We use geo-spatial data on the location of oil infrastructure (fields, wells, terminals, and pipelines) and armed conflict events to assess the model's observable implications. First, we show that rebels focus their attacks on new pipelines, and that the construction of more valuable infrastructure (e.g., oil wells and terminals) has no discernible effect on armed conflict. Rebels anticipate government defenses at critical infrastructure, so they instead attack pipelines which are softer targets. Second, to prevent government from thwarting their attacks, we find that rebels randomize where they strike. Third, we find that increases in the world price of oil raise the likelihood of attacks along pipelines (though not around critical infrastructure). Our model and analysis uncovers offsetting effects of increased oil prices: as the black-market price increases, so too do the returns to oil theft; yet, as the export price increases, government is more eager to "bargain away'' conflict. Our argument and findings contribute to a better understanding of where and why rebels stage attacks: groups sabotage pipelines both because they expect these sites to be vulnerable and because such disruption can compel government to address their demands.</p></div>
+
+
+  </div>
+
+
+
+  <div class = "col-md-6">
+
+   <h1>Research design and methodology</h1>
+
+		    <p class="paper-links"><a href="https://www.bitss.org/relationships/leamer-rosenthal-prize-recipient-2016/"><i class="fas fa-trophy paper-icon"></i>BITSS Leamer-Rosenthal Prize</a><a href="https://improvingpsych.org/mission/awards/"><i class="fas fa-trophy paper-icon"></i>SIPS Commendation</a></p>
+
+<p  style="font-size: 18px"><b>Book</b></p>
+
+						<p><a href="https://book.declaredesign.org"><img src="img/rdss-cover.avif" style="border: 1px solid #555;margin-right:25px;float:left;width:100px;height:142.83333px"></a>
+
+
+                   <p class="paper-title"><i>Research Design in the Social Sciences: Declaration, Diagnosis, and Redesign</i>. <b>Princeton University Press</b>, 2023. With Alexander Coppock and Macartan Humphreys.
+&nbsp;<a href = "#" data-toggle="collapse" data-target="#rdssbookAbstract" aria-expanded="false" aria-controls="rdssbookAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+				    <div class="collapse abstract" id="rdssbookAbstract">
+
+				    <p class="paper-links"><a href="https://book.declaredesign.org"><i class="fas fa-book paper-icon"></i>Read online</a><a href="https://press.princeton.edu/books/paperback/9780691199573/research-design-in-the-social-sciences"><i class="fa-solid fa-shop paper-icon"></i>Press</a><a href="https://www.amazon.com/Research-Design-Social-Sciences-Declaration/dp/0691199574/ref=sr_1_3?crid=3OWFXGAN7B5XD&keywords=graeme+blair&qid=1675139589&sprefix=graeme+blair%2Caps%2C228&sr=8-3"><i class="fa-brands fa-amazon paper-icon"></i>Amazon</a> </p><p>Reviewed in <i><a href="https://www.nature.com/articles/d41586-023-03591-5">Nature</a></i></p>
+
+				    <p class="abstracttext">Assessing the properties of research designs before implementing them can be tricky for even the most seasoned researchers. This book provides a powerful framework—Model, Inquiry, Data Strategy, and Answer Strategy, or MIDA—for describing any empirical research design in the social sciences. MIDA enables you to characterize the key analytic features of observational and experimental designs, qualitative and quantitative designs, and descriptive and causal designs. An accompanying algorithm lets you declare designs in the MIDA framework, diagnose properties such as bias and precision, and redesign features like sampling, assignment, measurement, and estimation procedures. <i>Research Design in the Social Sciences</i> is an essential tool kit for the entire life of a research project, from planning and realization of design to the integration of your results into the scientific literature.</p></div>
+
+
+			   			<p style = "clear: both; padding-top: 20px; font-size: 18px"><b>Articles</b></p>
+
+		    		    <p class="paper-title">&ldquo;Evidence needed for ethical social science.&rdquo; <b>Science</b>, 2023. With Rebecca Littman, Rebecca Wolfe, and Sarah Ryan.
+
+		    &nbsp;<a href = "#" data-toggle="collapse" data-target="#ethicsScienceAbstract" aria-expanded="false" aria-controls="ethicsScienceAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a> </p>
+
+<div class="collapse abstract" id="ethicsScienceAbstract"><p class="paper-links"><a href="https://www.science.org/doi/10.1126/science.adf8329"><i class="far fa-file-pdf paper-icon"></i>PDF</a></p><p class="abstracttext">The history of science is littered with violations of the human rights of research participants. One response has been regulation. In the United States, the Belmont Report lays out ethical principles for human subjects research, which form the foundation of modern-day institutional review boards. According to the Belmont Report, ethics committees and investigators need to determine whether the benefits of the research outweigh the costs and whether the costs unevenly burden particular groups. However, the assumptions underlying such assessments can be flawed. Without evidence about the causal effects of social science research on participant welfare, researchers risk causing unexpected harms or missing unexpected benefits.</p></div>
+
+
+
+<p class="paper-title">&ldquo;Field experiments in the Global South: Assessing risks, localizing benefits, and addressing positionality.&rdquo; <b>PS: Political Science & Politics</b>, 2022. With Biz Herman & ...
+
+		    &nbsp;<a href = "#" data-toggle="collapse" data-target="#fieldexpAbstract" aria-expanded="false" aria-controls="fieldexpAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a> </p>
+
+                        <div class="collapse abstract" id="fieldexpAbstract"><p class="paper-links">Biz Herman ⓡ Amma Panin ⓡ Nicholas Owlsley ⓡ Graeme Blair ⓡ Alex Dyzenhaus ⓡ Elizabeth Iams Wellman ⓡ Allison Grossman ⓡ Ken Opalo ⓡ Anisha Singh ⓡ Hannah Alarian ⓡ Lindsey Pruett ⓡ and Yvonne Tan. (Author order randomized.)</p><p><a href="papers/fieldexp.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a></p><p class="abstracttext">
+				In this piece, we draw on our interdisciplinary experiences to develop a set of questions for RCT research in the Global South, suggesting ways to involve scholars and research staff who hail from the study site at every research stage. We maintain these interactions are not one-off exchanges, but rather opportunities to foster meaningful collaboration. We see such efforts as complementary to institutional efforts to recruit and retain graduate students and junior faculty from the Global South. We organize this piece by four distinct, yet interrelated research stages: idea generation, planning, implementation, and dissemination.</p></div>
+
+		     <p class="paper-title">&ldquo;Experiments in multiple contexts.&rdquo; <b>Handbook of Experimental Political Science</b>, 2021. With Gwyneth McClendon.
+			&nbsp;<a href = "#" data-toggle="collapse" data-target="#contextsAbstract" aria-expanded="false" aria-controls="contextsAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+      <div class="collapse abstract" id="contextsAbstract"><p class="paper-links"><a href="/papers/contexts.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a></p><p class="abstracttext">In an effort to assess the generalizability of treatment effects across contexts, scholars (or teams of scholars) are increasingly conducting experiments around the same research questions in multiple country and subnational contexts. In this chapter, we categorize recent and ongoing efforts to conduct cross-context experiments into three types: “uncoordinated,” “coordinated, sequential,” and “coordinated, simultaneous.” We discuss some practical trade-offs across these types, arguing that coordinated cross-context designs offer the most promise for meta-analyses. We then draw attention to four areas in which the current approaches arguably all fall short in facilitating cumulative learning about treatment effects and treatment effect heterogeneity across contexts. We conclude by proposing some ways forward to continue improving our approach to learning about generalizability across contexts.</p></div>
+
+
+                    <p class="paper-title">&ldquo;When to worry about sensitivity bias: A social reference theory and evidence from 30 years of list experiments.&rdquo; <b>American Political Science Review</b>, 2020. With Alexander Coppock and Margaret Moor.
+                        &nbsp;<a href = "#" data-toggle="collapse" data-target="#sensitivityAbstract" aria-expanded="false" aria-controls="sensitivityAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+                        <div class="collapse abstract" id="sensitivityAbstract"><p class="paper-links"><a href="papers/sensitivity.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="https://doi.org/10.7910/DVN/YUXHZT"><i class="fas fa-table paper-icon"></i>Replication</a><a href="https://graemeblair.com/papers/sensitivity-supporting.pdf"><i class="far fa-file-alt paper-icon"></i>Appendices</a></p><p class="abstracttext">Eliciting honest answers to sensitive questions is frustrated if subjects withhold the truth for fear that others will judge or punish them. The resulting bias is commonly referred to as social desirability bias, a subset of what we label sensitivity bias. We make three contributions. First, we propose a social reference theory of sensitivity bias to structure expectations about survey responses on sensitive topics. Second, we explore the bias-variance trade-off inherent in the choice between direct and indirect measurement technologies. Third, to estimate the extent of sensitivity bias, we meta-analyze the set of published and unpublished list experiments (a.k.a., the item count technique) conducted to date and compare the results with direct questions. We find that sensitivity biases are typically smaller than 10 percentage points and in some domains are approximately zero.</p></div>
+
+                    <p class="paper-title">&ldquo;Declaring and diagnosing research designs.&rdquo; <b>American Political Science Review</b>, 2019. With Jasper Cooper, Alexander Coppock, Macartan Humphreys
+                        &nbsp;<a href = "#" data-toggle="collapse" data-target="#declareAbstract" aria-expanded="false" aria-controls="declareAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+                        <div class="collapse abstract" id="declareAbstract"><p class="paper-links"><a href="https://declaredesign.org/declare.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="https://doi.org/10.7910/DVN/XYT1VB"><i class="fas fa-table paper-icon"></i>Replication</a><a href="https://declaredesign.org/declare_SI.pdf"><i class="far fa-file-alt paper-icon"></i>Appendices</a> </p><p class="abstracttext">Researchers need to select high-quality research designs and communicate those designs clearly to readers. Both tasks are difficult. We provide a framework for formally “declaring” the analytically relevant features of a research design in a demonstrably complete manner, with applications to qualitative, quantitative, and mixed methods research. The approach to design declaration we describe requires defining a model of the world (M), an inquiry (I), a data strategy (D), and an answer strategy (A). Declaration of these features in code provides sufficient information for researchers and readers to use Monte Carlo techniques to diagnose properties such as power, bias, accuracy of qualitative causal inferences, and other “diagnosands.” Ex ante declarations can be used to improve designs and facilitate preregistration, analysis, and reconciliation of intended and actual analyses. Ex post declarations are useful for describing, sharing, reanalyzing, and critiquing existing designs. We provide open-source software, DeclareDesign, to implement the proposed approach.</p></div>
+
+
+                    <p class="paper-title">&ldquo;List experiments with measurement error.&rdquo; <b>Political Analysis</b>, 2019. With Winston Chou and Kosuke Imai.
+                        &nbsp;<a href = "#" data-toggle="collapse" data-target="#listerrorAbstract" aria-expanded="false" aria-controls="listerrorAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a>
+                        <div class="collapse abstract" id="listerrorAbstract"><p class="paper-links"><a href="papers/listerror.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="https://doi.org/10.7910/DVN/L3GWNP"><i class="fas fa-table paper-icon"></i>Replication</a>
+</p><p class="abstracttext">Measurement error threatens the validity of survey research, especially when studying sensitive questions. Although list experiments can help discourage deliberate misreporting, they may also suffer from nonstrategic measurement error due to flawed implementation and respondents’ inattention. Such error runs against the assumptions of the standard maximum likelihood regression (MLreg) estimator for list experiments and can result in misleading inferences, especially when the underlying sensitive trait is rare. We address this problem by providing new tools for diagnosing and mitigating measurement error in list experiments. First, we demonstrate that the nonlinear least squares regression (NLSreg) estimator proposed in Imai (2011) is robust to nonstrategic measurement error. Second, we offer a general model misspecification test to gauge the divergence of the MLreg and NLSreg estimates. Third, we show how to model measurement error directly, proposing new estimators that preserve the statistical efficiency of MLreg while improving robustness. Last, we revisit empirical studies shown to exhibit nonstrategic measurement error, and demonstrate that our tools readily diagnose and mitigate the bias. We conclude this article with a number of practical recommendations for applied researchers. The proposed methods are implemented through an open-source software package.</p></div>
+
+                    <p class="paper-title">&ldquo;Design and analysis of the randomized response technique.&rdquo; <b>Journal of the American Statistical Association</b>, 2015.  With Kosuke Imai, Yang-Yang Zhou.
+                        &nbsp;<a href = "#" data-toggle="collapse" data-target="#randrespAbstract" aria-expanded="false" aria-controls="randrespAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+                        <div class="collapse abstract" id="randrespAbstract"><p class="paper-links"><a href="papers/randresp.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="http://dx.doi.org/10.7910/DVN/AIO5BR"><i class="fas fa-table paper-icon"></i>Replication</a></p><p class="abstracttext">About a half century ago, in 1965, Warner proposed the randomized response method as a survey technique to reduce potential bias due to nonresponse and social desirability when asking questions about sensitive behaviors and beliefs. This method asks respondents to use a randomization device, such as a coin flip, whose outcome is unobserved by the interviewer. By introducing random noise, the method conceals individual responses and protects respondent privacy. While numerous methodological advances have been made, we find surprisingly few applications of this promising survey technique. In this article, we address this gap by (1) reviewing standard designs available to applied researchers, (2) developing various multivariate regression techniques for substantive analyses, (3) proposing power analyses to help improve research designs, (4) presenting new robust designs that are based on less stringent assumptions than those of the standard designs, and (5) making all described methods available through open-source software. We illustrate some of these methods with an original survey about militant groups in Nigeria.</p></div>
+
+		  <!--
+  <p>&ldquo;Survey methods for sensitive topics.&rdquo; <b>APSA Comparative Politics Newsletter</b>.
+			<br> <a href="/papers/sensitive.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a></p>
+
+
+
+ -->       <p class="paper-title">&ldquo;Comparing and combining list and endorsement experiments: Evidence from Afghanistan.&rdquo; <b>American Journal of Political Science</b>, 2014. With Kosuke Imai and Jason Lyall.
+                        &nbsp;<a href = "#" data-toggle="collapse" data-target="#listendorseAbstract" aria-expanded="false" aria-controls="listendorseAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+                        <div class="collapse abstract" id="listendorseAbstract"><p class="paper-links"><a href="papers/listendorse.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="http://hdl.handle.net/1902.1/21243"><i class="fas fa-table paper-icon"></i>Replication</a></p><p class="abstracttext">List and endorsement experiments are becoming increasingly popular among social scientists as indirect survey techniques for sensitive questions. When studying issues such as racial prejudice and support for militant groups, these survey methodologies may improve the validity of measurements by reducing nonresponse and social desirability biases. We develop a statistical test and multivariate regression models for comparing and combining the results from list and endorsement experiments. We demonstrate that when carefully designed and analyzed, the two survey experiments can produce substantively similar empirical findings. Such agreement is shown to be possible even when these experiments are applied to one of the most challenging research environments: contemporary Afghanistan. We find that both experiments uncover similar patterns of support for the International Security Assistance Force (ISAF) among Pashtun respondents. Our findings suggest that multiple measurement strategies can enhance the credibility of empirical conclusions. Open-source software is available for implementing the proposed methods.</p></div>
+
+                    <p class="paper-title">&ldquo;Statistical analysis of list experiments.&rdquo; <b>Political Analysis</b>, 2012. With Kosuke Imai.
+                        &nbsp;<a href = "#" data-toggle="collapse" data-target="#listAbstract" aria-expanded="false" aria-controls="listAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+                        <div class="collapse abstract" id="listAbstract"><p class="paper-links"><a href="papers/list.pdf"><i class="far fa-file-pdf paper-icon"></i>PDF</a><a href="http://hdl.handle.net/1902.1/17040"><i class="fas fa-table paper-icon"></i>Replication</a><a href="https://graemeblair.com/papers/list-supporting.pdf"><i class="far fa-file-alt paper-icon"></i>Appendices</a></p><p class="abstracttext">The validity of empirical research often relies upon the accuracy of self-reported behavior and beliefs. Yet eliciting truthful answers in surveys is challenging, especially when studying sensitive issues such as racial prejudice, corruption, and support for militant groups. List experiments have attracted much attention recently as a potential solution to this measurement problem. Many researchers, however, have used a simple difference-in-means estimator, which prevents the efficient examination of multivariate relationships between respondents’ characteristics and their responses to sensitive items. Moreover, no systematic means exists to investigate the role of underlying assumptions. We fill these gaps by developing a set of new statistical methods for list experiments. We identify the commonly invoked assumptions, propose new multivariate regression estimators, and develop methods to detect and adjust for potential violations of key assumptions. For empirical illustration, we analyze list experiments concerning racial prejudice. Open-source software is made available to implement the proposed methodology.</p></div>
+
+	</div> <!-- end col -->
+
+	</div> <!-- end row -->
+
+    <!-- ---------------------------- Demo Content ----------------------------- -->
+    <!-- Added only for demo and testing purposes -->
+    <div class="row">
+        <div class="col-xs-12">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" data-citation="lyall2013explaining">lyall2013explaining</a>, tenetur porro <a href="#" data-citation="wrongkey">wrongkey</a>, nobis quisquam pariatur, <a href="#" data-citation="blair2012statistical">blair2012statistical</a> rem sapiente in hic. Aspernatur quidem totam id pariatur adipisci.</p>
+        </div>
+    </div>
+    <!-- -------------------------- End Demo Content --------------------------- -->
+
+  </div>
+
+
+  <div class="tab-pane fade" id="software" role="tabpanel" aria-labelledby="software-tab">
+
+
+  <div class="row">
+
+  <div class="col-md-7">
+
+   <h1 style = "font-size: 18px">Research design planning and implementation</h1>
+
+ 		    <p class="paper-links"><a href="https://www.cambridge.org/core/membership/spm/about-us/awards/statistical-software-award"><i class="fas fa-trophy paper-icon"></i>Polmeth Statistical Software Award</a></p>
+
+
+                    <p class = "paper-title">&ldquo;<b>DeclareDesign</b>: Declare and Diagnose Research Designs.&rdquo; R package. With Jasper Cooper, Alexander Coppock, Macartan Humphreys, and Neal Fultz. ~28,000 downloads. &nbsp;<a href = "#" data-toggle="collapse" data-target="#declaredesignAbstract" aria-expanded="false" aria-controls="declaredesignAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+                        <div class="collapse abstract" id="declaredesignAbstract"><p class="paper-links"><a href="https://declaredesign.org/r/declaredesign/"><i class="fas fa-globe-americas paper-icon"></i>Web</a><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/declaredesign.pdf"><i class="fas fa-info-circle paper-icon"></i>Cheatsheet</a></p></div>
+
+               <p class = "paper-title">&ldquo;<b>estimatr</b>: Fast Estimators for Design-Based Inference.&rdquo; R package. With Jasper Cooper, Alexander Coppock, Macartan Humphreys, and Luke Sonnet. ~136,000 downloads.
+                         &nbsp;<a href = "#" data-toggle="collapse" data-target="#estimatrAbstract" aria-expanded="false" aria-controls="estimatrAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+                        <div class="collapse abstract" id="estimatrAbstract"><p class="paper-links"> <a href="https://declaredesign.org/r/estimatr/"><i class="fas fa-globe-americas paper-icon"></i>Web</a><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/estimatr.pdf"><i class="fas fa-info-circle paper-icon"></i>Cheatsheet</a></p></div>
+
+                <p class = "paper-title">&ldquo;<b>fabricatr</b>: Imagine Your Data Before You Collect It.&rdquo; R package. With Jasper Cooper, Alexander Coppock, Macartan Humphreys, Aaron Rudkin, and Neal Fultz. ~43,000 downloads.
+                         &nbsp;<a href = "#" data-toggle="collapse" data-target="#fabricatrAbstract" aria-expanded="false" aria-controls="fabricatrAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+                        <div class="collapse abstract" id="fabricatrAbstract"><p class="paper-links"> <a href="https://declaredesign.org/r/fabricatr/"><i class="fas fa-globe-americas paper-icon"></i>Web</a></p></div>
+
+   <h1 style = "padding-top: 10px; font-size: 18px">Analyzing surveys with sensitive questions</h1>
+
+                    <p class = "paper-title">&ldquo;<b>list</b>: Statistical Methods for the Item Count Technique and List Experiment.&rdquo; R package. With Kosuke Imai. ~47,000 downloads.
+                         &nbsp;<a href = "#" data-toggle="collapse" data-target="#listAbstract" aria-expanded="false" aria-controls="listAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+                        <div class="collapse abstract" id="listAbstract"><p class="paper-links"> <a href="https://list.sensitivequestions.org/"><i class="fas fa-globe-americas paper-icon"></i>Web</a></p></div>
+
+                <p class = "paper-title">&ldquo;<b>rr</b>: Statistical Methods for the Randomized Response Technique.&rdquo; R package. With Yang-Yang Zhou and Kosuke Imai. ~23,000 downloads.
+                         &nbsp;<a href = "#" data-toggle="collapse" data-target="#rrAbstract" aria-expanded="false" aria-controls="rrAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
+
+                        <div class="collapse abstract" id="rrAbstract"><p class="paper-links"> <a href="https://rr.sensitivequestions.org/"><i class="fas fa-globe-americas paper-icon"></i>Web</a></p></div>
+
+	</div>
+
+
+
+	<div class="col-md-5"><p></p>
+
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <!--
+<div class="col-md-4 d-flex justify-content-center align-items-center">
+      <div class="image-container d-flex justify-content-center align-items-center">
+        <img src="https://declaredesign.org/index_files/figure-html/unnamed-chunk-10-1.png" class="card-img" alt="DeclareDesign simulation" style="margin-left:20px;max-width:100%;max-height:100%;">
+      </div>
+    </div>
+ -->
+    <div class="col-md-12">
+      <div class="card-body">
+        <h5 class="card-title" style="font-family: 'Merriweather', serif !important;">Getting started with DeclareDesign</h5>
+        <p class="card-text">DeclareDesign is a set of software tools to plan, implement, analyze, and communicate about empirical research.</p>
+<!--         <p class="card-text"><small class="text-muted">Get started at <a href ="https://declaredesign.org">declaredesign.org</a></small></p> -->
+
+<p><a href="https://book.declaredesign.org"><img src="img/rdss-cover.avif" style="border: 1px solid #555;margin-left:25px;margin-bottom:25px;float:right;width:100px;height:142.83333px"></a></p>
+
+<p>Our book, <i>Research Design in the Social Sciences</i> is the best place to start.</p>
+
+<p>To learn about the approach, read Part I and II. For examples that help apply the approach to many common research designs, read Part III. For ideas on incorporating these ideas into the lifecycle of your project, read Part IV. You can buy the book on <a href="https://www.amazon.com/Research-Design-Social-Sciences-Declaration/dp/0691199574/ref=sr_1_3?crid=3OWFXGAN7B5XD&keywords=graeme+blair&qid=1675139589&sprefix=graeme+blair%2Caps%2C228&sr=8-3">Amazon</a> or <a href="https://book.declaredesign.org">read it free online</a>.</p>
+
+<p>Start with:</p>
+
+<ul>
+<li>Read <a href="https://book.declaredesign.org/introduction/what-is-a-research-design.html">Chapter 2</a> for a first introduction to the framework.
+
+<li>Read <a href="https://book.declaredesign.org/declaration-diagnosis-redesign/declaration-in-code.html">Chapter 13</a> for an introduction to the software.
+
+<li><a href="https://declaredesign.org">declaredesign.org</a> includes documentation for each of the software packages including further examples.
+</ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+	</div>
+
+  </div>
+
+  </div>
+
+
+  <!-- -->
+
+
+    <div class="tab-pane fade" id="group" role="tabpanel" aria-labelledby="group-tab">
+
+I'm lucky to work with and learn from a range of graduate and undergraduate students and staff researchers based at UCLA and elsewhere. I'm proud of my record of placing these researchers in Ph.D. programs, jobs in industry and civil society, postdocs, and tenure-track positions.
+
+<h1 style="margin-top:35px; margin-bottom: 25px">Current research group</h1>
+
+<div class="card-columns">
+
+
+
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="img/group-sofia.jpg" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><a href="https://co.linkedin.com/in/dankat-sofia-granados-sotelo">Dankat Sofía Granados</a></h5>
+        <p class="card-text"><small class="text-muted">Field research manager</small></p>
+        <p class="card-text"><b>Research interests:</b><br>Effects of conflict on early child development of civilians.</p>
+                <p class="card-text"><b>Collaborations:</b><br>Asking about violence randomized experiment</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="img/group-alyssa.png" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><a href="https://alyssaheinze.github.io/">Alyssa René Heinze</a></h5>
+        <p class="card-text"><small class="text-muted">UC Berkeley Ph.D. student</small></p>
+        <p class="card-text"><b>Collaborations:</b><br>Policing randomized trials meta-analysis; Using machine learning to improve the efficiency of meta-analysis</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="img/group-dario.jpg" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><a href="https://www.dariosidhu.com/">Dario Sidhu</a></h5>
+        <p class="card-text"><small class="text-muted">UCLA Ph.D. student</small></p>
+        <p class="card-text"><b>Research interests:</b><br>I study the political economy of development.</p>
+        <p class="card-text"><b>Collaborations:</b><br>Use of evidence in policy systematic review</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="img/group-ragini.jpg" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><a href="https://www.linkedin.com/in/ragini-srinivasan">Ragini Srinivasan</a></h5>
+        <p class="card-text"><small class="text-muted">UCLA senior</small></p>
+        <p class="card-text"><b>Collaborations:</b><br>Asking about violence systematic review; Community policing in the US systematic review</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="img/group-elayne.jpg" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><a href="https://www.elaynestecher.com/">Elayne Stecher</a></h5>
+        <p class="card-text"><small class="text-muted">UCLA Ph.D. student</small></p>
+        <p class="card-text"><b>Research interests:</b><br>How can cycles of conflict be interrupted, and what is the role of social structures in that endeavor? I use experiments, field research, and statistical analysis to try to drill down into the causes of conflict and barriers to peace in the Global South.</p>
+                        <p class="card-text"><b>Collaborations:</b><br>Asking about violence randomized experiment</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</div> <!-- end card group -->
+
+   <h1 style="margin-top:35px; margin-bottom: 25px">Current dissertation students</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col">Area of speciality</th>
+      <th scope="col">Dissertation title</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<tr>
+  	    <td><img src="img/group-brigid.jpg" height=50px></td>
+  		<td><a href="https://www.linkedin.com/in/brigid-morris-09a00223">Brigid Morris</a> (chair)</td>
+  		<td>Comparative politics</td>
+  		<td>Popular Opinion and Democratization</td>
+  	</tr>
+  	<tr>
+  	    <td><img src="img/group-ryan.jpg" height=50px></td>
+  		<td><a href="https://ryanbk.github.io">Ryan Baxter-King</a></td>
+  		<td>American politics</td>
+  		<td>Learning About Policy-Demanding Conditions: When Does Direct Experience with Real-World Events Affect Political Behavior?</td>
+  	</tr>
+  	<tr>
+  	    <td><img src="img/group-jiyoung.jpg" height=50px></td>
+  		<td><a href="https://jiyoungestherkim.github.io">Jiyoung Kim</a></td>
+  		<td>Comparative politics</td>
+  		<td>Dividing Us: How Climate Change Can Increase Conflict</td>
+  	</tr>
+  	<tr>
+  	    <td><img src="img/group-carolyn.jpg" height=50px></td>
+  		<td><a href="https://www.linkedin.com/in/carolyn-steinle-2932a0115">Carolyn Steinle</a></td>
+  		<td>Comparative politics</td>
+  		<td>Age-Set or Kinship Based Social Structure in Ethnic Politics</td>
+  	</tr>
+  	<tr>
+  	    <td><img src="img/group-alfredo.jpg" height=50px></td>
+  		<td><a href="https://www.alfredotrejoiii.com">Alfredo Trejo III</a></td>
+  		<td>International relations</td>
+  		<td>The Contentious Politics of Trade: Public Demonstrations and their Impact on the Free Trade Agreement Negotiation and Ratification Process in Latin America</td>
+  	</tr>
+  </tbody>
+</table>
+
+
+ 	<h1 style="margin-top:35px; margin-bottom: 25px">Alumni</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col">Placement / next position</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<tr>
+  	  <td><img src="img/group-guanzhang.jpg" height=50px></td>
+      <td><a href="https://www.linkedin.com/in/guanzhang-zhao-1669351a9">Guanzhang Zhao</a></td>
+      <td>Undergraduate research assistant</td>
+      <td>Ph.D. student in economics, Yale</td>
+    </tr>
+    <tr>
+  	  <td><img src="img/group-safa.jpg" height=50px></td>
+      <td><a href="https://www.linkedin.com/in/safa-saleem-5394541b2">Safa Saleem</a></td>
+      <td>Undergraduate research assistant</td>
+      <td>Legal assistant, law firm</td>
+    </tr>
+  	<tr>
+   	  <td><img src="img/group-jihae.jpg" height=50px></td>
+      <td><a href="https://www.linkedin.com/in/jihaehong">Jihae Hong</a></td>
+      <td>Staff researcher</td>
+      <td>Advisor, Auschwitz Institute for the Prevention of Genocide and Mass Atrocities</td>
+    </tr>
+    <tr>
+     <td><img src="img/group-cesar.jpg" height=50px></td>
+      <td><a href="https://www.cesarbmartinez.com/">Cesar B. Martinez-Alvarez</a></td>
+      <td>Dissertation committee</td>
+      <td>Postdoctoral fellow, Yale<br>Assistant Professor of Political Science, UCSB</td>
+    </tr>
+    <tr>
+     <td><img src="img/group-aaron.jpg" height=50px></td>
+      <td><a href="https://github.com/aaronrudkin">Aaron Rudkin</a></td>
+      <td>Graduate student researcher</td>
+      <td>Postdoctoral fellow, MIT</td>
+    </tr>
+    <tr>
+     <td><img src="img/group-luke.jpg" height=50px></td>
+      <td><a href="https://lukesonnet.com/">Luke Sonnet</a></td>
+      <td>Graduate student researcher</td>
+      <td>Lead data scientist, GrowthBook</td>
+    </tr>
+    <tr>
+     <td><img src="img/group-valerie.jpg" height=50px></td>
+      <td><a href="https://valeriewirtschafter.com/">Valerie Wirtschafter</a></td>
+      <td>Dissertation committee; graduate student researcher</td>
+      <td>Data analyst, Brookings Institution</td>
+    </tr>
+    <tr>
+  	  <td><img src="img/group-fatiq.jpg" height=50px></td>
+      <td><a href="https://www.fatiqnadeem.com/">Fatiq Nadeem</a></td>
+      <td>Staff researcher</td>
+      <td>Ph.D. student, UCSB Bren School</td>
+    </tr>
+    <tr>
+  	  <td><img src="img/group-emily.jpg" height=50px></td>
+      <td><a href="https://www.linkedin.com/in/emily-allendorf">Emily Allendorf</a></td>
+      <td>Undergraduate research assistant</td>
+      <td>Quantitative research assistant, RAND Corporation</td>
+    </tr>
+    <tr>
+  	  <td><img src="img/group-sebastian.jpg" height=50px></td>
+      <td><a href="https://www.linkedin.com/in/jsleivamolano">J. Sebastián Leiva M.</a></td>
+      <td>Staff researcher</td>
+      <td>M.P.P student, Princeton</td>
+    </tr>
+    <tr>
+  	  <td><img src="img/group-jasmine.jpg" height=50px></td>
+      <td><a href="https://www.linkedin.com/in/jasmine-miller-ab2b6114a">Jasmine Miller</a></td>
+      <td>Staff researcher</td>
+      <td>Researcher, Give Directly</td>
+    </tr>
+    <tr>
+  	  <td><img src="img/group-min.jpg" height=50px></td>
+      <td><a href="https://minwoosun.github.io/">Min Woo Sun</a></td>
+      <td>Undergraduate research assistant</td>
+      <td>Ph.D. student in biomedical data science, Stanford</td>
+    </tr>
+    <tr>
+  	  <td><img src="img/group-neal.jpg" height=50px></td>
+      <td><a href="https://www.linkedin.com/in/nfultz">Neal Fultz</a></td>
+      <td>Staff researcher</td>
+      <td>Independent data science consultant</td>
+    </tr>
+  </tbody>
+</table>
+
+  	</div>
+
+  <!-- -->
+
+
+  <div class="tab-pane fade" id="teaching" role="tabpanel" aria-labelledby="teaching-tab">
+
+	<div class="row d-flex justify-content-center">
+	<div class="col-12 col-lg-8">
+	<h1>Courses at UCLA</h1>
+
+                    <p>POL SCI 170A: Randomized Trials for Social Change (undergraduate).  <a href="teaching/UCLA_PS179_Syllabus.pdf">Syllabus</a></p>
+
+                    <p>POL SCI 200E: Experimental Design for Social Science (Ph.D. seminar). Next: Winter 2024. <a href="teaching/UCLA_PS200E_Syllabus.pdf">Syllabus</a></p>
+
+		    <p>POL SCI 292B: Research Design (Ph.D. seminar).  <a href="teaching/UCLA_PS292B_Syllabus.pdf">Syllabus</a></p>
+
+                    <p>POL SCI 240a/b: Comparative Politics Field Seminar (Ph.D. seminar).  <a href="teaching/UCLA_PS240a_Fall2016.pdf">Syllabus</a></p>
+
+            <p>I developed a course taught by a graduate student to introduce first year graduate students to the R statistical programming language:</p><p style="margin-top:-10px">POL SCI 200X: Statistical programming for social science. (Ph.D. seminar).  <a href="">Syllabus</a></p>
+
+            <hr width="25%" style="margin-top:30px;margin-bottom:25px">
+
+            <p>I regularly teach short courses on experimental design and planning, including on DeclareDesign. I'm happy to share materials.</p>
+
+
+
+	</div>
+	</div> <!-- row -->
+  </div>
+
+  <div class="tab-pane fade" id="students" role="tabpanel" aria-labelledby="students-tab">
+
+
+  <div class="row">
+
+  <div class="col-md-6">
+
+ <h1>Graduate advising</h1>
+
+		    <p>I actively advise and collaborate with graduate students in the political science Ph.D. program at UCLA. I'm also always happy to talk to other UCLA Ph.D. students even if I'm not advising you.</p>
+		    <p><a href="https://calendar.app.google/DGCtdjq6jVPccZ19A"><button type="button" class="btn btn-outline-info">Sign up for student hours</button></a></p>
+
+			<h1 style="margin-top:35px">Undergraduate researchers</h1>
+
+		<p>I regularly work with undergraduate student researchers at UCLA. Many other faculty also work with undergraduate researchers. The best way to find out who is to email faculty with common interests and to regularly check the <a href="https://be.my.ucla.edu/urportal.aspx">Undergraduate Research Portal</a> and talk with counselors from the <a href = "https://hass.ugresearch.ucla.edu/">Undergraduate Research Center</a>.</p>
+		<p><a href="https://forms.gle/27H3jshTnuTnjDbb9"><button type="button" class="btn btn-outline-info">Fill out researcher interest form</button></a></p>
+
+		<h1 style="margin-top:35px">Recommendation letters</h1>
+
+		<p>I'm happy to write letters for current and past students and research assistants. I need your materials two weeks in advance to submit, at a minimum.</p>
+				<p><a href="https://forms.gle/MqFA1ZRtVgue5bEU7"><button type="button" class="btn btn-outline-info">Request a letter</button></a></p>
+
+
+			</div>
+			<div class="col-md-6">
+
+			<h1>Prospective graduate students</h1>
+
+			<p>You can find information about <a href="https://polisci.ucla.edu/academics/graduate/applying-to-the-ph-d-program/">applying to the UCLA Ph.D. program here</a>.</p>
+			<p>In preparing your application, I encourage you to read Jessica Calarco's excellent <a href="https://bookshop.org/books/a-field-guide-to-grad-school-uncovering-the-hidden-curriculum/9780691201092">Field Guide to Grad School</a>, the advice from <a href="https://chrisblattman.com/about/contact/gradschool/">Chris Blattman</a> and <a href="http://macartan.nyc/teaching/applying-for-a-phd/">Macartan Humphreys</a>. Josh Kertzer has compiled a set of <a href ="https://people.fas.harvard.edu/~jkertzer/prospective.html">excellent additional writing</a> on applying to social science Ph.D. programs.</p>
+		    <p>Our department, like most in political science, does not admit students to work with specific faculty. Admissions decisions are made by a committee, which I am not currently sitting on. However, you are welcome to mention my name in your personal statement in order to ensure it is sent to me during the admission process.</p>
+		    <p><b>Following the example of <a href="http://www.betsylevypaluck.com/for-students">Betsy Paluck</a>, I no longer have personal conversations with prospective students, in order to avoid favoring students who have received advice to connect with faculty or who have connections with my colleagues.</b> If you are admitted, I will be eager to talk about working with you at UCLA.</p>
+
+
+    </div>
+
+    </div> <!-- end row -->
+
+  </div>
+
+
+</div>
+
+        </div>
+</div> <!-- /container -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Bio</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Graeme Blair is an associate professor of political science at UCLA and serves as Co-Director of Training and Methods of Evidence in Governance and Politics (EGAP). Graeme uses experiments, field research, and statistics to study how to reduce violence and how to improve social science research. He works primarily in Nigeria, often in partnership with government, civil society, or international organizations. His work is published in journals including <i>Science</i>, <i>Proceedings of the National Academy of Sciences</i>, <i>Science Advances</i>, <i>American Political Science Review</i>, <i>American Journal of Political Science</i>, <i>Journal of Politics</i>, <i>Journal of the American Statistical Association</i>, and <i>Political Analysis</i>. His book <i>Research Design in the Social Sciences</i> was published in 2023 by Princeton University Press, and his book on community policing is forthcoming with Cambridge University Press Studies in Comparative Politics. He is the recipient of the Leamer-Rosenthal Prize for Open Social Science, the Society for Political Methodology best statistical software award, the Pi Sigma Alpha best paper award, and received an honorable mention for best paper in comparative politics by the American Political Science Association.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- --------------------------- Citation Modal ---------------------------- -->
+<div class="modal fade" id="citationModal" tabindex="-1" role="dialog" aria-labelledby="citationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="citationModalLabel">Cite</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--         start     -->
+                <fieldset>
+                    <label for="citation-format">Output format</label>
+                    <select id="citation-format">
+                        <option value="bibliography">Formatted bibliography</option>
+                        <option value="bibtex">BibTeX</option>
+                        <option value="biblatex">BibLaTeX</option>
+                        <option value="data">CSL-JSON</option>
+                        <option value="ris">RIS</option>
+                    </select>
+                </fieldset>
+                <fieldset id="fieldset-files" style="display: none;">
+                    <label for="citation-type">File or JSON representation</label>
+                    <select id="citation-type">
+                        <option value="text">File</option>
+                        <option value="object">JSON</option>
+                    </select>
+                </fieldset>
+                <fieldset id="fieldset-bibliography" style="display: none;">
+                    <label for="citation-style">Style</label>
+                    <select id="citation-style">
+                        <option value="apa">APA</option>
+                        <option value="vancouver">Vancouver</option>
+                        <option value="harvard1">Harvard</option>
+                    </select>
+                </fieldset>
+
+                <div id="citation-error"></div>
+                <div id="citation-output"></div>
+
+                <!--         end       -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary copy-citation">Copy Citation</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ------------------------- End Citation Modal -------------------------- -->
+
+    </main>
+    </body>
+</html>
