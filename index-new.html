@@ -7,6 +7,8 @@
 
     <title>Graeme Blair - Associate Professor of Political Science at UCLA</title>
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital@0;1&display=swap" fetchpriority="high" />
+
     <script src="https://kit.fontawesome.com/c353c259e6.js" crossorigin="anonymous"></script>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -14,7 +16,7 @@
     <link rel="stylesheet" href="css/academicons.min.css">
     <link rel="stylesheet" href="./css/citation-highlight.css" />
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital@0;1&display=swap" />
+    <link rel="preload" href="https://graemeblair.com/img/graeme.jpg" as="image" fetchpriority="high" />
 
     <style>
         h1 {
@@ -67,7 +69,8 @@
 
         .nav-item {
             font-family: 'Merriweather', serif !important;
-            font-size: 17px
+            font-size: 17px;
+            --bs-nav-link-font-size: 17px;
         }
 
         .jumbotron {
@@ -88,10 +91,20 @@
             font-family: 'Lato', sans-serif !important;
         }
 
+        .fs-18p {
+            font-size: 18px;
+        }
+
         #citation-output>.csl-bib-body,
         #citation-output>pre {
             padding: 10px 15px;
             background: #f3f3f3;
+        }
+
+        @media (min-width: 992px) {
+            .jumbotron figure {
+                max-width: 255px;
+            }
         }
     </style>
 </head>
@@ -101,47 +114,50 @@
     <main role="main">
 
         <div class="jumbotron bg-cover px-2 py-4 mb-4" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%,rgba(255,255,255,0.3) 100%), url(img/maiduguri.jpg)">
-            <div class="container my-5" style="background-color: rgba(255, 255, 255, 0.9)">
-                <div class="row justify-content-md-center py-4 px-sm-2">
+            <div class="container my-sm-5" style="background-color: rgba(255, 255, 255, 0.9)">
+                <div class="row justify-content-md-center py-4 px-2">
 
-                    <div class="col-md-3">
+                    <div class="col-lg-3 col-md-5">
                         <figure class="figure m-0">
                             <img src="https://graemeblair.com/img/graeme.jpg" class="figure-img img-fluid rounded m-0" height="500">
                         </figure>
                     </div>
 
-                    <div class="col-md-5 my-auto">
-                        <h1 class="mt-sm-3" style="font-weight: 400; font-family: 'Merriweather', serif !important; font-size: 20pt	">Graeme Blair</h1>
-                        <h5 style="font-weight: 200"> Associate Professor of Political Science, UCLA </h5>
-                        <h6 style="font-weight: 200"> Co-Director of Training and Methods,<br>Evidence in Governance and Politics </h6>
+                    <div class="col-lg-9 col-md-7 my-auto">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h1 class="mt-3 mt-md-0" style="font-weight: 400; font-family: 'Merriweather', serif !important; font-size: 20pt	">Graeme Blair</h1>
+                                <h5 style="font-weight: 200"> Associate Professor of Political Science, UCLA </h5>
+                                <h6 style="font-weight: 200"> Co-Director of Training and Methods,<br>Evidence in Governance and Politics </h6>
 
-                        <!--<h6><span style="line-height: 20px;">Research groups</span><br>
-                        <a href="https://pod.polisci.ucla.edu">UCLA Politics of Order and Development Lab</a><br>
-                        <a href="https://egap.org/our-work/the-metaketa-initiative/round4-community-policing">EGAP community policing metaketa</a><br>
-                        <a href="https://declaredesign.org">DeclareDesign</a><br>
-                        <a href="https://projectrg.org">Project on Resources and Governance</a></h6>-->
+                                <!--<h6><span style="line-height: 20px;">Research groups</span><br>
+                                <a href="https://pod.polisci.ucla.edu">UCLA Politics of Order and Development Lab</a><br>
+                                <a href="https://egap.org/our-work/the-metaketa-initiative/round4-community-policing">EGAP community policing metaketa</a><br>
+                                <a href="https://declaredesign.org">DeclareDesign</a><br>
+                                <a href="https://projectrg.org">Project on Resources and Governance</a></h6>-->
 
-                        <h5 class="mt-3">
-                            <span class="align-middle">
-                                <a class="align-middle" href="GraemeBlair-CV.pdf" target="_blank" rel="noopener"><i class="align-middle ai ai-cv ai-1x"></i></a>
+                                <h5 class="my-2">
+                                    <span class="align-middle">
+                                        <a class="align-middle" href="GraemeBlair-CV.pdf" target="_blank" rel="noopener"><i class="align-middle ai ai-cv ai-1x"></i></a>
 
-                                <a class="align-middle" href="mailto:graeme.blair@gmail.com" target="_blank" rel="noopener"><i class="align-middle far fa-envelope fa-1x"></i></a>
+                                        <a class="align-middle" href="mailto:graeme.blair@gmail.com" target="_blank" rel="noopener"><i class="align-middle far fa-envelope fa-1x"></i></a>
 
-                                <a class="align-middle" href="https://github.com/graemeblair" target="_blank" rel="noopener"><i class="align-middle fab fa-github fa-1x"></i></a>
+                                        <a class="align-middle" href="https://github.com/graemeblair" target="_blank" rel="noopener"><i class="align-middle fab fa-github fa-1x"></i></a>
 
-                                <a class="align-middle" href="https://orcid.org/0000-0001-9164-2102" target="_blank" rel="noopener"><i class="align-middle ai ai-orcid ai-1x"></i></a>
+                                        <a class="align-middle" href="https://orcid.org/0000-0001-9164-2102" target="_blank" rel="noopener"><i class="align-middle ai ai-orcid ai-1x"></i></a>
 
-                                <a class="align-middle" href="https://scholar.google.com/citations?user=0hbap6YAAAAJ" target="_blank" rel="noopener"><i class="align-middle ai ai-google-scholar ai-1x"></i></a>
+                                        <a class="align-middle" href="https://scholar.google.com/citations?user=0hbap6YAAAAJ" target="_blank" rel="noopener"><i class="align-middle ai ai-google-scholar ai-1x"></i></a>
 
-                                <a class="align-middle" href="#" data-bs-toggle="modal" data-bs-target="#bioModal" style="margin-left:15px;font-size: 10pt;" class="text-nowrap"><i class="fa-solid fa-user fa-1x" style="margin-right:7px"></i>Bio</a>
+                                        <a class="align-middle" href="#" data-bs-toggle="modal" data-bs-target="#bioModal" style="margin-left:15px;font-size: 10pt;" class="text-nowrap"><i class="fa-solid fa-user fa-1x" style="margin-right:7px"></i>Bio</a>
 
-                                <a class="align-middle" href="https://calendar.app.google/DGCtdjq6jVPccZ19A" style="margin-left:10px; font-size: 10pt;" class="text-nowrap"><i style="margin-right:7px" class="fa-regular fa-calendar-days"></i>Appointments</a>
-                            </span>
-                        </h5>
-                    </div>
-
-                    <div class="col-md-4 my-auto">
-                        <p class="mt-2 mb-0">I use experiments, field research, and statistics to study how to reduce violence and how to make social science more credible, ethical, and useful.</p>
+                                        <a class="align-middle" href="https://calendar.app.google/DGCtdjq6jVPccZ19A" style="margin-left:10px; font-size: 10pt;" class="text-nowrap"><i style="margin-right:7px" class="fa-regular fa-calendar-days"></i>Appointments</a>
+                                    </span>
+                                </h5>
+                            </div>
+                            <div class="col-lg-6 col-md-12 mt-lg-auto my-auto">
+                                <p class="lh-sm m-0">I use experiments, field research, and statistics to study how to reduce violence and how to make social science more credible, ethical, and useful.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -153,7 +169,7 @@
 
             <div> <!-- class="col-md-8" -->
 
-<ul class="nav nav-tabs justify-content-center mb-4" id="mainNav" role="tablist">
+<ul class="nav nav-tabs justify-content-center mb-5" id="mainNav" role="tablist">
     <li class="nav-item">
         <a class="nav-link active" id="research-tab" data-bs-toggle="tab" href="#research" role="tab" aria-controls="research" aria-selected="true"><i class="fa-solid fa-book paper-icon"></i>&nbsp;Writing</a>
     </li>
@@ -181,7 +197,7 @@
   <h1>Conflict, crime, and governance</h1>
 
 
-           <p class="fs-5 fw-bolder">Book</p>
+           <p class="fs-18p fw-bolder">Book</p>
 
            <div style=" border: 1px solid darkgray;margin-right:25px;float:left;width:100px;height:142.83333px; text-align:center; padding:5px; align:middle; display: flex; align-items: center; justify-content: center; color: darkgray">
            Forthcoming September 2024
@@ -192,7 +208,7 @@
 
 <div class="collapse abstract" id="mkivbookAbstract"><p class="paper-links"><a href="https://www.cambridge.org/us/universitypress/subjects/politics-international-relations/comparative-politics/crime-insecurity-and-community-policing-experiments-building-trust?format=PB"><i class="fa-solid fa-shop paper-icon"></i>Press</a><a href="https://egap.org/our-work/the-metaketa-initiative/round4-community-policing/"><i class="fas fa-globe-americas paper-icon"></i>Project</a>&nbsp <i class="fas fa-book"></i> Contact for manuscript</p><p>With Eric Arias, Emile Badran, Robert A. Blair, Ali Cheema, Thiemo Fetzer, Guy Grossman, Dotan Haim, Rebecca Hanson, Ali Hasanain, Ben Kachero, Dorothy Kronick, Benjamin Morse, Robert Muggah, Matthew Nanes, Tara Slough, Nico Ravanilla, Jacob N. Shapiro, Barbara Silva, Pedro C. L. Souza, Lily Tsai, and Anna Wilke. </p><p class="abstracttext">How can societies effectively reduce crime without exacerbating adversarial relationships between the police and citizens? In recent decades, perhaps the most celebrated innovation in police reform has been the introduction of community policing, where citizens are involved in building channels of dialogue and improving police-citizen collaboration. Despite the widespread adoption of community policing in the United States and increasingly in the developing world, there is still limited credible evidence about whether it realistically increases trust in the police or reduces crime. Through simultaneously coordinated field experiments in a diversity of political contexts, this book presents the outcome of a major research initiative into the efficacy of community policing. Scholars from around the world uncover whether, and under what conditions, this highly influential strategy for tackling crime and insecurity is effective. With its highly innovative approach to cumulative learning, this project represents a new frontier in the study of police reform.</p></div>
 
-            <p class="fs-5 fw-bolder" style="clear: both; padding-top: 20px;">Articles</p>
+            <p class="fs-18p fw-bolder" style="clear: both; padding-top: 20px;">Articles</p>
 
             <p class="paper-title">&ldquo;Accessing justice for survivors of violence against women.&rdquo; <b>Science</b>, 2022. With Nirvikar Jassal.
                 &nbsp;<a href="#" data-bs-toggle="collapse" data-bs-target="#helpdesksAbstract" aria-expanded="false" aria-controls="helpdesksAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a>
@@ -244,7 +260,7 @@
 
             <!--<p class="fw-bolder" style="padding-top: 10px">Under review</p>-->
 
-               <p class="fs-5 fw-bolder" style="padding-top: 10px;">Working papers</p>
+               <p class="fs-18p fw-bolder" style="padding-top: 10px;">Working papers</p>
 
             <p class="paper-title">&ldquo;The point of attack: Where and why does oil cause armed conflict in Africa?&rdquo; Revise & resubmit, <b>Journal of Politics</b>. With Darin Christensen and Michael Gibilisco.
             &nbsp;<a href="#" data-bs-toggle="collapse" data-bs-target="#whereAbstract" aria-expanded="false" aria-controls="whereAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
@@ -262,7 +278,7 @@
 
             <p class="paper-links"><a href="https://www.bitss.org/relationships/leamer-rosenthal-prize-recipient-2016/"><i class="fas fa-trophy paper-icon"></i>BITSS Leamer-Rosenthal Prize</a><a href="https://improvingpsych.org/mission/awards/"><i class="fas fa-trophy paper-icon"></i>SIPS Commendation</a></p>
 
-<p class="fs-5 fw-bolder">Book</p>
+<p class="fs-18p fw-bolder">Book</p>
 
                         <p><a href="https://book.declaredesign.org"><img src="img/rdss-cover.avif" style="border: 1px solid #555;margin-right:25px;float:left;width:100px;height:142.83333px"></a>
 
@@ -277,7 +293,7 @@
                     <p class="abstracttext">Assessing the properties of research designs before implementing them can be tricky for even the most seasoned researchers. This book provides a powerful framework—Model, Inquiry, Data Strategy, and Answer Strategy, or MIDA—for describing any empirical research design in the social sciences. MIDA enables you to characterize the key analytic features of observational and experimental designs, qualitative and quantitative designs, and descriptive and causal designs. An accompanying algorithm lets you declare designs in the MIDA framework, diagnose properties such as bias and precision, and redesign features like sampling, assignment, measurement, and estimation procedures. <i>Research Design in the Social Sciences</i> is an essential tool kit for the entire life of a research project, from planning and realization of design to the integration of your results into the scientific literature.</p></div>
 
 
-                           <p class="fs-5 fw-bolder" style="clear: both; padding-top: 20px;">Articles</p>
+                           <p class="fs-18p fw-bolder" style="clear: both; padding-top: 20px;">Articles</p>
 
                         <p class="paper-title">&ldquo;Evidence needed for ethical social science.&rdquo; <b>Science</b>, 2023. With Rebecca Littman, Rebecca Wolfe, and Sarah Ryan.
 
@@ -350,7 +366,7 @@
 
   <div class="col-md-7">
 
-   <h1 class="fs-5">Research design planning and implementation</h1>
+   <h1 class="fs-18p">Research design planning and implementation</h1>
 
              <p class="paper-links"><a href="https://www.cambridge.org/core/membership/spm/about-us/awards/statistical-software-award"><i class="fas fa-trophy paper-icon"></i>Polmeth Statistical Software Award</a></p>
 
@@ -369,7 +385,7 @@
 
                         <div class="collapse abstract" id="fabricatrAbstract"><p class="paper-links"><a href="https://declaredesign.org/r/fabricatr/"><i class="fas fa-globe-americas paper-icon"></i>Web</a><a href="#citation" data-citation="blair2018fabricatr"><i class="fas fa-quote-left"></i>Cite</a></p></div>
 
-   <h1 class="fs-5" style="padding-top: 10px;">Analyzing surveys with sensitive questions</h1>
+   <h1 class="fs-18p" style="padding-top: 10px;">Analyzing surveys with sensitive questions</h1>
 
                     <p class="paper-title">&ldquo;<b>list</b>: Statistical Methods for the Item Count Technique and List Experiment.&rdquo; R package. With Kosuke Imai. ~47,000 downloads.
                          &nbsp;<a href="#" data-bs-toggle="collapse" data-bs-target="#listAbstract" aria-expanded="false" aria-controls="listAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
@@ -551,31 +567,31 @@ I'm lucky to work with and learn from a range of graduate and undergraduate stud
             </thead>
             <tbody>
                 <tr>
-                    <td><img src="img/group-brigid.jpg" height=50px></td>
+                    <td><img src="img/group-brigid.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://www.linkedin.com/in/brigid-morris-09a00223">Brigid Morris</a> (chair)</td>
                     <td>Comparative politics</td>
                     <td>Popular Opinion and Democratization</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-ryan.jpg" height=50px></td>
+                    <td><img src="img/group-ryan.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://ryanbk.github.io">Ryan Baxter-King</a></td>
                     <td>American politics</td>
                     <td>Learning About Policy-Demanding Conditions: When Does Direct Experience with Real-World Events Affect Political Behavior?</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-jiyoung.jpg" height=50px></td>
+                    <td><img src="img/group-jiyoung.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://jiyoungestherkim.github.io">Jiyoung Kim</a></td>
                     <td>Comparative politics</td>
                     <td>Dividing Us: How Climate Change Can Increase Conflict</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-carolyn.jpg" height=50px></td>
+                    <td><img src="img/group-carolyn.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://www.linkedin.com/in/carolyn-steinle-2932a0115">Carolyn Steinle</a></td>
                     <td>Comparative politics</td>
                     <td>Age-Set or Kinship Based Social Structure in Ethnic Politics</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-alfredo.jpg" height=50px></td>
+                    <td><img src="img/group-alfredo.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://www.alfredotrejoiii.com">Alfredo Trejo III</a></td>
                     <td>International relations</td>
                     <td>The Contentious Politics of Trade: Public Demonstrations and their Impact on the Free Trade Agreement Negotiation and Ratification Process in Latin America</td>
@@ -598,79 +614,79 @@ I'm lucky to work with and learn from a range of graduate and undergraduate stud
             </thead>
             <tbody>
                 <tr>
-                    <td><img src="img/group-guanzhang.jpg" height=50px></td>
+                    <td><img src="img/group-guanzhang.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://www.linkedin.com/in/guanzhang-zhao-1669351a9">Guanzhang Zhao</a></td>
                     <td>Undergraduate research assistant</td>
                     <td>Ph.D. student in economics, Yale</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-safa.jpg" height=50px></td>
+                    <td><img src="img/group-safa.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://www.linkedin.com/in/safa-saleem-5394541b2">Safa Saleem</a></td>
                     <td>Undergraduate research assistant</td>
                     <td>Legal assistant, law firm</td>
                 </tr>
                     <tr>
-                        <td><img src="img/group-jihae.jpg" height=50px></td>
+                        <td><img src="img/group-jihae.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://www.linkedin.com/in/jihaehong">Jihae Hong</a></td>
                     <td>Staff researcher</td>
                     <td>Advisor, Auschwitz Institute for the Prevention of Genocide and Mass Atrocities</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-cesar.jpg" height=50px></td>
+                    <td><img src="img/group-cesar.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://www.cesarbmartinez.com/">Cesar B. Martinez-Alvarez</a></td>
                     <td>Dissertation committee</td>
                     <td>Postdoctoral fellow, Yale<br>Assistant Professor of Political Science, UCSB</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-aaron.jpg" height=50px></td>
+                    <td><img src="img/group-aaron.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://github.com/aaronrudkin">Aaron Rudkin</a></td>
                     <td>Graduate student researcher</td>
                     <td>Postdoctoral fellow, MIT</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-luke.jpg" height=50px></td>
+                    <td><img src="img/group-luke.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://lukesonnet.com/">Luke Sonnet</a></td>
                     <td>Graduate student researcher</td>
                     <td>Lead data scientist, GrowthBook</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-valerie.jpg" height=50px></td>
+                    <td><img src="img/group-valerie.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://valeriewirtschafter.com/">Valerie Wirtschafter</a></td>
                     <td>Dissertation committee; graduate student researcher</td>
                     <td>Data analyst, Brookings Institution</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-fatiq.jpg" height=50px></td>
+                    <td><img src="img/group-fatiq.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://www.fatiqnadeem.com/">Fatiq Nadeem</a></td>
                     <td>Staff researcher</td>
                     <td>Ph.D. student, UCSB Bren School</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-emily.jpg" height=50px></td>
+                    <td><img src="img/group-emily.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://www.linkedin.com/in/emily-allendorf">Emily Allendorf</a></td>
                     <td>Undergraduate research assistant</td>
                     <td>Quantitative research assistant, RAND Corporation</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-sebastian.jpg" height=50px></td>
+                    <td><img src="img/group-sebastian.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://www.linkedin.com/in/jsleivamolano">J. Sebastián Leiva M.</a></td>
                     <td>Staff researcher</td>
                     <td>M.P.P student, Princeton</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-jasmine.jpg" height=50px></td>
+                    <td><img src="img/group-jasmine.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://www.linkedin.com/in/jasmine-miller-ab2b6114a">Jasmine Miller</a></td>
                     <td>Staff researcher</td>
                     <td>Researcher, Give Directly</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-min.jpg" height=50px></td>
+                    <td><img src="img/group-min.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://minwoosun.github.io/">Min Woo Sun</a></td>
                     <td>Undergraduate research assistant</td>
                     <td>Ph.D. student in biomedical data science, Stanford</td>
                 </tr>
                 <tr>
-                    <td><img src="img/group-neal.jpg" height=50px></td>
+                    <td><img src="img/group-neal.jpg" height=50px loading="lazy"></td>
                     <td><a href="https://www.linkedin.com/in/nfultz">Neal Fultz</a></td>
                     <td>Staff researcher</td>
                     <td>Independent data science consultant</td>
