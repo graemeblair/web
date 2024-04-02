@@ -812,6 +812,35 @@
               }
               tabTriggerEl.classList.add('active');
           }
+          
+          
+          // Listen for tab changes and update URL hash
+document.querySelectorAll('#mainNav a').forEach(function(tab) {
+    tab.addEventListener('click', function(e) {
+        var hash = this.getAttribute('href');
+        window.location.hash = '!' + hash.replace('#', '');
+    });
+});
+
+// Function to activate a tab based on the current URL hash
+function activateTabFromHash() {
+    var hash = window.location.hash.replace('!', '');
+    if (hash) {
+        var tab = document.querySelector(`#mainNav a[href="${hash}"]`);
+        if (tab) {
+            new bootstrap.Tab(tab).show(); // Bootstrap's method to show the tab
+        }
+    }
+}
+
+// Listen for hashchange events to support back/forward navigation
+window.addEventListener('hashchange', activateTabFromHash);
+
+// Activate tab from URL on page load
+activateTabFromHash();
+
+          
+          
       });
     </script>
   </body>
