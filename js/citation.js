@@ -208,7 +208,7 @@
             publisher={Princeton University Press}
         }`,
         'blair2024crime': `@incollection{blair2024crime,
-            title={Research Design in the Social Sciences},
+            title={Crime, insecurity, and community policing: Experiments on building trust},
             editors={Blair, Graeme and Christia, Fotini and Weinstein, Jeremy},
             year={2024},
             publisher={Cambridge University Press},
