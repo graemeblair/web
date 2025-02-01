@@ -207,6 +207,13 @@
             year={2023},
             publisher={Princeton University Press}
         }`,
+        'blair2024crime': `@incollection{blair2024crime,
+            title={Research Design in the Social Sciences},
+            editors={Blair, Graeme and Christia, Fotini and Weinstein, Jeremy},
+            year={2024},
+            publisher={Cambridge University Press},
+            series={Cambridge Studies in Comparative Politics}
+        }`,
         'littman2023evidence': `@article{littman2023evidence,
             title={Evidence required for ethical social science},
             author={Littman, Rebecca and Wolfe, Rebecca and Blair, Graeme and Ryan, Sarah},
