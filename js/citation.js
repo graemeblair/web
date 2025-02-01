@@ -209,7 +209,7 @@
         }`,
         'blair2024crime': `@incollection{blair2024crime,
             title={Crime, insecurity, and community policing: Experiments on building trust},
-            editors={Blair, Graeme and Christia, Fotini and Weinstein, Jeremy},
+            editor={Blair, Graeme and Christia, Fotini and Weinstein, Jeremy},
             year={2024},
             publisher={Cambridge University Press},
             series={Cambridge Studies in Comparative Politics}
