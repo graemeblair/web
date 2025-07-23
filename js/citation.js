@@ -83,7 +83,9 @@
             journal={Science Advances},
             volume={5},
             number={3},
-            year={2019}
+            pages={eaau5175},
+            year={2019},
+            publisher={American Association for the Advancement of Science}
         }`,
         'gomila2017audio': `@article{gomila2017audio,
             title={The audio check: A method for improving data quality and detecting data fabrication},
@@ -116,7 +118,11 @@
             title={When to worry about sensitivity bias: A social reference theory and evidence from 30 years of list experiments},
             author={Blair, Graeme and Coppock, Alexander and Moor, Margaret},
             journal={American Political Science Review},
-            year={2020}
+            volume={114},
+            number={4},
+            pages={1297--1315},
+            year={2020},
+            publisher={Cambridge University Press}
         }`,
         'blair2013policy': `@article{blair2013policy,
             title={Where policy experiments are conducted in economics and political science: The missing autocracies},
@@ -138,14 +144,21 @@
             title={How does armed conflict shape investment? Evidence from the mining sector},
             author={Blair, Graeme and Christensen, Darin and Wirtschafter, Valerie},
             journal={Journal of Politics},
-            year={2022}
+            volume={84},
+            number={4},
+            pages={2186--2201},
+            year={2022},
+            publisher={University of Chicago Press}
         }`,
         'blair2021commodity': `@article{blair2021commodity,
-            title={Do commodity price shocks cause armed conflict? A meta-analysis of natural experiments},
+            title={Do commodity price shocks cause armed conflict? Evidence from a meta-analysis},
             author={Blair, Graeme and Christensen, Darin and Rudkin, Aaron},
             journal={American Political Science Review},
-            number={Forthcoming},
-            year={2021}
+            volume={115},
+            number={2},
+            pages={709--716},
+            year={2021},
+            publisher={Cambridge University Press}
         }`,
         'blair2021conducting': `@article{blair2021conducting,
             title={Conducting experiments in multiple contexts},
@@ -156,10 +169,14 @@
             publisher={Cambridge University Press New York}
         }`,
         'blair2021trusted': `@article{blair2021trusted,
-            title={Trusted authorities can change minds and shift norms during conflict.},
+            title={Trusted authorities can change minds and shift norms during conflict},
             author={Blair, Graeme and Littman, Rebecca and Nugent, Elizabeth and Wolfe, Rebecca and Bukar, Mohammed and Crisman, Benjamin and Etim, Anthony and Hazlett, Chad and Kim, Jiyoung},
             journal={Proceedings of the National Academy of Sciences},
-            year={2021}
+            volume={118},
+            number={42},
+            pages={e2105570118},
+            year={2021},
+            publisher={National Academy of Sciences}
         }`,
         'blair2021community': `@article{blair2021community,
             title={Community policing does not build citizen trust in police or reduce crime in the Global South},
@@ -195,27 +212,27 @@
             publisher={American Association for the Advancement of Science}
         }`,
         'blair2022point': `@article{blair2022point,
-            title={The Point of Attack: Where and Why Does Oil Cause Armed Conflict in Africa?},
+            title={The point of attack: Where and why does oil cause armed conflict in Africa?},
             author={Blair, Graeme and Christensen, Darin and Gibilisco, Michael},
-            journal={Working Paper},
-            year={2022},
-            publisher={California Institute of Technology Pasadena}
+            journal={Journal of Politics},
+            year={2024},
+            note={Accepted}
         }`,
-        'blair2023research': `@incollection{blair2023research,
-            title={Research Design in the Social Sciences},
+        'blair2023research': `@book{blair2023research,
+            title={Research Design in the Social Sciences: Declaration, Diagnosis, and Redesign},
             author={Blair, Graeme and Coppock, Alexander and Humphreys, Macartan},
             year={2023},
             publisher={Princeton University Press}
         }`,
-        'blair2024crime': `@incollection{blair2024crime,
+        'blair2024crime': `@book{blair2024crime,
             title={Crime, insecurity, and community policing: Experiments on building trust},
-            editor={Blair, Graeme and Christia, Fotini and Weinstein, Jeremy},
+            editor={Blair, Graeme and Christia, Fotini and Weinstein, Jeremy M.},
             year={2024},
             publisher={Cambridge University Press},
-            series={Cambridge Studies in Comparative Politics}
+            series={Studies in Comparative Politics}
         }`,
         'littman2023evidence': `@article{littman2023evidence,
-            title={Evidence required for ethical social science},
+            title={Evidence needed for ethical social science},
             author={Littman, Rebecca and Wolfe, Rebecca and Blair, Graeme and Ryan, Sarah},
             journal={Science},
             volume={379},
@@ -231,7 +248,22 @@
      */
     var current_citation = null;
 
-    var Cite = require('citation-js')
+    // Check if citation-js is available, either from CDN or globally
+    var Cite = window.Cite;
+    
+    // If citation-js is not available, create a fallback that just returns the raw bibtex
+    if (!Cite) {
+        console.warn('Citation.js library not available, using fallback');
+        Cite = {
+            async: function(citation, options) {
+                return Promise.resolve({
+                    format: function(format) {
+                        return citation; // Just return the raw BibTeX
+                    }
+                });
+            }
+        };
+    }
 
     var citationModalEl = document.querySelector('#citationModal');
     var citationModal = new bootstrap.Modal(citationModalEl);
