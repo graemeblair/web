@@ -83,7 +83,9 @@
             journal={Science Advances},
             volume={5},
             number={3},
-            year={2019}
+            pages={eaau5175},
+            year={2019},
+            publisher={American Association for the Advancement of Science}
         }`,
         'gomila2017audio': `@article{gomila2017audio,
             title={The audio check: A method for improving data quality and detecting data fabrication},
@@ -116,12 +118,17 @@
             title={When to worry about sensitivity bias: A social reference theory and evidence from 30 years of list experiments},
             author={Blair, Graeme and Coppock, Alexander and Moor, Margaret},
             journal={American Political Science Review},
-            year={2020}
+            volume={114},
+            number={4},
+            pages={1297--1315},
+            year={2020},
+            publisher={Cambridge University Press}
         }`,
-        'blair2013policy': `@article{blair2013policy,
+        'blair2013policy': `@misc{blair2013policy,
             title={Where policy experiments are conducted in economics and political science: The missing autocracies},
             author={Blair, Graeme and Iyengar, Radha K. and Shapiro, Jacob N.},
-            year={2013}
+            year={2013},
+            note={Working paper}
         }`,
         'blair2016declaredesign': `@article{blair2016declaredesign,
             title={DeclareDesign},
@@ -132,20 +139,29 @@
         'blair2018estimatr': `@article{blair2018estimatr,
             title={estimatr: Fast estimators for design-based inference},
             author={Blair, Graeme and Cooper, Jasper and Coppock, Alexander and Humphreys, Macartan and Sonnet, Luke and Fultz, Neal},
-            year={2018}
+            journal={The Comprehensive R Archive Network (CRAN)},
+            year={2018},
+            note={R package version 0.30.6}
         }`,
         'blair2022does': `@article{blair2022does,
             title={How does armed conflict shape investment? Evidence from the mining sector},
             author={Blair, Graeme and Christensen, Darin and Wirtschafter, Valerie},
             journal={Journal of Politics},
-            year={2022}
+            volume={84},
+            number={4},
+            pages={2064--2079},
+            year={2022},
+            publisher={University of Chicago Press}
         }`,
         'blair2021commodity': `@article{blair2021commodity,
             title={Do commodity price shocks cause armed conflict? A meta-analysis of natural experiments},
             author={Blair, Graeme and Christensen, Darin and Rudkin, Aaron},
             journal={American Political Science Review},
-            number={Forthcoming},
-            year={2021}
+            volume={115},
+            number={2},
+            pages={709--716},
+            year={2021},
+            publisher={Cambridge University Press}
         }`,
         'blair2021conducting': `@article{blair2021conducting,
             title={Conducting experiments in multiple contexts},
@@ -156,10 +172,14 @@
             publisher={Cambridge University Press New York}
         }`,
         'blair2021trusted': `@article{blair2021trusted,
-            title={Trusted authorities can change minds and shift norms during conflict.},
+            title={Trusted authorities can change minds and shift norms during conflict},
             author={Blair, Graeme and Littman, Rebecca and Nugent, Elizabeth and Wolfe, Rebecca and Bukar, Mohammed and Crisman, Benjamin and Etim, Anthony and Hazlett, Chad and Kim, Jiyoung},
             journal={Proceedings of the National Academy of Sciences},
-            year={2021}
+            volume={118},
+            number={42},
+            pages={e2105570118},
+            year={2021},
+            publisher={National Academy of Sciences}
         }`,
         'blair2021community': `@article{blair2021community,
             title={Community policing does not build citizen trust in police or reduce crime in the Global South},
@@ -174,13 +194,17 @@
         'blair2018fabricatr': `@article{blair2018fabricatr,
             title={fabricatr: Imagine your data before you collect It},
             author={Blair, Graeme and Cooper, Jasper Jack and Coppock, Alex and Humphreys, Macartan and Rudkin, A and Fultz, N},
-            year={2018}
+            journal={The Comprehensive R Archive Network (CRAN)},
+            year={2018},
+            note={R package version 1.0.2}
         }`,
         'herman2022field': `@article{herman2022field,
             title={Field Experiments in the Global South: Assessing Risks, Localizing Benefits, and Addressing Positionality},
             author={Herman, Biz and Panin, Amma and Wellman, Elizabeth Iams and Blair, Graeme and Pruett, Lindsey D and Ochieng’Opalo, Ken and Alarian, Hannah M and Grossman, Allison N and Tan, Yvonne and Dyzenhaus, Alex P and others},
             journal={PS: Political Science \& Politics},
-            pages={1--1},
+            volume={55},
+            number={4},
+            pages={795--804},
             year={2022},
             publisher={Cambridge University Press}
         }`,
@@ -197,9 +221,9 @@
         'blair2022point': `@article{blair2022point,
             title={The Point of Attack: Where and Why Does Oil Cause Armed Conflict in Africa?},
             author={Blair, Graeme and Christensen, Darin and Gibilisco, Michael},
-            journal={Working Paper},
-            year={2022},
-            publisher={California Institute of Technology Pasadena}
+            journal={Journal of Politics},
+            note={Accepted for publication},
+            year={2025},
         }`,
         'blair2023research': `@incollection{blair2023research,
             title={Research Design in the Social Sciences},
@@ -231,10 +255,16 @@
      */
     var current_citation = null;
 
-    var Cite = require('citation-js')
+    // Use the global Cite object loaded from CDN
+    var Cite = window.Cite;
 
     var citationModalEl = document.querySelector('#citationModal');
-    var citationModal = new bootstrap.Modal(citationModalEl);
+    var citationModal = null;
+    
+    // Check if Bootstrap is available
+    if (typeof bootstrap !== 'undefined') {
+        citationModal = new bootstrap.Modal(citationModalEl);
+    }
 
     var citationOutput = document.querySelector('#citation-output');
 
@@ -251,7 +281,14 @@
             return false;
         }
         updateCitationModal();
-        citationModal.show();
+        if (citationModal) {
+            citationModal.show();
+        } else {
+            // Fallback: manually show the modal
+            citationModalEl.style.display = 'block';
+            citationModalEl.classList.add('show');
+            document.body.classList.add('modal-open');
+        }
     });
 
     citationModalEl.addEventListener('change', function () {
