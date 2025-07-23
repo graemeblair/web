@@ -248,43 +248,10 @@
      */
     var current_citation = null;
 
-    // Check if citation-js is available, either from CDN or globally
-    var Cite = window.Cite;
-    
-    // If citation-js is not available, create a fallback that just returns the raw bibtex
-    if (!Cite) {
-        console.warn('Citation.js library not available, using fallback');
-        Cite = {
-            async: function(citation, options) {
-                return Promise.resolve({
-                    format: function(format) {
-                        return citation; // Just return the raw BibTeX
-                    }
-                });
-            }
-        };
-    }
+    var Cite = require('citation-js')
 
     var citationModalEl = document.querySelector('#citationModal');
-    
-    // Create a simple modal handler since Bootstrap might not be available
-    var citationModal = {
-        show: function() {
-            citationModalEl.style.display = 'block';
-            citationModalEl.classList.add('show');
-            document.body.classList.add('modal-open');
-        },
-        hide: function() {
-            citationModalEl.style.display = 'none';
-            citationModalEl.classList.remove('show');
-            document.body.classList.remove('modal-open');
-        }
-    };
-    
-    // Check if Bootstrap is available and use it if so
-    if (typeof bootstrap !== 'undefined') {
-        citationModal = new bootstrap.Modal(citationModalEl);
-    }
+    var citationModal = new bootstrap.Modal(citationModalEl);
 
     var citationOutput = document.querySelector('#citation-output');
 
@@ -308,34 +275,16 @@
         updateCitationModal();
     });
 
-    // Add close button functionality
-    citationModalEl.addEventListener('click', function(e) {
-        if (e.target.matches('.btn-close, [data-bs-dismiss="modal"]') || e.target === citationModalEl) {
-            citationModal.hide();
-        }
-    });
-
     function updateCitationModal() {
         var options = { generateGraph: false };
         var citationError = document.querySelector('#citation-error');
-        
-        try {
-            // Use Promise.resolve to handle both real and fallback Cite
-            Promise.resolve(Cite.async(current_citation, options)).then(function (result) {
-                citationError.textContent = '';
-                updateCitationOutput(result);
-            }).catch(function (error) {
-                console.log(error);
-                citationError.textContent = error.message || 'Citation error';
-                // Show raw citation as fallback
-                updateCitationOutput({ format: () => current_citation });
-            });
-        } catch (error) {
-            console.log('Citation error:', error);
-            citationError.textContent = 'Citation error: ' + error.message;
-            // Show raw citation as fallback
-            updateCitationOutput({ format: () => current_citation });
-        }
+        Cite.async(current_citation, options).then(function (result) {
+            citationError.textContent = '';
+            updateCitationOutput(result);
+        }).catch(function (error) {
+            console.log(error);
+            citationError.textContent = error.message;
+        });
     }
 
     function updateCitationOutput(data) {
