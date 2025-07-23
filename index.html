@@ -1018,7 +1018,12 @@ Attitudes and the Role of Psychosocial Support in Preventing Conflict Recurrence
               
               var tab = document.querySelector(`#mainNav a[href="${hash}"]`);
               if (tab) {
-                  new bootstrap.Tab(tab).show(); // Bootstrap's method to show the tab
+                  if (typeof bootstrap !== 'undefined') {
+                      new bootstrap.Tab(tab).show(); // Bootstrap's method to show the tab
+                  } else {
+                      // Fallback: manually activate the tab
+                      tab.click();
+                  }
               }
           }
           
