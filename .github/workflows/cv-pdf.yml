@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Compile GraemeBlair-CV.tex with XeLaTeX
         uses: xu-cheng/latex-action@v3
@@ -26,15 +28,32 @@ jobs:
 
       - name: Replace CV PDF on gh-pages
         run: |
+          set -euo pipefail
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git fetch origin gh-pages
-          git worktree add /tmp/gh-pages -B gh-pages origin/gh-pages
+          publish_dir="$(mktemp -d)"
+          cleanup() {
+            git worktree remove --force "$publish_dir" || true
+            rm -rf "$publish_dir"
+          }
+          trap cleanup EXIT
 
-          cp GraemeBlair-CV.pdf /tmp/gh-pages/GraemeBlair-CV.pdf
+          if git fetch --no-tags origin gh-pages:refs/remotes/origin/gh-pages; then
+            git worktree add --detach "$publish_dir" refs/remotes/origin/gh-pages
+          else
+            git worktree add --detach "$publish_dir"
+            (
+              cd "$publish_dir"
+              git checkout --orphan gh-pages
+              git rm -rf . >/dev/null 2>&1 || true
+            )
+          fi
 
-          cd /tmp/gh-pages
+          cp GraemeBlair-CV.pdf "$publish_dir/GraemeBlair-CV.pdf"
+
+          cd "$publish_dir"
           git add GraemeBlair-CV.pdf
 
           if git diff --cached --quiet; then
@@ -43,4 +62,4 @@ jobs:
           fi
 
           git commit -m "Update CV PDF from ${GITHUB_SHA}"
-          git push origin gh-pages
+          git push origin HEAD:gh-pages
