@@ -1,0 +1,46 @@
+name: Build and publish CV PDF
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - GraemeBlair-CV.tex
+      - .github/workflows/cv-pdf.yml
+
+jobs:
+  build-and-deploy:
+    if: github.ref != 'refs/heads/gh-pages'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Compile GraemeBlair-CV.tex with XeLaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: GraemeBlair-CV.tex
+          latexmk_use_xelatex: true
+
+      - name: Replace CV PDF on gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin gh-pages
+          git worktree add /tmp/gh-pages -B gh-pages origin/gh-pages
+
+          cp GraemeBlair-CV.pdf /tmp/gh-pages/GraemeBlair-CV.pdf
+
+          cd /tmp/gh-pages
+          git add GraemeBlair-CV.pdf
+
+          if git diff --cached --quiet; then
+            echo "No PDF changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Update CV PDF from ${GITHUB_SHA}"
+          git push origin gh-pages
