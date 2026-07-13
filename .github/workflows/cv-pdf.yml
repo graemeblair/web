@@ -1,0 +1,84 @@
+name: Build and publish CV PDF
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - GraemeBlair-CV.tex
+      - .github/workflows/cv-pdf.yml
+      - .github/fonts/**
+
+jobs:
+  build-and-deploy:
+    if: github.ref != 'refs/heads/gh-pages'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compile GraemeBlair-CV.tex with XeLaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: GraemeBlair-CV.tex
+          latexmk_use_xelatex: true
+          pre_compile: |
+            mkdir -p ~/.local/share/fonts
+            copied_font=0
+            if [ -d .github/fonts ]; then
+              for font_file in .github/fonts/Hoefler* .github/fonts/Monaco* .github/fonts/Gentium* .github/fonts/GenBas* .github/fonts/GenBkBas*; do
+                [ -f "$font_file" ] || continue
+                cp "$font_file" ~/.local/share/fonts/
+                copied_font=1
+              done
+            fi
+            if [ "$copied_font" -eq 1 ] && command -v fc-cache >/dev/null 2>&1; then
+              fc-cache -f
+            fi
+
+      - name: Replace CV PDF on gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          publish_dir="$(mktemp -d)"
+          cleanup() {
+            rm -rf "$publish_dir"
+          }
+          trap cleanup EXIT
+
+          remote_url="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git clone --depth 1 --branch gh-pages "$remote_url" "$publish_dir"
+          else
+            git init "$publish_dir"
+            (
+              cd "$publish_dir"
+              git checkout --orphan gh-pages
+              git remote add origin "$remote_url"
+            )
+          fi
+
+          cp "${GITHUB_WORKSPACE}/GraemeBlair-CV.pdf" "$publish_dir/GraemeBlair-CV.pdf"
+
+          cd "$publish_dir"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add GraemeBlair-CV.pdf
+
+          if git diff --cached --quiet; then
+            echo "No PDF changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Update CV PDF from ${GITHUB_SHA}"
+          git push origin HEAD:gh-pages
