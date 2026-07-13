@@ -6,6 +6,7 @@ on:
     paths:
       - GraemeBlair-CV.tex
       - .github/workflows/cv-pdf.yml
+      - .github/fonts/**
 
 jobs:
   build-and-deploy:
@@ -25,6 +26,18 @@ jobs:
         with:
           root_file: GraemeBlair-CV.tex
           latexmk_use_xelatex: true
+          pre_compile: |
+            set -euo pipefail
+            mkdir -p ~/.local/share/fonts
+            font_files="$(find .github/fonts -maxdepth 1 -type f \( -name 'Hoefler*' -o -name 'Monaco*' -o -name 'Gentium*' \) 2>/dev/null || true)"
+            if [ -n "$font_files" ]; then
+              while IFS= read -r font_file; do
+                cp "$font_file" ~/.local/share/fonts/
+              done <<< "$font_files"
+              if command -v fc-cache >/dev/null 2>&1; then
+                fc-cache -f
+              fi
+            fi
 
       - name: Replace CV PDF on gh-pages
         env:
