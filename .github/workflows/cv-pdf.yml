@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-and-deploy:
-    if: github.ref != 'refs/heads/gh-pages'
+    if: github.event_name == 'workflow_dispatch' || github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -27,6 +27,8 @@ jobs:
           latexmk_use_xelatex: true
 
       - name: Replace CV PDF on gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
@@ -35,23 +37,24 @@ jobs:
 
           publish_dir="$(mktemp -d)"
           cleanup() {
-            git worktree remove --force "$publish_dir" || true
             rm -rf "$publish_dir"
           }
           trap cleanup EXIT
 
-          if git fetch --no-tags origin gh-pages:refs/remotes/origin/gh-pages; then
-            git worktree add --detach "$publish_dir" refs/remotes/origin/gh-pages
+          remote_url="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git clone --depth 1 --branch gh-pages "$remote_url" "$publish_dir"
           else
-            git worktree add --detach "$publish_dir"
+            git init "$publish_dir"
             (
               cd "$publish_dir"
               git checkout --orphan gh-pages
-              git rm -rf . >/dev/null 2>&1 || true
+              git remote add origin "$remote_url"
             )
           fi
 
-          cp GraemeBlair-CV.pdf "$publish_dir/GraemeBlair-CV.pdf"
+          cp "${GITHUB_WORKSPACE}/GraemeBlair-CV.pdf" "$publish_dir/GraemeBlair-CV.pdf"
 
           cd "$publish_dir"
           git add GraemeBlair-CV.pdf
