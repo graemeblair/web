@@ -30,7 +30,7 @@ jobs:
             mkdir -p ~/.local/share/fonts
             copied_font=0
             if [ -d .github/fonts ]; then
-              for font_file in .github/fonts/Hoefler* .github/fonts/Monaco* .github/fonts/Gentium*; do
+              for font_file in .github/fonts/Hoefler* .github/fonts/Monaco* .github/fonts/Gentium* .github/fonts/GenBas* .github/fonts/GenBkBas*; do
                 [ -f "$font_file" ] || continue
                 cp "$font_file" ~/.local/share/fonts/
                 copied_font=1
