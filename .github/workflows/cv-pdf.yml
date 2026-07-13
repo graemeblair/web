@@ -57,6 +57,8 @@ jobs:
           cp "${GITHUB_WORKSPACE}/GraemeBlair-CV.pdf" "$publish_dir/GraemeBlair-CV.pdf"
 
           cd "$publish_dir"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add GraemeBlair-CV.pdf
 
           if git diff --cached --quiet; then
