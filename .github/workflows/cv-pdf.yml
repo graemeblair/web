@@ -27,7 +27,6 @@ jobs:
           root_file: GraemeBlair-CV.tex
           latexmk_use_xelatex: true
           pre_compile: |
-            set -eu
             mkdir -p ~/.local/share/fonts
             copied_font=0
             if [ -d .github/fonts ]; then
