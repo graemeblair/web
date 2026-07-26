@@ -1,0 +1,43 @@
+# TeX Live packages needed to build GraemeBlair-CV.tex, on top of BasicTeX.
+#
+# Installing only these instead of all of MacTeX is what keeps the build fast:
+# the full distribution takes about five minutes to install, this takes well
+# under one, and the result is small enough to cache as a single tarball.
+#
+# tlmgr resolves dependencies, so packages pulled in by something already listed
+# (most of the oberdiek bundle, via hyperref) are deliberately not repeated here.
+#
+# Editing this file changes the cache key and forces a fresh install on the next
+# run. Derived from the 62 files GraemeBlair-CV.log reports loading -- if you add
+# a \usepackage to the CV, add its package here too.
+
+latexmk
+
+# fonts and engine
+fontspec
+l3packages
+xunicode
+xltxtra
+realscripts
+metalogo
+tipa
+iftex
+
+# layout
+geometry
+changepage
+marginnote
+sectsty
+ulem
+comment
+etaremune
+xkeyval
+graphics
+graphics-cfg
+graphics-def
+
+# links and PDF metadata
+hyperref
+greek-fontenc
+etoolbox
+url
