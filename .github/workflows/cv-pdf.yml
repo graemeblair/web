@@ -7,11 +7,10 @@ on:
       - GraemeBlair-CV.tex
       - .github/workflows/cv-pdf.yml
       - .github/fonts/**
-  pull_request:
-    paths:
-      - GraemeBlair-CV.tex
-      - .github/workflows/cv-pdf.yml
-      - .github/fonts/**
+
+# Note: there is deliberately no pull_request trigger. Branches in this
+# repository are pushed directly, so a pull_request trigger would only start a
+# second, identical macOS build of the same commit.
 
 concurrency:
   group: cv-pdf-${{ github.ref }}
@@ -118,33 +117,42 @@ jobs:
           if-no-files-found: warn
 
       - name: Publish PDF to the site
-        # Only the default branch is published. Feature branches and pull
-        # requests build for verification but must not overwrite the live PDF.
-        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        # Only the default branch is published. Other branches build for
+        # verification but must not overwrite the live PDF.
+        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
           set -euo pipefail
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          if git diff --quiet -- GraemeBlair-CV.pdf; then
-            echo "PDF unchanged; nothing to publish."
-            exit 0
-          fi
-
-          git add GraemeBlair-CV.pdf
-          git commit -m "Update CV PDF from ${GITHUB_SHA}"
-
           branch="${GITHUB_REF_NAME}"
+          built_pdf="${RUNNER_TEMP}/GraemeBlair-CV.pdf"
+          cp GraemeBlair-CV.pdf "$built_pdf"
+
           for attempt in 1 2 3 4 5; do
+            # Re-anchor on the current remote tip each attempt, then drop the
+            # freshly built PDF on top. The commit only ever touches this one
+            # file, so this cannot conflict with concurrent pushes.
+            git fetch --depth=1 origin "$branch"
+            git checkout -q -B cv-publish FETCH_HEAD
+            cp "$built_pdf" GraemeBlair-CV.pdf
+
+            if git diff --quiet -- GraemeBlair-CV.pdf; then
+              echo "PDF unchanged; nothing to publish."
+              exit 0
+            fi
+
+            git add GraemeBlair-CV.pdf
+            git commit -q -m "Update CV PDF from ${GITHUB_SHA}"
+
             if git push origin "HEAD:${branch}"; then
               echo "Published GraemeBlair-CV.pdf to ${branch}."
               exit 0
             fi
-            echo "Push attempt ${attempt} failed; rebasing on ${branch} and retrying."
-            git fetch origin "${branch}"
-            git rebase "origin/${branch}"
-            sleep $((attempt * 2))
+
+            echo "Push attempt ${attempt} failed; retrying against the new tip."
+            sleep $((attempt * 3))
           done
 
           echo "::error::Could not push the rebuilt CV PDF to ${branch}."
