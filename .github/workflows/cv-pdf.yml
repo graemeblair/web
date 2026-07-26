@@ -53,6 +53,11 @@ jobs:
       # (.github/texlive-packages.txt) and cache the result as a single tarball.
       # One large file restores far quicker than letting actions/cache walk tens
       # of thousands of small TeX files.
+      #
+      # Actions caches are branch-scoped with fallback to the default branch, so
+      # the entry that matters is the one written by a gh-pages run: that one is
+      # readable from every branch. A cache filled on a feature branch is only
+      # visible to that branch, so the first run on a new branch may reinstall.
       - name: Restore cached TeX Live
         id: texlive-cache
         uses: actions/cache@v4
