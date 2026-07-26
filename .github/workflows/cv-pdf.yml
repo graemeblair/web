@@ -48,14 +48,79 @@ jobs:
           done
           echo "installed $installed bundled font file(s)"
 
+      # Installing all of MacTeX took ~300s of a ~314s job, while the XeLaTeX run
+      # itself takes 2s. So install BasicTeX plus only the packages the CV needs
+      # (.github/texlive-packages.txt) and cache the result as a single tarball.
+      # One large file restores far quicker than letting actions/cache walk tens
+      # of thousands of small TeX files.
+      #
+      # Actions caches are branch-scoped with fallback to the default branch, so
+      # the entry that matters is the one written by a gh-pages run: that one is
+      # readable from every branch. A cache filled on a feature branch is only
+      # visible to that branch, so the first run on a new branch may reinstall.
+      - name: Restore cached TeX Live
+        id: texlive-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/texlive-cv.tar.gz
+          key: texlive-cv-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.github/texlive-packages.txt') }}
+
       - name: Install TeX Live
+        if: steps.texlive-cache.outputs.cache-hit != 'true'
         run: |
           set -euo pipefail
-          # mactex-no-gui is the full TeX Live distribution without the GUI
-          # front-ends. It is a single download, so unlike BasicTeX + tlmgr it
-          # does not depend on CTAN mirror availability at build time.
-          brew install --cask mactex-no-gui
-          echo "/Library/TeX/texbin" >> "$GITHUB_PATH"
+          brew install --cask basictex
+          export PATH="/Library/TeX/texbin:$PATH"
+
+          packages="$(sed -e 's/#.*//' -e '/^[[:space:]]*$/d' .github/texlive-packages.txt | tr '\n' ' ')"
+          echo "installing: $packages"
+          sudo tlmgr update --self
+          # shellcheck disable=SC2086
+          sudo tlmgr install $packages
+
+          sudo tar -czpf "$HOME/texlive-cv.tar.gz" -C / usr/local/texlive Library/TeX
+          sudo chown "$(id -u):$(id -g)" "$HOME/texlive-cv.tar.gz"
+          echo "cached tarball size: $(du -h "$HOME/texlive-cv.tar.gz" | cut -f1)"
+
+      - name: Unpack cached TeX Live
+        if: steps.texlive-cache.outputs.cache-hit == 'true'
+        run: |
+          set -euo pipefail
+          sudo tar -xzpf "$HOME/texlive-cv.tar.gz" -C /
+
+      - name: Put TeX Live on PATH
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+
+          # Locate the bin directory by testing for an executable xelatex. Note
+          # that xelatex is a *symlink* to xetex, so a `find -type f` search
+          # misses it; `-x`, which follows symlinks, is what works here.
+          texbin=""
+          for candidate in /usr/local/texlive/*/bin/*; do
+            if [ -x "$candidate/xelatex" ]; then
+              texbin="$candidate"
+              break
+            fi
+          done
+          # Fall back to the symlink farm BasicTeX sets up.
+          if [ -z "$texbin" ] && [ -x /Library/TeX/texbin/xelatex ]; then
+            texbin=/Library/TeX/texbin
+          fi
+
+          if [ -z "$texbin" ]; then
+            echo "::error::xelatex not found. Contents follow for diagnosis."
+            ls -la /usr/local/texlive || true
+            for d in /usr/local/texlive/*/bin/*; do
+              echo "--- $d"
+              ls -la "$d" | head -20 || true
+            done
+            exit 1
+          fi
+
+          echo "using $texbin"
+          "$texbin/xelatex" --version | head -1
+          echo "$texbin" >> "$GITHUB_PATH"
 
       - name: Verify the CV fonts are visible to XeTeX
         run: |
