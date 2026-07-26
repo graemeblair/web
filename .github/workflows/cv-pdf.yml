@@ -23,6 +23,8 @@ jobs:
 
       - name: Compile GraemeBlair-CV.tex with XeLaTeX
         uses: xu-cheng/latex-action@v3
+        env:
+          ACTIONS_ALLOW_UNSECURE_STOPCOMMAND_TOKENS: true
         with:
           root_file: GraemeBlair-CV.tex
           latexmk_use_xelatex: true
