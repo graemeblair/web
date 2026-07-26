@@ -86,14 +86,36 @@ jobs:
       - name: Put TeX Live on PATH
         run: |
           set -euo pipefail
-          # Resolve the real bin directory rather than trusting the
-          # /Library/TeX/texbin symlink farm, which the tarball may not restore.
-          xelatex_bin="$(find /usr/local/texlive -type f -name xelatex -perm -u+x | head -1)"
-          if [ -z "$xelatex_bin" ]; then
-            echo "::error::xelatex not found under /usr/local/texlive."
+          shopt -s nullglob
+
+          # Locate the bin directory by testing for an executable xelatex. Note
+          # that xelatex is a *symlink* to xetex, so a `find -type f` search
+          # misses it; `-x`, which follows symlinks, is what works here.
+          texbin=""
+          for candidate in /usr/local/texlive/*/bin/*; do
+            if [ -x "$candidate/xelatex" ]; then
+              texbin="$candidate"
+              break
+            fi
+          done
+          # Fall back to the symlink farm BasicTeX sets up.
+          if [ -z "$texbin" ] && [ -x /Library/TeX/texbin/xelatex ]; then
+            texbin=/Library/TeX/texbin
+          fi
+
+          if [ -z "$texbin" ]; then
+            echo "::error::xelatex not found. Contents follow for diagnosis."
+            ls -la /usr/local/texlive || true
+            for d in /usr/local/texlive/*/bin/*; do
+              echo "--- $d"
+              ls -la "$d" | head -20 || true
+            done
             exit 1
           fi
-          dirname "$xelatex_bin" >> "$GITHUB_PATH"
+
+          echo "using $texbin"
+          "$texbin/xelatex" --version | head -1
+          echo "$texbin" >> "$GITHUB_PATH"
 
       - name: Verify the CV fonts are visible to XeTeX
         run: |
