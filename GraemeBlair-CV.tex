@@ -22,14 +22,10 @@
 \usepackage{xunicode}
 \usepackage{xltxtra}
 \defaultfontfeatures{Mapping=tex-text} % converts LaTeX specials (``quotes'' --- dashes etc.) to unicode
-\IfFontExistsTF{Hoefler Text}{%
-\setromanfont [Ligatures={Common}, BoldFont={Hoefler Text Black}, ItalicFont={Hoefler Text Italic}]{Hoefler Text}%
-}{%
-\setromanfont[Ligatures={Common}]{TeX Gyre Pagella}%
-}
-\setmonofont[Scale=0.8]{Latin Modern Mono}
+\setromanfont [Ligatures={Common}, BoldFont={Hoefler Text Black}, ItalicFont={Hoefler Text Italic}]{Hoefler Text}
+\setmonofont[Scale=0.8]{Monaco} 
 % ---- CUSTOM AMPERSAND
-\newcommand{\amper}{{\IfFontExistsTF{Gentium Basic Italic}{\fontspec[Scale=.95]{Gentium Basic Italic}}{\fontspec[Scale=.95]{TeX Gyre Pagella}}\selectfont\itshape\&}}
+\newcommand{\amper}{{\fontspec[Scale=.95]{Gentium Basic Italic}\selectfont\itshape\&}}
 % ---- MARGIN YEARS
 \usepackage{marginnote}
 \newcommand{\years}[1]{\marginnote{\scriptsize #1}}
@@ -79,7 +75,7 @@
 {\large  Current appointments}\donotbreakhere
 \begin{indnt}
 Fellow, Center for Advanced Study in the Behavioral Sciences, Stanford University, 2026--27\\[.75em]
-Professor of Political Science, UCLA, 2025-- \hspace{0.1em}(on leave 2026-27) \\[.75em]
+Professor of Political Science, UCLA, 2025-- (on leave 2026-27) \\[.75em]
 Co-Director, \href{https://deportationdata.org}{Deportation Data Project}, 2024--
 \end{indnt}
 \vspace{1.5em}

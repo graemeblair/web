@@ -7,78 +7,145 @@ on:
       - GraemeBlair-CV.tex
       - .github/workflows/cv-pdf.yml
       - .github/fonts/**
+  pull_request:
+    paths:
+      - GraemeBlair-CV.tex
+      - .github/workflows/cv-pdf.yml
+      - .github/fonts/**
+
+concurrency:
+  group: cv-pdf-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
-  build-and-deploy:
-    if: github.ref != 'refs/heads/gh-pages'
-    runs-on: ubuntu-latest
+  build:
+    # GraemeBlair-CV.tex is set in Hoefler Text and Monaco. Those are macOS
+    # system fonts and are not redistributable, so they cannot be vendored into
+    # this repository and installed on a Linux runner -- the build has to run on
+    # macOS, where XeTeX picks them up from the system font book. Substituting
+    # free lookalikes changes the typography of the published CV, so don't.
+    runs-on: macos-latest
+    timeout-minutes: 60
     permissions:
       contents: write
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v5
+
+      - name: Install fonts bundled in this repository
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/Library/Fonts"
+          shopt -s nullglob
+          installed=0
+          for font in .github/fonts/*.ttf .github/fonts/*.otf .github/fonts/*.ttc; do
+            cp "$font" "$HOME/Library/Fonts/"
+            echo "installed $(basename "$font")"
+            installed=$((installed + 1))
+          done
+          echo "installed $installed bundled font file(s)"
+
+      - name: Install TeX Live
+        run: |
+          set -euo pipefail
+          # mactex-no-gui is the full TeX Live distribution without the GUI
+          # front-ends. It is a single download, so unlike BasicTeX + tlmgr it
+          # does not depend on CTAN mirror availability at build time.
+          brew install --cask mactex-no-gui
+          echo "/Library/TeX/texbin" >> "$GITHUB_PATH"
+
+      - name: Verify the CV fonts are visible to XeTeX
+        run: |
+          set -euo pipefail
+          cat > font-probe.tex <<'PROBE'
+          \documentclass{article}
+          \usepackage{fontspec}
+          \newcommand{\probe}[1]{\IfFontExistsTF{#1}{\typeout{FONT-OK: #1}}{\typeout{FONT-MISSING: #1}}}
+          \begin{document}
+          \probe{Hoefler Text}
+          \probe{Hoefler Text Black}
+          \probe{Hoefler Text Italic}
+          \probe{Monaco}
+          font probe
+          \end{document}
+          PROBE
+
+          xelatex -interaction=nonstopmode -halt-on-error font-probe.tex >/dev/null
+          grep 'FONT-OK\|FONT-MISSING' font-probe.log || true
+
+          if grep -q 'FONT-MISSING' font-probe.log; then
+            echo "::error::A font required by GraemeBlair-CV.tex is not installed on this runner."
+            grep 'FONT-MISSING' font-probe.log
+            exit 1
+          fi
 
       - name: Compile GraemeBlair-CV.tex with XeLaTeX
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: GraemeBlair-CV.tex
-          latexmk_use_xelatex: true
-          pre_compile: |
-            mkdir -p ~/.local/share/fonts
-            copied_font=0
-            if [ -d .github/fonts ]; then
-              for font_file in .github/fonts/Hoefler* .github/fonts/Monaco* .github/fonts/Gentium* .github/fonts/GenBas* .github/fonts/GenBkBas*; do
-                [ -f "$font_file" ] || continue
-                cp "$font_file" ~/.local/share/fonts/
-                copied_font=1
-              done
-            fi
-            if [ "$copied_font" -eq 1 ] && command -v fc-cache >/dev/null 2>&1; then
-              fc-cache -f
-            fi
+        run: |
+          set -euo pipefail
+          latexmk -xelatex -halt-on-error -file-line-error -interaction=nonstopmode GraemeBlair-CV.tex
 
-      - name: Replace CV PDF on gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify the PDF was typeset in the intended fonts
+        run: |
+          set -euo pipefail
+          # Guard against a silent regression to substituted fonts: if XeTeX had
+          # fallen back, these font families would never have been created.
+          for family in "HoeflerText(0)" "Monaco(0)"; do
+            if ! grep -qF "Font family '${family}' created" GraemeBlair-CV.log; then
+              echo "::error::GraemeBlair-CV.pdf was not typeset with ${family}."
+              exit 1
+            fi
+            echo "ok: ${family}"
+          done
+
+          if [ ! -s GraemeBlair-CV.pdf ]; then
+            echo "::error::GraemeBlair-CV.pdf is missing or empty."
+            exit 1
+          fi
+          ls -l GraemeBlair-CV.pdf
+
+      - name: Upload build output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: |
+            GraemeBlair-CV.pdf
+            GraemeBlair-CV.log
+          if-no-files-found: warn
+
+      - name: Publish PDF to the site
+        # Only the default branch is published. Feature branches and pull
+        # requests build for verification but must not overwrite the live PDF.
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
           set -euo pipefail
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          publish_dir="$(mktemp -d)"
-          cleanup() {
-            rm -rf "$publish_dir"
-          }
-          trap cleanup EXIT
-
-          remote_url="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-
-          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
-            git clone --depth 1 --branch gh-pages "$remote_url" "$publish_dir"
-          else
-            git init "$publish_dir"
-            (
-              cd "$publish_dir"
-              git checkout --orphan gh-pages
-              git remote add origin "$remote_url"
-            )
-          fi
-
-          cp "${GITHUB_WORKSPACE}/GraemeBlair-CV.pdf" "$publish_dir/GraemeBlair-CV.pdf"
-
-          cd "$publish_dir"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add GraemeBlair-CV.pdf
-
-          if git diff --cached --quiet; then
-            echo "No PDF changes to commit."
+          if git diff --quiet -- GraemeBlair-CV.pdf; then
+            echo "PDF unchanged; nothing to publish."
             exit 0
           fi
 
+          git add GraemeBlair-CV.pdf
           git commit -m "Update CV PDF from ${GITHUB_SHA}"
-          git push origin HEAD:gh-pages
+
+          branch="${GITHUB_REF_NAME}"
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${branch}"; then
+              echo "Published GraemeBlair-CV.pdf to ${branch}."
+              exit 0
+            fi
+            echo "Push attempt ${attempt} failed; rebasing on ${branch} and retrying."
+            git fetch origin "${branch}"
+            git rebase "origin/${branch}"
+            sleep $((attempt * 2))
+          done
+
+          echo "::error::Could not push the rebuilt CV PDF to ${branch}."
+          exit 1
