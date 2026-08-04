@@ -1,16 +1,13 @@
-name: Build and publish CV PDF
+name: Build CV PDF
 
+# Called by build-deploy.yml, which needs the PDF for the Pages artifact.
+# Reusable rather than standalone: the CV source is generated from content/, so
+# there is no longer a GraemeBlair-CV.tex path to trigger on, and the PDF is no
+# longer committed anywhere -- it is uploaded as an artifact and bundled into
+# the deploy.
 on:
+  workflow_call:
   workflow_dispatch:
-  push:
-    paths:
-      - GraemeBlair-CV.tex
-      - .github/workflows/cv-pdf.yml
-      - .github/fonts/**
-
-# Note: there is deliberately no pull_request trigger. Branches in this
-# repository are pushed directly, so a pull_request trigger would only start a
-# second, identical macOS build of the same commit.
 
 concurrency:
   group: cv-pdf-${{ github.ref }}
@@ -28,12 +25,30 @@ jobs:
     # free lookalikes changes the typography of the published CV, so don't.
     runs-on: macos-latest
     timeout-minutes: 60
-    permissions:
-      contents: write
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
+
+      # The CV source is generated from content/*.yml, so it has to be built
+      # before XeLaTeX can see it. build.py writes it to _site/, and the
+      # pre-compile lint in sitegen/targets/latex.py runs as part of that --
+      # catching an escaping bug in milliseconds, with a line number, rather
+      # than four minutes later as a TeX stack trace or (worse) a PDF that
+      # compiled successfully into math mode.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Generate the CV source
+        run: |
+          set -euo pipefail
+          pip install -r requirements.txt
+          python build.py
+          cp _site/GraemeBlair-CV.tex .
+          ls -l GraemeBlair-CV.tex
 
       - name: Install fonts bundled in this repository
         run: |
@@ -171,6 +186,24 @@ jobs:
           fi
           ls -l GraemeBlair-CV.pdf
 
+      # Gate 4. Until now the CV had no automated check at all beyond "XeLaTeX
+      # exited 0" -- and a missing \$ does not stop XeLaTeX, it opens math mode
+      # and produces garbled output that compiles successfully.
+      #
+      # pdftotext catches every content and line-break change; the page count
+      # catches a pagination shift; pdftoppm catches kerning and font-fallback
+      # regressions that text extraction cannot see. The volatile "Last updated
+      # <month> <year>" footer is normalized out on both sides.
+      - name: Compare the PDF against the frozen baseline
+        run: |
+          set -euo pipefail
+          brew install --quiet poppler
+          pip install pillow
+          python tests/acceptance/compare_pdf.py \
+            tests/acceptance/baseline/GraemeBlair-CV.pdf \
+            GraemeBlair-CV.pdf \
+            --expect-pages 9 --images
+
       - name: Upload build output
         if: always()
         uses: actions/upload-artifact@v4
@@ -180,45 +213,3 @@ jobs:
             GraemeBlair-CV.pdf
             GraemeBlair-CV.log
           if-no-files-found: warn
-
-      - name: Publish PDF to the site
-        # Only the default branch is published. Other branches build for
-        # verification but must not overwrite the live PDF.
-        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-        run: |
-          set -euo pipefail
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          branch="${GITHUB_REF_NAME}"
-          built_pdf="${RUNNER_TEMP}/GraemeBlair-CV.pdf"
-          cp GraemeBlair-CV.pdf "$built_pdf"
-
-          for attempt in 1 2 3 4 5; do
-            # Re-anchor on the current remote tip each attempt, then drop the
-            # freshly built PDF on top. The commit only ever touches this one
-            # file, so this cannot conflict with concurrent pushes.
-            git fetch --depth=1 origin "$branch"
-            git checkout -q -B cv-publish FETCH_HEAD
-            cp "$built_pdf" GraemeBlair-CV.pdf
-
-            if git diff --quiet -- GraemeBlair-CV.pdf; then
-              echo "PDF unchanged; nothing to publish."
-              exit 0
-            fi
-
-            git add GraemeBlair-CV.pdf
-            git commit -q -m "Update CV PDF from ${GITHUB_SHA}"
-
-            if git push origin "HEAD:${branch}"; then
-              echo "Published GraemeBlair-CV.pdf to ${branch}."
-              exit 0
-            fi
-
-            echo "Push attempt ${attempt} failed; retrying against the new tip."
-            sleep $((attempt * 3))
-          done
-
-          echo "::error::Could not push the rebuilt CV PDF to ${branch}."
-          exit 1

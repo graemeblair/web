@@ -176,6 +176,21 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "Chung v. Trump}, March 2025",
         "CV line gains its amicus-brief link (S.D.N.Y.).",
     ),
+    # These keys exist for the PDF text comparison, which sees typeset prose
+    # rather than LaTeX source -- so keys containing braces or macros never
+    # match there. Each matches both sides of its change.
+    (
+        "text",
+        "Stanford Daily Publishing Corporation",
+        "In the typeset CV this line gains its parentheses and David Hausman "
+        "-- see the two entries above. Registered again in a brace-free form "
+        "because the PDF comparison reads text, not LaTeX.",
+    ),
+    (
+        "text",
+        "D.N.N. et al. v. Liggins",
+        "Brace-free form of the stray-period fix above, for the PDF comparison.",
+    ),
     (
         "text",
         "<p/>",

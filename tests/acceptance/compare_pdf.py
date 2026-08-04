@@ -30,6 +30,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent))
+
 VOLATILE = [
     (re.compile(r"Last updated \w+ \d{4}"), "Last updated <DATE>"),
 ]
@@ -114,9 +116,17 @@ def main(argv: list[str] | None = None) -> int:
 
     diff = text_diff(args.baseline, args.built)
     if diff:
-        print("FAIL text:")
-        sys.stdout.write(diff)
-        failed = True
+        # Content that has deliberately changed since the baseline was frozen
+        # is registered in expected_diffs.py with a reason. Anything else fails.
+        from expected_diffs import unexplained_diff_lines
+
+        unexplained = unexplained_diff_lines(diff)
+        if unexplained:
+            print("FAIL text -- changes with no registered reason:")
+            print("\n".join(unexplained))
+            failed = True
+        else:
+            print(f"ok text: {len(diff.splitlines())} diff lines, all registered")
     else:
         print("ok text: identical after footer normalization")
 

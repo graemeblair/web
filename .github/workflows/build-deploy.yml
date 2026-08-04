@@ -1,0 +1,104 @@
+name: Build and deploy
+
+# Builds the site from content/*.yml and publishes it to GitHub Pages.
+#
+# Nothing generated is committed anywhere. index.html, GraemeBlair-CV.tex and
+# GraemeBlair-CV.pdf exist only inside a run, which is the point: files that are
+# not in a branch cannot be hand-edited, and an edit to generated output would
+# be silently discarded by the next build.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # macOS, because the CV is set in Hoefler Text and Monaco -- non-redistributable
+  # system fonts. See cv-pdf.yml.
+  cv:
+    uses: ./.github/workflows/cv-pdf.yml
+
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # `always()` so a failed CV build degrades the PDF rather than taking the
+    # website down with it. See the fallback below.
+    needs: [cv]
+    if: always()
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Build
+        run: python build.py
+
+      - name: Fetch the CV PDF built on macOS
+        id: cv-artifact
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: cv-pdf
+          path: cv-artifact
+
+      # Three-step fallback. A missing PDF is a broken link on the landing page
+      # (index.html links GraemeBlair-CV.pdf from the header), so the site must
+      # never deploy without one -- but a font regression on the macOS runner
+      # should degrade CV freshness, not take the website offline.
+      - name: Place the CV PDF
+        run: |
+          set -euo pipefail
+          if [ -s cv-artifact/GraemeBlair-CV.pdf ]; then
+            cp cv-artifact/GraemeBlair-CV.pdf _site/GraemeBlair-CV.pdf
+            echo "CV PDF: freshly built" >> "$GITHUB_STEP_SUMMARY"
+          elif curl -fsSL https://graemeblair.com/GraemeBlair-CV.pdf -o _site/GraemeBlair-CV.pdf; then
+            echo "::warning::CV build failed; falling back to the currently-published PDF."
+            echo "CV PDF: **STALE** -- the macOS build failed, serving the previously published PDF." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::error::No CV PDF available, and the published one could not be fetched."
+            exit 1
+          fi
+          ls -l _site/GraemeBlair-CV.pdf
+
+      - name: Acceptance gates
+        run: python -m pytest tests/acceptance -q
+
+      - name: Check HTML validity
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq && sudo apt-get install -y -qq tidy
+          python -m pytest tests/acceptance -q -k tidy
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    # Only main publishes. Pull requests build and run the gates, which is the
+    # point of the PR trigger, but must not touch the live site.
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

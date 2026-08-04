@@ -1,0 +1,6 @@
+# Owners for structural code. content/ stays open for fast edits.
+/templates/  @graemeblair
+/sitegen/    @graemeblair
+/build.py    @graemeblair
+/tests/      @graemeblair
+/.github/    @graemeblair
