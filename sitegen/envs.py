@@ -2,7 +2,12 @@
 
 HTML and LaTeX cannot share one environment. Jinja's default `{{ }}` and `{% %}`
 are unreadable and ambiguous beside `\\href{...}{...}` and `{\\it ...}`, so the
-LaTeX environment uses `((( )))` / `((* *))` delimiters instead.
+LaTeX environment uses `<<< >>>` / `<<% %>>` delimiters instead.
+
+Parenthesis-style delimiters were tried first and are a trap: CV prose is full
+of literal parentheses, so `((( x )))` next to a "(graduate)" annotation gets
+parsed as `(((` + the expression `( x )` + `)))`, and the parentheses silently
+vanish from the PDF. `<` and `>` appear nowhere in this document.
 
 Two settings carry most of the safety:
 
@@ -26,6 +31,7 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined
 from markupsafe import Markup
 
 from .escape import raw_tex
+from .filters import for_target, titlecase
 from .markup import to_html, to_tex
 
 REPO = Path(__file__).resolve().parent.parent
@@ -53,6 +59,8 @@ def html_env() -> Environment:
     )
     env.globals["inline"] = _inline
     env.filters["markup"] = to_html
+    env.filters["titlecase"] = titlecase
+    env.filters["for_target"] = lambda items: for_target(items, "site")
     return env
 
 
@@ -61,12 +69,12 @@ def latex_env() -> Environment:
 
     env = Environment(
         loader=FileSystemLoader(TEMPLATES / "latex"),
-        block_start_string="((*",
-        block_end_string="*))",
-        variable_start_string="(((",
-        variable_end_string=")))",
-        comment_start_string="((=",
-        comment_end_string="=))",
+        block_start_string="<<%",
+        block_end_string="%>>",
+        variable_start_string="<<<",
+        variable_end_string=">>>",
+        comment_start_string="<<#",
+        comment_end_string="#>>",
         autoescape=False,
         finalize=latex_escape,
         trim_blocks=True,
@@ -76,4 +84,6 @@ def latex_env() -> Environment:
     )
     env.filters["raw_tex"] = raw_tex
     env.filters["markup"] = to_tex
+    env.filters["titlecase"] = titlecase
+    env.filters["for_target"] = lambda items: for_target(items, "cv")
     return env

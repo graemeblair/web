@@ -1,0 +1,6 @@
+\begin{indnt}
+<<% for course in teaching.courses | for_target %>>
+<<< teaching.cv_prefix >>> <<< course.number >>>. <<< course.title >>> (<<< teaching.levels[course.level].cv >>>), <<< teaching.institution >>>\\[<<% if loop.last %>>1em<<% else %>>.75em<<% endif %>>]
+<<% endfor %>>
+<<< teaching.cv_short_courses >>>
+\end{indnt}

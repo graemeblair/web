@@ -1,0 +1,91 @@
+# Courses. One record per course feeds both the Teaching tab and the CV.
+#
+# The two targets differ only in presentation, and every difference is derived
+# rather than stored:
+#
+#   prefix     "POL SCI 150" on the site, "PS 150" in the CV
+#   level      "(Ph.D. seminar)" on the site, "(graduate)" in the CV
+#   title      stored in sentence case (the CV's house style); the site applies
+#              a `titlecase` filter
+#
+# There is exactly ONE course number per course, which is what makes the
+# PS 179 / POL SCI 170A disagreement impossible to reintroduce. A lint asserts
+# the syllabus filename contains the number.
+
+site_prefix: POL SCI
+cv_prefix: PS
+institution: UCLA
+
+# Register vocabulary: same fact, different convention per target.
+levels:
+  undergraduate: {site: undergraduate, cv: undergraduate}
+  graduate: {site: Ph.D. seminar, cv: graduate}
+
+courses:
+  # The site does not list PS 50 today, and its syllabus
+  # (static/teaching/UCLA_PS50_Syllabus.pdf) is linked from nowhere. Kept
+  # CV-only rather than assumed to be an omission -- dropping a course from the
+  # site is a normal thing to do deliberately.
+  - number: "50"
+    title: Comparative politics
+    level: undergraduate
+    syllabus: teaching/UCLA_PS50_Syllabus.pdf
+    targets: [cv]
+
+  - number: "150"
+    title: Political violence
+    level: undergraduate
+    next: Winter 2026
+    syllabus: teaching/UCLA_PS150_Syllabus.pdf
+
+  # UCLA renumbered this course from 179 to 170A. The CV had not caught up and
+  # still said 179; the syllabus PDF was renamed to match the current number.
+  # Previously taught: Winter 2017, Winter 2018.
+  - number: "170A"
+    title: Randomized trials for social change
+    level: undergraduate
+    syllabus: teaching/UCLA_PS170A_Syllabus.pdf
+
+  - number: "200E"
+    title: Experimental design for social science
+    level: graduate
+    next: Winter 2026
+    syllabus: teaching/UCLA_PS200E_Syllabus.pdf
+
+  # DRIFT: the site titled this just "Research Design". Using the CV's fuller
+  # title in both places.
+  # Previously taught: Fall 2016 (as PS 209), Winter 2018.
+  - number: "292B"
+    title: Research design for social science
+    level: graduate
+    syllabus: teaching/UCLA_PS292B_Syllabus.pdf
+
+  # DRIFT: the site rendered the number as "240a/b", the CV as "240A-B".
+  # Same course; the CV's form wins.
+  # Previously taught: Fall 2016 - Winter 2017.
+  # Also once listed: Politics 572 (preceptor), Quantitative Analysis II
+  # (instructor: Kosuke Imai), Princeton, Spring 2011.
+  - number: "240A-B"
+    title: Comparative politics field seminar
+    level: graduate
+    syllabus: teaching/UCLA_PS240a_Fall2016.pdf
+
+  # Site-only: developed by Graeme, taught by a graduate student, so it does not
+  # belong in the CV's own teaching list.
+  - number: "200X"
+    title: Statistical programming for social science
+    level: graduate
+    syllabus: teaching/UCLA_PS200X_Syllabus.pdf
+    targets: [site]
+    intro: >-
+      I developed a course taught by a graduate student to introduce first year
+      graduate students to the R statistical programming language:
+
+# Prose that appears in exactly one target.
+site_footer: >-
+  I regularly teach short courses on experimental design and planning,
+  including on DeclareDesign. I'm happy to share materials.
+
+cv_short_courses: >-
+  Research design short courses: Nigeria Ministry of Agriculture, 2015;
+  EITM Europe, 2019; EGAP Learning Days, Abidjan, 2022, 2023

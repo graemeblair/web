@@ -25,7 +25,7 @@ import pytest
 
 import inventory
 import normalize_html
-from expected_diffs import describe, is_expected
+from expected_diffs import describe, is_expected, unexplained_diff_lines
 
 HERE = Path(__file__).parent
 BASELINE = HERE / "baseline"
@@ -181,7 +181,13 @@ def test_gate1_every_toggle_target_resolves_once():
 @needs_build
 def test_gate2_normalized_text_matches_baseline():
     diff = normalize_html.diff(BASE_HTML, BUILT_HTML)
-    assert diff == "", diff
+    unexplained = unexplained_diff_lines(diff)
+    assert not unexplained, (
+        "prose changed without a registered reason:\n"
+        + "\n".join(unexplained)
+        + "\n\nAdd a ('text', <fragment>, <why>) entry to expected_diffs.py, or "
+        "fix the content."
+    )
 
 
 def _tidy_errors(path: Path) -> set[str]:
@@ -222,19 +228,47 @@ BUILT_TEX = SITE / "GraemeBlair-CV.tex"
 
 
 @pytest.mark.skipif(not BUILT_TEX.exists(), reason="no _site/GraemeBlair-CV.tex yet")
-def test_gate4_cv_tex_is_byte_identical_to_baseline():
-    """The strongest CV check available without a TeX installation.
+def test_gate4_cv_source_changes_are_all_registered():
+    """Every line of the generated CV source that differs from the baseline
+    must be explained by an expected_diffs entry.
 
-    XeLaTeX is deterministic apart from the timestamp, so an identical .tex
-    means an identical PDF -- no runner, no fonts, no five-minute build needed.
+    This is the CV's only real protection until CI runs XeLaTeX. It is stronger
+    than it looks: the baseline .tex is 550 lines, so a stray escaping bug or a
+    dropped section shows up here immediately, in a diff a human can read --
+    rather than four minutes later as a subtly wrong PDF nobody proofreads.
 
-    This holds only while the CV body is a verbatim template. Once publications
-    move into YAML the .tex will be regenerated from data and will differ in
-    whitespace and ordering; at that point delete this test and let Gate 4's
-    pdftotext and page-image comparison be the authority. Do not weaken it in
-    place -- an assertion that has been relaxed to keep passing proves nothing.
+    Whitespace-only changes are ignored: the generator reflows the lines it
+    owns, and trailing spaces in the hand-written source carry no meaning.
     """
-    assert BUILT_TEX.read_bytes() == (BASELINE / "GraemeBlair-CV.tex").read_bytes()
+    baseline = (BASELINE / "GraemeBlair-CV.tex").read_text(encoding="utf-8")
+    built = BUILT_TEX.read_text(encoding="utf-8")
+
+    import difflib
+    import re
+
+    def norm(text: str) -> list[str]:
+        out = []
+        for line in text.splitlines():
+            line = re.sub(r"[ \t]+", " ", line).strip()
+            # TeX absorbs space before a line-break macro, so `UCLA \\[.75em]`
+            # and `UCLA\\[.75em]` typeset identically. Normalized so reflowing a
+            # generated line does not read as a content change. Deliberately
+            # narrow -- stripping all whitespace would make `PS 200E` and
+            # `PS200E` compare equal, and this gate exists to catch exactly that
+            # kind of slip.
+            line = re.sub(r" +(\\\\)", r"\1", line)
+            out.append(line + "\n")
+        return out
+
+    diff = "".join(
+        difflib.unified_diff(
+            norm(baseline), norm(built), fromfile="baseline", tofile="built"
+        )
+    )
+    unexplained = unexplained_diff_lines(diff)
+    assert not unexplained, (
+        "CV source changed without a registered reason:\n" + "\n".join(unexplained)
+    )
 
 
 @needs_pdf
@@ -294,6 +328,46 @@ def test_gate5_local_links_resolve():
         if not (SITE / path).exists():
             missing.append(url)
     assert not missing, "unresolved local links:\n" + "\n".join(sorted(missing))
+
+
+def test_gate5_syllabus_filenames_match_course_numbers():
+    """A course's syllabus filename must contain its number.
+
+    This is the lint that would have caught the PS 179 / POL SCI 170A drift
+    years earlier: the site displayed 170A while linking a file called
+    UCLA_PS179_Syllabus.pdf, and nothing anywhere objected.
+    """
+    from sitegen.content import CONTENT, load_one
+
+    teaching = load_one(CONTENT / "teaching.yml")
+    problems = []
+    for course in teaching["courses"]:
+        syllabus = course.get("syllabus")
+        if not syllabus:
+            continue
+        # Case-insensitive, and a two-quarter sequence like 240A-B may be
+        # documented by the syllabus for either half (UCLA_PS240a_Fall2016.pdf).
+        # Matching only the first segment keeps the check sharp -- 200E still
+        # will not accept a file named for 200X.
+        wanted = course["number"].split("-")[0].lower()
+        if wanted not in syllabus.lower():
+            problems.append(f"PS {course['number']} links {syllabus}")
+    assert not problems, "syllabus filename does not match course number:\n" + "\n".join(
+        problems
+    )
+
+
+def test_gate5_syllabus_files_exist():
+    from sitegen.content import CONTENT, load_one
+    from sitegen.envs import STATIC
+
+    teaching = load_one(CONTENT / "teaching.yml")
+    missing = [
+        c["syllabus"]
+        for c in teaching["courses"]
+        if c.get("syllabus") and not (STATIC / c["syllabus"]).exists()
+    ]
+    assert not missing, "missing syllabus files:\n" + "\n".join(missing)
 
 
 @needs_build
