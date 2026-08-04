@@ -22,6 +22,14 @@ publisher or a typo'd page range in the same entry. Checked: with the current
 registrations, changing a journal issue from 377(6602) to 377(6603) passes the
 suite; dropping a coauthor from a line with no registered key still fails.
 
+A second instance, same cause: Gate 2 emits one line per node, so a role label
+in a table cell has nothing on its line identifying whose row it is. Moving a
+person between two roles already in use passes. Names, links, photos and
+placements are each checked, so this is bounded to the role column.
+
+Keys do at least match on word boundaries now -- "Jihae Hong" no longer matches
+"Jihae Hongg", which it did, and which meant a typo in a name passed.
+
 The fix is to require the registered keys to account for the whole difference --
 mask every key occurrence on both sides and demand the remainders match. That
 was tried here and works, but the 60 existing registrations were written for
@@ -627,6 +635,312 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "With Kosuke Imai, Yang-Yang Zhou.",
         "Removal side of the byline punctuation normalization.",
     ),
+    # ---- people, moved into content/people.yml ------------------------------
+    #
+    # The site's Research group tab and the CV's "Advisees and placement" are
+    # one list now. Nine people appeared in one and not the other, and eight
+    # placements were worded differently. Owner confirmed one list, everyone in
+    # both, and settled the two status questions.
+    (
+        "text",
+        "Jiyoung Kim (dissertation committee): Assistant Professor",
+        "BUG FIX. The CV line read 'Jiyoung Kim (dissertation committee, "
+        "Assistant professor, Michigan State University' -- an unclosed "
+        "parenthesis, and a comma where its eleven siblings use '):'. It "
+        "typeset that way in the published PDF. The rendering is generated from "
+        "one template now, so a line cannot be punctuated differently from its "
+        "neighbours.",
+    ),
+    (
+        "text",
+        "Jiyoung Kim (dissertation committee, Assistant professor",
+        "Removal side of the unclosed-parenthesis fix.",
+    ),
+    (
+        "text",
+        "Alfredo Trejo III (dissertation committee)\\\\",
+        "OWNER DECISION. The CV said 'ongoing'; the site listed him under "
+        "Alumni. Owner confirmed he has finished. No placement is recorded -- "
+        "left blank rather than invented.",
+    ),
+    (
+        "text",
+        "Alfredo Trejo III (dissertation committee, ongoing)",
+        "Removal side of the Trejo status correction.",
+    ),
+    (
+        "text",
+        "Daniel Carnahan",
+        "OWNER DECISION. On the site as a current dissertation student and "
+        "absent from the CV. Owner confirmed the CV was stale; he is now listed "
+        "in both, dissertation committee, ongoing.",
+    ),
+    (
+        "text",
+        "Brigid Morris",
+        "As above -- current on the site, missing from the CV, now in both.",
+    ),
+    (
+        "text",
+        "Current research assistants",
+        "Five current undergraduate researchers (Omar Elamri, Belle Ho, Jason "
+        "Leland, Jarod Ngo, Ophelia Sin) were in the CV and nowhere on the "
+        "site, which had no section for a current researcher without a "
+        "placement -- only 'Current dissertation students' and 'Alumni'. Owner "
+        "chose one list for both targets, so the site gains the section.",
+    ),
+    (
+        "text",
+        "Omar Elamri, Belle Ho, Jason Leland, Jarod Ngo, Ophelia Sin",
+        "The five names in that new section -- see above.",
+    ),
+    (
+        "text",
+        "Graduate student researchers",
+        "Aaron Rudkin and Luke Sonnet were on the site as graduate student "
+        "researchers and in neither of the CV's three subsections. The CV gains "
+        "a fourth rather than filing them under 'Staff researchers', which is "
+        "not what they were.",
+    ),
+    ("text", "Aaron Rudkin: Postdoctoral fellow, MIT", "See above."),
+    ("text", "Luke Sonnet: Lead data scientist, GrowthBook", "See above."),
+    (
+        "text",
+        "Jihae Hong",
+        "On the site's alumni table, absent from the CV. Now in both.",
+    ),
+    (
+        "text",
+        "Neal Fultz: Independent data science consultant",
+        "On the site's alumni table, absent from the CV. Now in both. (He was "
+        "already in the CV's software list as a fabricatr author.)",
+    ),
+    (
+        "text",
+        "Sofía Granados",
+        "Her name, link and photo were on the site only inside a large "
+        "commented-out card block, so they reached no reader. She is in the "
+        "CV's staff researchers, so she now appears in both.",
+    ),
+    (
+        "href",
+        "https://co.linkedin.com/in/dankat-sofia-granados-sotelo",
+        "Sofía Granados's link, previously only inside commented-out markup.",
+    ),
+    (
+        "src",
+        "img/group-sofia.webp",
+        "Sofía Granados's photo, previously only inside commented-out markup.",
+    ),
+    ("text", "Saloni Majmudar", "In the CV's undergraduate list, absent from the site. Now in both."),
+    ("text", "Jacquelyn Nguyen", "In the CV's undergraduate list, absent from the site. Now in both."),
+    # Placements the two sources worded differently. The site's wording is used
+    # in each case: it is the one being maintained, and in every instance it is
+    # the more specific or more recent of the two.
+    (
+        "text",
+        "Cesar B. Martinez-Alvarez",
+        "The CV wrote 'Cesar Martinez Alvarez' and listed 'Assistant professor, "
+        "UCSB; Postdoc, Yale'; the site has the hyphenated name with the middle "
+        "initial and the two positions in chronological order. One value now "
+        "feeds both.",
+    ),
+    ("text", "Cesar Martinez Alvarez", "Removal side of the name and placement correction."),
+    (
+        "text",
+        "Ph.D. student, UCSB Bren School",
+        "The CV said 'Ph.D. student, Bren School of the Environment, UCSB'.",
+    ),
+    (
+        "text",
+        "Ph.D. student, Bren School of the Environment, UCSB",
+        "Removal side of the Fatiq Nadeem placement wording.",
+    ),
+    (
+        "text",
+        "J. Sebastián Leiva M.",
+        "The CV wrote 'J. Sebasti\\'an Leiva'; the site has the full name. Also "
+        "settles 'M.P.P student' (site, missing a period) against 'M.P.P. "
+        "student' (CV) in favour of the CV.",
+    ),
+    ("text", "M.P.P student, Princeton", "Removal side of the missing-period fix above."),
+    (
+        "text",
+        "Jasmine Miller: Researcher, Give Directly",
+        "The CV said 'Research manager'; the site says 'Researcher'.",
+    ),
+    ("text", "Jasmine Miller: Research manager, Give Directly", "Removal side of the above."),
+    (
+        "text",
+        "Safa Saleem: Legal assistant, law firm",
+        "The CV recorded no placement for her; the site does.",
+    ),
+    (
+        "text",
+        "Quantitative research assistant, RAND Corporation",
+        "The CV said 'Research assistant, RAND Corporation'.",
+    ),
+    (
+        "text",
+        "Research assistant, RAND Corporation",
+        "Removal side of the Emily Allendorf placement wording.",
+    ),
+    (
+        "text",
+        "Ph.D. student in biomedical data science, Stanford",
+        "The CV said 'biomedical informatics'; the site says 'biomedical data "
+        "science', which is the name of the Stanford programme.",
+    ),
+    (
+        "text",
+        "Ph.D. student in biomedical informatics, Stanford",
+        "Removal side of the Min Woo Sun placement correction.",
+    ),
+    (
+        "text",
+        "Assistant Professor of Political Science, University of Nevada, Reno",
+        "The CV abbreviated the title to 'Assistant professor'; the site gives "
+        "it in full, as it does for every other placement.",
+    ),
+    (
+        "text",
+        "Assistant professor, University of Nevada, Reno",
+        "Removal side of the Ryan Baxter-King title wording.",
+    ),
+    ("text", "Jacquelyn Nguyen: Medical school", "Sentence-cased with its neighbours."),
+    ("text", "Jacquelyn Nguyen: medical school", "Removal side of the above."),
+    # Markup that reached no reader, dropped with the section it lived in.
+    (
+        "text",
+        "%\\begin{minipage}{\\linewidth}",
+        "Commented-out LaTeX at the head of the advisees block, dropped with "
+        "the hand-written section it introduced.",
+    ),
+    (
+        "text",
+        "%{\\large\\item UCLA}",
+        "As above -- commented-out heading.",
+    ),
+    (
+        "text",
+        "%Avery Do:",
+        "A commented-out staff researcher with no placement recorded. Dropped "
+        "rather than carried into the YAML as a person with no content; git "
+        "history has it if it was a placeholder for someone real.",
+    ),
+    # Table scaffolding for the rows added above. The cells' contents are each
+    # registered separately, and Gate 1 compares every href and src exactly, so
+    # what these admit is an empty row -- not a row with anything in it.
+    ("text-exact", "<tr>", "Scaffolding of an added alumni row -- see the names above."),
+    ("text-exact", "<td>", "As above."),
+    ("text-exact", "<td/>", "An added alumni row's empty photo cell (no photo on file)."),
+    ("text-exact", "<h1>", "The 'Current research assistants' heading element."),
+    # Gate 2 emits one line per node, so a role label sits on a line of its own
+    # with nothing tying it to the person whose row it is. These keys therefore
+    # admit "some alumni row says this role" and no more: every name, link,
+    # photo and placement on those rows is checked separately. What slips
+    # through is a person's role changing between two labels already in use --
+    # measured, and noted in the blind-spot section at the top of this file.
+    (
+        "text-exact",
+        "#text Undergraduate research assistant",
+        "Role label on the rows added for Saloni Majmudar and Jacquelyn Nguyen.",
+    ),
+    (
+        "text-exact",
+        "#text Staff researcher",
+        "Role label on the row added for Sofía Granados.",
+    ),
+    (
+        "text",
+        "Postdoctoral fellow, Yale; Assistant Professor of Political Science, UCSB",
+        "Cesar Martinez-Alvarez's two positions were split by a <br> on the "
+        "site and joined by a semicolon in the CV. One value feeds both, so the "
+        "site's cell is now one string.",
+    ),
+    ("text", "Ph.D. student, UCLA", "Sofía Granados's placement, on her added row."),
+    ("text", "M.P.P. student, Princeton", "J. Sebastián Leiva's placement -- see the name entry above."),
+    ("text", "M.P.P. student, Princeton\\\\", "LaTeX form of the above, which carries a line-break macro."),
+    (
+        "text",
+        "J. Sebasti{\\'a}n Leiva M.",
+        "LaTeX form of the Leiva name correction. Registered separately because "
+        "the CV source spells the accent as {\\'a} and the site as a literal á, "
+        "so one key cannot match both.",
+    ),
+    (
+        "text",
+        "J. Sebasti{\\'a}n Leiva:",
+        "Removal side of the above, in LaTeX form.",
+    ),
+    # Spacing that moved because membership did. The wider \\[.9em] marks a
+    # boundary between groups within a subsection, so it follows whoever is last
+    # in a group -- and both groups gained or lost a member above.
+    (
+        "text",
+        "Emily Ortiz (dissertation committee, ongoing)",
+        "Now last among the ongoing committee members, because Alfredo Trejo "
+        "moved to the finished group, so the group-boundary gap follows her.",
+    ),
+    (
+        "text",
+        "Ophelia Sin",
+        "Now last among current undergraduate researchers, because Safa Saleem "
+        "moved to the placed group.",
+    ),
+    (
+        "text",
+        "Valerie Wirtschafter (dissertation committee): Data analyst, Brookings Institution\\end{indnt}",
+        "The last line of a subsection no longer carries a trailing line break, "
+        "so \\end{indnt} follows it directly rather than starting its own line. "
+        "A trailing \\\\ before \\end{indnt} adds vertical space the "
+        "hand-written CV did not have.",
+    ),
+    (
+        "text-exact",
+        "\\end{indnt}\\vspace{1em}",
+        "Removal side of the line-break change above: the bare \\end{indnt} "
+        "line that each subsection used to start.",
+    ),
+    (
+        "text-exact",
+        "\\begin{indnt}\\vspace{-.35em}",
+        "Opening of the added 'Graduate student researchers' subsection.",
+    ),
+    (
+        "text",
+        "img/group-sofia.webp",
+        "Sofía Granados's photo element. Registered as text as well as src "
+        "because Gate 2 reads the rendered markup and consults only text keys, "
+        "while Gate 1 compares the src set.",
+    ),
+    (
+        "text",
+        "co.linkedin.com/in/dankat-sofia-granados-sotelo",
+        "Her link element, for the same reason.",
+    ),
+    ("text-exact", "#text Postdoctoral fellow, Yale", "Removal side of the Cesar placement join."),
+    (
+        "text-exact",
+        "#text Assistant Professor of Political Science, UCSB",
+        "Removal side of the Cesar placement join.",
+    ),
+    ("text-exact", "<br/>", "The <br> that separated Cesar's two positions -- now a semicolon."),
+    ("text", "Associate consultant, Bain", "Saloni Majmudar's placement, on her added row."),
+    ("text-exact", "#text Medical school", "Jacquelyn Nguyen's placement, on her added row."),
+    (
+        "text",
+        "Valerie Wirtschafter (dissertation committee): Data analyst, Brookings Institution",
+        "Removal side of the trailing-line-break change: her line used to end "
+        "the subsection with \\end{indnt} on the next line.",
+    ),
+    (
+        "text",
+        "Safa Saleem",
+        "Moves from the current undergraduate researchers to the placed ones, "
+        "because the site records a placement for her and the CV did not.",
+    ),
+    ("text-exact", "\\end{indnt}", "Removal side of the trailing-line-break change above."),
     (
         "text",
         "<p/>",
@@ -694,9 +1008,34 @@ def unexplained_diff_lines(diff: str) -> list[str]:
             continue
         if stripped in exact:
             continue
-        if not any(key in body for key in keys):
+        if not any(_matches(key, body) for key in keys):
             unexplained.append(line)
     return unexplained
+
+
+def _matches(key: str, body: str) -> bool:
+    """Is `key` present in `body` as a whole word rather than a fragment?
+
+    Plain `in` is too weak for a key that is somebody's name. "Jihae Hong" is
+    registered because she was added to the CV -- and it also matches "Jihae
+    Hongg", so a typo in a name would have passed the suite. Measured: it did.
+
+    A match is rejected when the character butting up against either end of the
+    key is alphanumeric and the key's own end character is too. Keys that
+    deliberately stop mid-phrase are unaffected, because they end in
+    punctuation or a space.
+    """
+    start = body.find(key)
+    while start != -1:
+        end = start + len(key)
+        before = body[start - 1] if start else ""
+        after = body[end] if end < len(body) else ""
+        clean_start = not (key[:1].isalnum() and before.isalnum())
+        clean_end = not (key[-1:].isalnum() and after.isalnum())
+        if clean_start and clean_end:
+            return True
+        start = body.find(key, start + 1)
+    return False
 
 
 def reason(kind: str, key: str) -> str | None:

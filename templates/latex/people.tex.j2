@@ -1,0 +1,43 @@
+<<# Advisees and placement, from content/people.yml -- the same list the site's
+    Research group tab renders.
+
+    Four subsections, each a flat run of lines separated by \\[.5em], with a
+    wider \\[.9em] between groups within a subsection. The last line of a
+    subsection takes no separator at all: a trailing \\ before \end{indnt} adds
+    a blank line the hand-written CV did not have. #>>
+
+<<# One line per person.
+
+    The role is named in parentheses only for dissertation students. Elsewhere
+    the subsection heading already says it, and the hand-written CV listed a
+    current undergraduate as a bare name. #>>
+<<% macro line(person, roles) -%>>
+<<%- set titled = person.roles[0] in ('cochair', 'committee') -%>>
+<<< person.name >>><<% if titled %>> (<<< roles[person.roles[0]].cv >>><<% if person.status == 'current' %>>, ongoing<<% endif %>>)<<% endif %>><<% if person.get('placement') %>>: <<< person.placement >>><<% endif %>>
+<<%- endmacro %>>
+
+<<# A run of people, with a wider gap after each group boundary. `groups` is a
+    list of lists; empty groups are dropped so a boundary never produces a
+    separator with nothing after it. #>>
+<<% macro run(groups, roles) -%>>
+<<%- set live = groups | select | list -%>>
+<<%- for group in live -%>>
+<<%- set outer = loop -%>>
+<<%- for person in group -%>>
+<<< line(person, roles) | raw_tex >>><<% if not loop.last %>>\\[.5em]
+<<% elif not outer.last %>>\\[.9em]
+<<% else %>>
+<<% endif -%>>
+<<%- endfor -%>>
+<<%- endfor -%>>
+<<%- endmacro %>>
+
+<<# `last` drops the trailing \vspace{1em}: the section that closes the block
+    is followed by the block's own \vspace{1.5em}, and the hand-written CV did
+    not stack the two. #>>
+<<% macro section(title, groups, roles, last=False) %>>
+ {\large\it \hspace{.15em} <<< title >>>}\donotbreakhere
+\begin{indnt}\vspace{-.35em}
+<<< run(groups, roles) | raw_tex >>>\end{indnt}<<% if not last %>>\vspace{1em}
+<<% endif %>>
+<<% endmacro %>>

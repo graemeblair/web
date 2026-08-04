@@ -1,4 +1,5 @@
 <<% from 'publications.tex.j2' import publist %>>
+<<% from 'people.tex.j2' import section %>>
 
 %\pagestyle{empty}
 %~~\vspace{0.8em}\\   %%% PUT BACK IN
@@ -224,48 +225,24 @@ Liberia: July 2009
 %\vspace{1.5em}
 
 {\large Advisees and placement} \donotbreakhere
-%\begin{minipage}{\linewidth}
-%{\large\item UCLA}\\[-.25em]
- {\large\it \hspace{.15em} Ph.D. students}\donotbreakhere
-\begin{indnt}\vspace{-.35em}
-Rachel Berwald (dissertation co-chair, ongoing) \\[.5em]
-Elayne Stecher (dissertation co-chair, ongoing) \\[.5em]
-Dario Sidhu (dissertation co-chair, ongoing) \\[.5em]
-Carolyn Steinle (dissertation co-chair, ongoing)\\[.9em]
-Jessica Cobian (dissertation committee, ongoing)\\[.5em]
-Samyu Comandur (dissertation committee, ongoing)\\[.5em]
-Emily Ortiz (dissertation committee, ongoing)\\[.5em]
-Alfredo Trejo III (dissertation committee, ongoing)\\[.9em]
-Jiyoung Kim (dissertation committee, Assistant professor, Michigan State University\\[.5em]
-Ryan Baxter-King (dissertation committee): Assistant professor, University of Nevada, Reno\\[.5em]
-Cesar Martinez Alvarez (dissertation committee): Assistant professor, UCSB; Postdoc, Yale\\[.5em]
-Valerie Wirtschafter (dissertation committee): Data analyst, Brookings Institution
-\end{indnt}\vspace{1em}
-
- {\large\it \hspace{.15em} Staff researchers}\donotbreakhere
-\begin{indnt}\vspace{-.35em}
-Sof{\'i}a Granados: Ph.D. student, UCLA\\[0.5em]
-Fatiq Nadeem: Ph.D. student, Bren School of the Environment, UCSB\\[.5em]
-J. Sebasti{\'a}n Leiva: M.P.P. student, Princeton \\[.5em]
-Jasmine Miller: Research manager, Give Directly
-%Avery Do: \\[.75em]
-\end{indnt}\vspace{1em}
-
- {\large\it \hspace{.15em} Undergraduate researchers}\donotbreakhere
-\begin{indnt}\vspace{-.35em}
-Safa Saleem  \\[.5em]
-Omar Elamri \\[.5em]
-Belle Ho \\[.5em]
-Jason Leland\\[.5em]
-Jarod Ngo\\[.5em]
-Ophelia Sin\\[.5em]
-Ragini Srinivasan: Ph.D. student in economics, MIT \\[.5em]
-Guanzhang Zhao: Ph.D. student in economics, Yale \\[.5em]
-Saloni Majmudar: Associate consultant, Bain \& Company\\[.5em]
-Jacquelyn Nguyen: medical school\\[.5em]
-Emily Allendorf: Research assistant, RAND Corporation\\[.5em]
-Min Woo Sun: Ph.D. student in biomedical informatics, Stanford
-\end{indnt}
+<<# Grouped the way the CV reads them: current co-chairs, then current
+    committee members, then those who have finished and where they went. #>>
+<<% set folk = people.people %>>
+<<% set phd = folk | selectattr('roles', 'contains', 'cochair') | list
+             + folk | selectattr('roles', 'contains', 'committee') | list %>>
+<<< section('Ph.D. students', [
+      phd | selectattr('status', 'equalto', 'current') | selectattr('roles', 'contains', 'cochair') | list,
+      phd | selectattr('status', 'equalto', 'current') | rejectattr('roles', 'contains', 'cochair') | list,
+      phd | selectattr('status', 'equalto', 'alumni') | list,
+    ], people.roles) | raw_tex >>>
+<<< section('Staff researchers', [folk | selectattr('roles', 'contains', 'staff') | list], people.roles) | raw_tex >>>
+<<< section('Graduate student researchers', [
+      folk | selectattr('roles', 'contains', 'gsr') | rejectattr('roles', 'contains', 'committee') | list,
+    ], people.roles) | raw_tex >>>
+<<< section('Undergraduate researchers', [
+      folk | selectattr('roles', 'contains', 'undergrad') | selectattr('status', 'equalto', 'current') | list,
+      folk | selectattr('roles', 'contains', 'undergrad') | selectattr('status', 'equalto', 'alumni') | list,
+    ], people.roles, last=True) | raw_tex >>>
 
 \vspace{1.5em}
 

@@ -1,0 +1,243 @@
+# Advisees, staff and student researchers. One list feeds the site's Research
+# group tab and the CV's "Advisees and placement" section.
+#
+# The two had drifted badly: nine people appeared in one and not the other, and
+# eight placements were worded differently. Owner confirmed one list, everyone
+# in both.
+#
+#   role       what the person did (controlled vocabulary below). A person can
+#              hold more than one -- Valerie Wirtschafter was on a dissertation
+#              committee AND a graduate student researcher, and the site said so.
+#   status     current | alumni. "alumni" means they have moved on, which is
+#              what `placement` records. Derived from nothing: it is stated,
+#              because "has a placement" and "has finished" are not the same
+#              thing and guessing wrong misstates someone's status in public.
+#   placement  where they went next. Alumni only.
+#   area,
+#   dissertation
+#              current dissertation students only; the site tabulates them.
+
+roles:
+  cochair:
+    cv: dissertation co-chair
+    site: Dissertation co-chair
+    marker: co-chair          # the site appends "(co-chair)" to the name
+  committee:
+    cv: dissertation committee
+    site: Dissertation committee
+  staff:
+    cv: staff researcher
+    site: Staff researcher
+  gsr:
+    cv: graduate student researcher
+    site: Graduate student researcher
+  undergrad:
+    cv: undergraduate researcher
+    site: Undergraduate research assistant
+
+people:
+# ---- current dissertation students -------------------------------------
+- name: Rachel Berwald
+  url: https://www.linkedin.com/in/rachel-berwald
+  img: img/group-rachel.webp
+  roles: [cochair]
+  status: current
+  area: Comparative politics
+  dissertation: Political Misinformation and Identity in Brazil
+- name: Elayne Stecher
+  url: https://www.elaynestecher.com
+  img: img/group-elayne.webp
+  roles: [cochair]
+  status: current
+  area: Comparative politics
+  dissertation: 'War, Interrupted: How Stress and Exposure to Violence in Conflict Zones Shape
+    Behavior and Attitudes and the Role of Psychosocial Support in Preventing Conflict Recurrence'
+- name: Dario Sidhu
+  url: https://www.dariosidhu.com
+  img: img/group-dario.webp
+  roles: [cochair]
+  status: current
+  area: Comparative politics
+  dissertation: Essays on evidence in policy
+- name: Carolyn Steinle
+  url: https://www.linkedin.com/in/carolyn-steinle-2932a0115
+  img: img/group-carolyn.webp
+  roles: [cochair]
+  status: current
+  area: Comparative politics
+  dissertation: Age-Set or Kinship Based Social Structure in Ethnic Politics
+# Carnahan and Morris were on the site and absent from the CV. Owner confirmed
+# the CV was stale; both are dissertation committee, ongoing.
+- name: Daniel Carnahan
+  url: https://polisci.ucla.edu/person/daniel-carnahan/
+  img: img/group-daniel.webp
+  roles: [committee]
+  status: current
+  area: Comparative politics
+  dissertation: Essays on the political economy of natural resources and climate
+- name: Jessica Cobian
+  url: https://polisci.ucla.edu/person/jessica-cobian/
+  img: img/group-jessica.webp
+  roles: [committee]
+  status: current
+  area: Race and ethnic politics
+  dissertation: The Emotional Effects of Xenophobic Rhetoric on Latino Immigration Attitudes
+- name: Samyu Comandur
+  url: https://www.samyucomandur.com/
+  img: img/group-samyu.webp
+  roles: [committee]
+  status: current
+  area: Race and ethnic politics
+  dissertation: Abortion Politics
+- name: Brigid Morris
+  url: https://www.linkedin.com/in/brigid-morris-09a00223
+  img: img/group-brigid.webp
+  roles: [committee]
+  status: current
+  area: Comparative politics
+  dissertation: Popular Opinion and Democratization
+- name: Emily Ortiz
+  url: https://drive.google.com/file/d/1cUP-pyd1OvUdhn_tsPeGb3sRtGNL9j1p/view?usp=drive_link
+  img: img/group-emily-ortiz.webp
+  roles: [committee]
+  status: current
+  area: Race and ethnic politics
+  dissertation: Latino Adults and the (Re)Surging Appeal of Republican Politics in a Racialized
+    and Polarized America
+
+# ---- current research assistants ----------------------------------------
+# In the CV's undergraduate list with no placement, so still in the group.
+- name: Omar Elamri
+  roles: [undergrad]
+  status: current
+- name: Belle Ho
+  roles: [undergrad]
+  status: current
+- name: Jason Leland
+  roles: [undergrad]
+  status: current
+- name: Jarod Ngo
+  roles: [undergrad]
+  status: current
+- name: Ophelia Sin
+  roles: [undergrad]
+  status: current
+
+# ---- alumni --------------------------------------------------------------
+# Owner confirmed Trejo has finished; the CV's "ongoing" was stale. No
+# placement recorded yet -- deliberately blank rather than invented.
+- name: Alfredo Trejo III
+  url: https://www.alfredotrejoiii.com
+  img: img/group-alfredo.webp
+  roles: [committee]
+  status: alumni
+- name: Jiyoung Kim
+  url: https://jiyoungestherkim.github.io
+  img: img/group-jiyoung.webp
+  roles: [committee]
+  status: alumni
+  placement: Assistant Professor of Political Science, Michigan State University
+- name: Ryan Baxter-King
+  url: https://ryanbk.github.io
+  img: img/group-ryan.webp
+  roles: [committee]
+  status: alumni
+  placement: Assistant Professor of Political Science, University of Nevada, Reno
+- name: Cesar B. Martinez-Alvarez
+  url: https://www.cesarbmartinez.com/
+  img: img/group-cesar.webp
+  roles: [committee]
+  status: alumni
+  placement: Postdoctoral fellow, Yale; Assistant Professor of Political Science, UCSB
+- name: Valerie Wirtschafter
+  url: https://valeriewirtschafter.com/
+  img: img/group-valerie.webp
+  roles: [committee, gsr]
+  status: alumni
+  placement: Data analyst, Brookings Institution
+- name: Aaron Rudkin
+  url: https://github.com/aaronrudkin
+  img: img/group-aaron.webp
+  roles: [gsr]
+  status: alumni
+  placement: Postdoctoral fellow, MIT
+- name: Luke Sonnet
+  url: https://lukesonnet.com/
+  img: img/group-luke.webp
+  roles: [gsr]
+  status: alumni
+  placement: Lead data scientist, GrowthBook
+- name: Sofía Granados
+  url: https://co.linkedin.com/in/dankat-sofia-granados-sotelo
+  img: img/group-sofia.webp
+  roles: [staff]
+  status: alumni
+  placement: Ph.D. student, UCLA
+- name: Fatiq Nadeem
+  url: https://www.fatiqnadeem.com/
+  img: img/group-fatiq.webp
+  roles: [staff]
+  status: alumni
+  placement: Ph.D. student, UCSB Bren School
+- name: J. Sebastián Leiva M.
+  url: https://www.linkedin.com/in/jsleivamolano
+  img: img/group-sebastian.webp
+  roles: [staff]
+  status: alumni
+  placement: M.P.P. student, Princeton
+- name: Jasmine Miller
+  url: https://www.linkedin.com/in/jasmine-miller-ab2b6114a
+  img: img/group-jasmine.webp
+  roles: [staff]
+  status: alumni
+  placement: Researcher, Give Directly
+- name: Jihae Hong
+  url: https://www.linkedin.com/in/jihaehong
+  img: img/group-jihae.webp
+  roles: [staff]
+  status: alumni
+  placement: Advisor, Auschwitz Institute for the Prevention of Genocide and Mass Atrocities
+- name: Neal Fultz
+  url: https://www.linkedin.com/in/nfultz
+  img: img/group-neal.webp
+  roles: [staff]
+  status: alumni
+  placement: Independent data science consultant
+- name: Ragini Srinivasan
+  url: https://www.linkedin.com/in/ragini-srinivasan
+  img: img/group-ragini.webp
+  roles: [undergrad]
+  status: alumni
+  placement: Ph.D. student in economics, MIT
+- name: Guanzhang Zhao
+  url: https://www.linkedin.com/in/guanzhang-zhao-1669351a9
+  img: img/group-guanzhang.webp
+  roles: [undergrad]
+  status: alumni
+  placement: Ph.D. student in economics, Yale
+- name: Safa Saleem
+  url: https://www.linkedin.com/in/safa-saleem-5394541b2
+  img: img/group-safa.webp
+  roles: [undergrad]
+  status: alumni
+  placement: Legal assistant, law firm
+- name: Emily Allendorf
+  url: https://www.linkedin.com/in/emily-allendorf
+  img: img/group-emily.webp
+  roles: [undergrad]
+  status: alumni
+  placement: Quantitative research assistant, RAND Corporation
+- name: Min Woo Sun
+  url: https://minwoosun.github.io/
+  img: img/group-min.webp
+  roles: [undergrad]
+  status: alumni
+  placement: Ph.D. student in biomedical data science, Stanford
+- name: Saloni Majmudar
+  roles: [undergrad]
+  status: alumni
+  placement: Associate consultant, Bain & Company
+- name: Jacquelyn Nguyen
+  roles: [undergrad]
+  status: alumni
+  placement: Medical school

@@ -51,6 +51,15 @@ def _inline(relative: str) -> Markup:
     return Markup((STATIC / relative).read_text(encoding="utf-8").rstrip("\n"))
 
 
+
+def _add_common(env: Environment) -> None:
+    """Filters and tests both targets need."""
+    # Jinja has an `in` test (`x is in seq`) but no `contains`, and
+    # `selectattr` needs the sequence on the attribute side: a person's `roles`
+    # is a list and the question is whether it holds one value.
+    env.tests["contains"] = lambda seq, value: value in (seq or ())
+
+
 def html_env() -> Environment:
     env = Environment(
         loader=FileSystemLoader(TEMPLATES / "html"),
@@ -72,6 +81,7 @@ def html_env() -> Environment:
     env.filters["rcirc"] = rcirc
     env.filters["starred"] = starred
     env.filters["for_target"] = lambda items: for_target(items, "site")
+    _add_common(env)
     return env
 
 
@@ -108,4 +118,5 @@ def latex_env() -> Environment:
     env.filters["by_year_desc"] = by_year_desc
     env.filters["cv_url"] = cv_url
     env.filters["for_target"] = lambda items: for_target(items, "cv")
+    _add_common(env)
     return env
