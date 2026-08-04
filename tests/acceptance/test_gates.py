@@ -17,6 +17,7 @@ gate means a real regression rather than a broken comparator.
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -81,6 +82,34 @@ def test_canonicalizer_ignores_whitespace_and_entities():
     a = "<p>Santiago &oacute; &ldquo;x&rdquo;</p>"
     b = "<p>\n   Santiago ó\n   “x”\n</p>"
     assert normalize_html.canonicalize(a) == normalize_html.canonicalize(b)
+
+
+def test_canonicalizer_ignores_bare_layout_wrappers():
+    """A moved <div>/<p> wrapper is not a content change; a lost <i> is.
+
+    Regenerating a section reshuffles wrappers, and reporting each one buries
+    the text changes that matter. Inline formatting stays in scope because
+    losing it changes how the text reads.
+    """
+    plain = "<div><p>Hello <i>world</i></p></div>"
+    rewrapped = "<span><div><p>Hello <i>world</i></p></div></span>"
+    assert normalize_html.canonicalize(plain) == normalize_html.canonicalize(rewrapped)
+
+    # A wrapper carrying an attribute this gate keeps is real. `id` is not one
+    # of them -- identifiers are Gate 1's business, and it compares them exactly.
+    assert normalize_html.canonicalize(plain) != normalize_html.canonicalize(
+        '<div role="alert"><p>Hello <i>world</i></p></div>'
+    )
+    assert normalize_html.canonicalize(plain) == normalize_html.canonicalize(
+        '<div id="x"><p>Hello <i>world</i></p></div>'
+    )
+    assert normalize_html.canonicalize(plain) != normalize_html.canonicalize(
+        "<div><p>Hello world</p></div>"
+    )
+    # An empty <p> is a spacer with real height, so it is still reported.
+    assert normalize_html.canonicalize(plain) != normalize_html.canonicalize(
+        "<div><p>Hello <i>world</i></p><p></p></div>"
+    )
 
 
 def test_canonicalizer_ignores_class_and_style_but_not_href():
@@ -227,6 +256,56 @@ def test_gate2_built_html_introduces_no_new_validity_errors():
 BUILT_TEX = SITE / "GraemeBlair-CV.tex"
 
 
+_ETAREMUNE = re.compile(r"(\\begin\{etaremune\}\n)(.*?)(\\end\{etaremune\})", re.S)
+
+
+def _sort_list_items(source: str) -> str:
+    """Sort the entries inside each `etaremune` block, leaving the rest alone.
+
+    An entry may wrap onto continuation lines (a review, an invited commentary),
+    so the block is split on `\\item` boundaries rather than on newlines --
+    otherwise a continuation line would sort away from the entry it belongs to.
+    """
+    def join(entry: str) -> str:
+        # TeX reads a newline inside a paragraph as a space, so where the source
+        # breaks a long entry carries no meaning: the hand-written CV put a
+        # book's "Reviews:" line on its own line and an article's invited
+        # commentary at the end of the item's line, and both typeset the same.
+        # Collapsing to one line per entry lets the comparison see the words.
+        #
+        # NOT applied to a draft entry: those begin with `%`, a comment runs to
+        # end of line, and joining its continuation onto it would comment out
+        # text that is currently live. That difference must stay visible.
+        if entry.lstrip().startswith("%"):
+            return entry
+        return re.sub(r"\s*\n\s*", " ", entry.rstrip()) + "\n"
+
+    def one_per_line(block: str) -> str:
+        """Put every `\\item` at the start of a line.
+
+        The hand-written CV ran the chapter entry onto the end of the meta-
+        analysis entry's line -- harmless there, since neither is a draft, but
+        it means splitting on line starts alone would treat the two as one
+        entry. Only lines with no comment are split, because moving an `\\item`
+        that sits after a `%` onto its own line would uncomment it.
+        """
+        out = []
+        for line in block.split("\n"):
+            if line.lstrip().startswith("%") or "%" in re.sub(r"\\%", "", line):
+                out.append(line)
+            else:
+                out.append(re.sub(r"[ \t]+(?=\\item )", "\n", line))
+        return "\n".join(out)
+
+    def sort_block(match: re.Match) -> str:
+        items = re.split(r"^(?=%?\\item )", one_per_line(match.group(2)), flags=re.M)
+        lead = items[0] if items and not items[0].lstrip().startswith(("\\item", "%\\item")) else ""
+        entries = items[1:] if lead else items
+        return match.group(1) + lead + "".join(sorted(join(e) for e in entries)) + match.group(3)
+
+    return _ETAREMUNE.sub(sort_block, source)
+
+
 @pytest.mark.skipif(not BUILT_TEX.exists(), reason="no _site/GraemeBlair-CV.tex yet")
 def test_gate4_cv_source_changes_are_all_registered():
     """Every line of the generated CV source that differs from the baseline
@@ -242,6 +321,18 @@ def test_gate4_cv_source_changes_are_all_registered():
     """
     baseline = (BASELINE / "GraemeBlair-CV.tex").read_text(encoding="utf-8")
     built = BUILT_TEX.read_text(encoding="utf-8")
+
+    # The publication lists are now ordered by `by_year_desc` rather than by
+    # hand, so almost every entry sits at a different line number than it did.
+    # Sorting the \item lines inside each list before diffing makes a move
+    # invisible and leaves a content change showing exactly once, instead of as
+    # two unrelated-looking diff hunks hundreds of lines apart.
+    #
+    # This is NOT the same as skipping the lists: every entry is still compared,
+    # in full, against the entry that matches it. What it gives up is order --
+    # which is why test_gate4_cv_publications_are_in_order checks that
+    # separately, from the data rather than from the baseline.
+    baseline, built = _sort_list_items(baseline), _sort_list_items(built)
 
     import difflib
     import re
@@ -261,6 +352,13 @@ def test_gate4_cv_source_changes_are_all_registered():
             # hand-written CV used both, 29 times and 85 times respectively.
             # A notation difference, not a content one.
             line = re.sub(r"\[0\.(\d+em\])", r"[.\1", line)
+            # A closing quotation mark written as a straight `"` rather than
+            # `''`. Five entries in the hand-written CV ended their title that
+            # way and the rest used `''`; under `Mapping=tex-text` both typeset
+            # as a right double quote, so this is a notation difference like the
+            # one above. Anchored to a sentence-ending period so it cannot
+            # quietly normalize a straight quote anywhere else.
+            line = line.replace('."', ".''")
             out.append(line + "\n")
         return out
 
@@ -273,6 +371,43 @@ def test_gate4_cv_source_changes_are_all_registered():
     assert not unexplained, (
         "CV source changed without a registered reason:\n" + "\n".join(unexplained)
     )
+
+
+@pytest.mark.skipif(not BUILT_TEX.exists(), reason="no _site/GraemeBlair-CV.tex yet")
+def test_gate4_cv_publications_are_in_order():
+    """The CV's publication lists run newest first, undated entries at the top.
+
+    The order used to be maintained by hand, and had drifted: the 2020 mining
+    paper sat above a 2021 one. It is computed now, which is only an improvement
+    if something checks it -- and the source comparison above cannot, because it
+    sorts these very lines to keep a reordering from drowning out the content
+    changes it exists to report.
+
+    Read out of the rendered LaTeX rather than out of the YAML, so a template
+    that renders the list in the wrong order still fails.
+    """
+    import yaml
+
+    source = BUILT_TEX.read_text(encoding="utf-8")
+    titles = {
+        p["title"].rstrip(".").lower(): p.get("year")
+        for p in yaml.safe_load(
+            (REPO / "content" / "publications.yml").read_text(encoding="utf-8")
+        )["publications"]
+    }
+
+    for block in _ETAREMUNE.findall(source):
+        years = []
+        for item in re.split(r"^(?=%?\\item )", block[1], flags=re.M):
+            title = re.search(r"``(.+?)\.''|\{\\it (.+?)\}\.", item)
+            if not title:
+                continue
+            key = (title.group(1) or title.group(2)).rstrip(".").lower()
+            if key in titles:
+                years.append(titles[key] or 10_000)
+        assert years == sorted(years, reverse=True), (
+            "CV publication list is out of order: " + repr(years)
+        )
 
 
 @needs_pdf
@@ -377,6 +512,46 @@ def test_gate5_syllabus_files_exist():
     assert not missing, "missing syllabus files:\n" + "\n".join(missing)
 
 
+def test_gate5_no_duplicate_yaml_keys():
+    """A key must not appear twice in the same mapping.
+
+    PyYAML accepts a duplicate silently and keeps the last one. `contexts` in
+    publications.yml carried `kind: chapter` near the top and a leftover
+    `kind: article` after its abstract, sixty lines below; the chapter rendering
+    -- volume title, editors, publisher -- was dropped from the CV and nothing
+    said so. The two lines are far enough apart to be invisible in review, which
+    is exactly why this belongs in a test.
+    """
+    import yaml
+
+    class Strict(yaml.SafeLoader):
+        pass
+
+    def no_duplicates(loader, node, deep=False):
+        seen, out = set(), {}
+        for key_node, value_node in node.value:
+            key = loader.construct_object(key_node, deep=deep)
+            if key in seen:
+                raise yaml.constructor.ConstructorError(
+                    None, None, f"duplicate key {key!r}", key_node.start_mark
+                )
+            seen.add(key)
+            out[key] = loader.construct_object(value_node, deep=deep)
+        return out
+
+    Strict.add_constructor(
+        yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, no_duplicates
+    )
+
+    problems = []
+    for path in sorted((REPO / "content").glob("*.yml")):
+        try:
+            yaml.load(path.read_text(encoding="utf-8"), Loader=Strict)
+        except yaml.constructor.ConstructorError as exc:
+            problems.append(f"{path.name}: {exc}")
+    assert not problems, "duplicate YAML keys:\n" + "\n".join(problems)
+
+
 @needs_build
 def test_gate5_no_build_output_committed():
     """Generated paths must not appear as tracked files.
@@ -392,3 +567,19 @@ def test_gate5_no_build_output_committed():
         text=True,
     ).stdout.split()
     assert not tracked, f"generated files are tracked in git: {tracked}"
+
+
+def test_moved_lines_cancel_but_deletions_do_not():
+    """Both sides of a moved line are skipped; a one-sided change still fails.
+
+    The first version of this shared one allowance between removals and
+    additions, so the removals exhausted it and every addition was reported as
+    unexplained.
+    """
+    from expected_diffs import unexplained_diff_lines
+
+    moved = "--- a\n+++ b\n-  <a>\n-  <i/>\n+text\n+  <a>\n+  <i/>\n"
+    assert unexplained_diff_lines(moved) == ["+text"]
+
+    deleted = "--- a\n+++ b\n-  <a>\n"
+    assert unexplained_diff_lines(deleted) == ["-  <a>"]

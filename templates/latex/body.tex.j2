@@ -1,3 +1,4 @@
+<<% from 'publications.tex.j2' import publist %>>
 
 %\pagestyle{empty}
 %~~\vspace{0.8em}\\   %%% PUT BACK IN
@@ -50,46 +51,14 @@ B.A., Political Science, Reed College, 2006 \\[.45em]
 %\clearpage
 {\large Research}\donotbreakhere
 {\large\it \hspace{.15em} Books}
-\begin{etaremune}
-\item Graeme Blair, Fotini Christia, and Jeremy M. Weinstein (eds.) with Eric Arias, Emile Badran, Robert A. Blair, Ellen Chapin, Ali Cheema, Ahsan Farooqui, Thiemo Fetzer, Guy Grossman, Dotan Haim, Zulfiqar Hameed, Rebecca Hanson, Ali Hasanain, Ben Kachero, Dorothy Kronick, Andrew Miller, Benjamin Morse, Robert Muggah, Fatiq Nadeem, Matthew Nanes, Tara Slough, Nico Ravanilla, Jacob N. Shapiro, Barbara Silva, Pedro C. L. Souza, and Anna Wilke. {\it Crime, Insecurity, and Community Policing: Experiments on Building Trust}. 2024, Cambridge University Press (Studies in Comparative Politics series).
-\item \href{https://book.declaredesign.org}{Graeme Blair, Alexander Coppock, and Macartan Humphreys. {\it Research Design in the Social Sciences: Declaration, Diagnosis, and Redesign}. 2023, Princeton University Press. Manuscript at book.declaredesign.org.}\\[0.35em] 
-Reviews: \textit{\href{https://www.nature.com/articles/d41586-023-03591-5}{Nature}} (``best science picks'')
-\end{etaremune}
+<<< publist(publications.publications | for_target | selectattr('kind', 'equalto', 'book') | list, citations) | raw_tex >>>
 \vspace{1em}
 %\clearpage
 
 %\begin{minipage}{\linewidth}   
 % \if0\complete \clearpage \fi
 {\large\it \hspace{.15em} Articles and chapters}\donotbreakhere
-\begin{etaremune}
-%\item \href{https://deportationdata.org/docs/ice/codebook-facilities.html}{Graeme Blair and Hayley Labia. ``ICE detention facilities codebook.''}
-%\item \href{https://deportationdata.org/docs/ice/codebook-offices.html}{Graeme Blair. ``ICE field offices and areas of responsibility codebook.''}
-%\item \href{https://deportationdata.org/docs/eoir/codebook-processed.html}{Graeme Blair and David Hausman. ``EOIR processed case data codebook.''}
-\item \href{https://deportationdata.org/analysis/immigration-enforcement-first-year.html}{Graeme Blair and David Hausman. ``One year of immigration enforcement under the second Trump administration.''} Report.
-%\item \href{https://deportationdata.org/docs/eoir/codebook-original.html}{Neil Agarwal, Graeme Blair, Ingrid Eagly, David Hausman, Sara Heridia, Brandon Marrow, Matthew Martin, Emily Ryo, Steven Shafer, Noelle Smart, Angel Sosa, Jeffrey Staton, and Devon Thurman. ``EOIR case dataset codebook.''}
-\item \href{https://deportationdata.org/analysis/immigration-enforcement-first-nine-months-trump.html}{Graeme Blair and David Hausman. ``Immigration enforcement in the first nine months of the second Trump administration.''} Report.
-\item \href{https://graemeblair.com/papers/ice-data-preprint.pdf}{Graeme Blair, David Hausman, and Phil Neff. ``Immigration and Customs Enforcement individual-level data: An introduction.''} Forthcoming, \textit{Nature Scientific Data}. 
-\item \href{https://graemeblair.com/papers/where.pdf}{Graeme Blair, Darin Christensen, and Michael Gibilisco. ``The point of attack: Where and why does oil cause armed conflict?''} Forthcoming, \textit{Journal of Politics}.
-\item \href{https://www.science.org/doi/10.1126/science.adf8329}{Rebecca Littman*, Rebecca Wolfe*, Graeme Blair*, and Sarah Ryan. 2023. ``Evidence required for ethical social science.'' {\it Science} 379(6629):247.} * Equal authors.
-\item \href{https://graemeblair.com/papers/fieldexp.pdf}{Biz Herman \textcircled{r} Amma Panin \textcircled{r} Elizabeth Iams Wellman \textcircled{r} Graeme Blair \textcircled{r} Lindsey D. Pruett \textcircled{r} Ken Ochieng' Opalo \textcircled{r} Hannah M. Alarian \textcircled{r} Allison N. Grossman \textcircled{r} Yvonne Tan \textcircled{r} Alex P. Dyzenhaus \textcircled{r} and Nicholas Owsley. 2022. ``Field Experiments in the Global South: Assessing Risks, Localizing Benefits, and Addressing Positionality.'' {\it PS: Political Science \& Politics} 55(4): 769-772. *Author order randomized.}
-\item \href{https://graemeblair.com/papers/helpdesks.pdf}{Graeme Blair and Nirvikar Jassal. 2022. ``Improving Access to Justice for Survivors of Violence Against Women.'' {\it Science} 377(6602): 150-151.}
-\item \href{https://www.science.org/doi/10.1126/science.abd3446}{Graeme Blair, Jeremy M. Weinstein, Fotini Christia, Eric Arias, Emile Badran, Robert A. Blair, Ali Cheema, Ahsan Farooqui, Thiemo Fetzer, Guy Grossman, Dotan Haim, Zulfiqar Hameed, Rebecca Hanson, Ali Hasanain, Dorothy Kronick, Benjamin Morse, Robert Muggah, Fatiq Nadeem, Matthew Nanes, Tara Slough, Nico Ravanilla, Jacob N. Shapiro, Barbara Silva, Pedro C. L. Souza, and Anna Wilke. 2021. ``Does Community Policing Build Trust in Police and Reduce Crime? Evidence from Six Coordinated Field Experiments in the Global South.'' {\it Science} 374(6571).} \\[0.35em]  \href{https://www.science.org/doi/10.1126/science.abm4112}{Invited perspective by Santiago Tob{\'o}n, ``Community policing in the developing world.'' {\it Science}.}
-\item \href{https://www.pnas.org/content/pnas/118/42/e2105570118.full.pdf}{Graeme Blair, Rebecca Littman, Elizabeth R. Nugent, Rebecca Wolfe, Mohammed Bukar, Benjamin Crisman, Anthony Etim, Chad Hazlett, and Jiyoung Kim. 2021. ``Trusted Authorities Can Change Minds and Shift Norms during Conflict.'' {\it Proceedings of the National Academy of Sciences} 118 (42).}
-\item \href{https://graemeblair.com/papers/prospecting.pdf}{Graeme Blair, Darin Christensen, and Valerie Wirtschafter. 2020. ``How does armed conflict shape investment? Evidence from the mining sector.'' {\it Journal of Politics} 84(1): 116-133.}
-\item \href{https://graemeblair.com/papers/prices.pdf}{Graeme Blair, Darin Christensen, and Aaron Rudkin. 2021. ``Do Commodity Price Shocks Cause Armed Conflict? Evidence from a Meta-Analysis.'' {\it American Political Science Review} 115(2): 709-716.}
- \item \href{https://graemeblair.com/papers/contexts.pdf}{Graeme Blair and Gwyneth McClendon. ``Experiments in Multiple Contexts.'' Chapter in {\it Advances in Experimental Political Science,} James N. Druckman and Donald P. Green eds., 2021. Cambridge: Cambridge University Press.}
-\item \href{https://graemeblair.com/papers/sensitivity.pdf}{Graeme Blair, Alexander Coppock, and Margaret Moor. 2020. ``When to Worry about Sensitivity Bias: A Social Reference Theory and Evidence from 30 Years of List Experiments.'' {\it American Political Science Review} 114(4): 1297-1315.}
-\item \href{https://graemeblair.com/papers/listerror.pdf}{Graeme Blair, Winston Chou, and Kosuke Imai. 2019. ``List Experiments with Measurement Error.'' {\it Political Analysis} 27(4): 455-480.}
-\item \href{https://declaredesign.org/declare.pdf}{Graeme Blair, Jasper Cooper, Alexander Coppock, and Macartan Humphreys. 2019. ``Declaring and Diagnosing Research Designs.'' {\it American Political Science Review} 113(3): 838-859.}
-\item \href{https://graemeblair.com/papers/nollywood.pdf}{Graeme Blair, Rebecca Littman, and Elizabeth Levy Paluck. 2019. ``Motivating the Adoption of New Community-Minded Behaviors: An Empirical Test in Nigeria.'' {\it Science Advances} 5(3):1-8.}
-\item \href{http://graemeblair.com/papers/audiocheck.pdf}{Robin Gomila, Rebecca Littman, Graeme Blair, and Elizabeth Levy Paluck. 2017. ``The Audio Check: A Method for Improving Data Quality and Detecting Data Fabrication.'' {\it Social Psychological and Personality Science}. 8(4): 424-433.}
-\item \href{http://graemeblair.com/papers/randresp.pdf}{Graeme Blair, Kosuke Imai, and Yang-Yang Zhou. 2015. ``Statistical Analysis of the Randomized Response Technique.'' {\it Journal of the American Statistical Association} 110(511): 1304-1319.}
-\item \href{http://graemeblair.com/papers/sensitive.pdf}{Graeme Blair. 2015. ``Survey Methods for Sensitive Topics.'' {\it APSA Comparative Politics Newsletter} 24(1): 12-16.}
-\item \href{http://graemeblair.com/papers/listendorse.pdf}{Graeme Blair, Kosuke Imai, and Jason Lyall. 2014. ``Comparing and Combining List and Endorsement Experiments: Evidence from Afghanistan." {\it American Journal of Political Science} 58(4): 1043-1063.}
-\item \href{https://graemeblair.com/papers/afghan.pdf}{Jason Lyall, Graeme Blair, and Kosuke Imai. 2013. ``Explaining Support for Combatants during Wartime: A Survey Experiment in Afghanistan." {\it American Political Science Review} 107(4): 679-705.}
-\item \href{http://graemeblair.com/papers/pakistan.pdf}{Graeme Blair, C. Christine Fair, Neil Malhotra, and Jacob N. Shapiro. 2013. ``Poverty and Support for Militant Politics: Survey Evidence from Pakistan." {\it American Journal of Political Science} 57(1): 30-48.} 
-\item \href{https://graemeblair.com/papers/list.pdf}{Graeme Blair and Kosuke Imai. 2012. ``Statistical Analysis of List Experiments." {\it Political Analysis} 20: 47-77.}
-\end{etaremune}
+<<< publist(publications.publications | for_target | rejectattr('kind', 'equalto', 'book') | list, citations) | raw_tex >>>
 \vspace{1em}  %\end{minipage}
 
 % {\large\it \hspace{.15em} Invited contributions}

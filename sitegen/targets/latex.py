@@ -63,6 +63,31 @@ def lint(source: str) -> list[str]:
     if "\\end{document}" not in source:
         problems.append("no \\end{document}")
 
+    # Every \item must start its own line. A draft entry renders as `%\item`,
+    # and a LaTeX comment runs to end of line -- so two items sharing a line
+    # means one draft can comment out every item after it plus the closing
+    # \end{etaremune}. XeLaTeX then fails with "perhaps a missing \item",
+    # pointing dozens of lines away from the cause.
+    for lineno, raw in enumerate(source.split("\n"), start=1):
+        if raw.count("\\item") > 1:
+            problems.append(
+                f"line {lineno}: {raw.count(chr(92) + 'item')} \\item on one line -- "
+                f"a %\\item draft would comment out the rest"
+            )
+
+    # An empty list environment is also a "missing \item" error. Commented-out
+    # lines are dropped first: this CV keeps several whole list environments
+    # commented out as held-back drafts, and they are not errors.
+    live = "\n".join(
+        ln for ln in source.split("\n") if not ln.lstrip().startswith("%")
+    )
+    for env in ("etaremune", "itemize", "enumerate"):
+        for block in re.findall(
+            r"\\begin\{" + env + r"\}(.*?)\\end\{" + env + r"\}", live, re.S
+        ):
+            if "\\item" not in block:
+                problems.append(f"empty {env} environment (no uncommented \\item)")
+
     return problems
 
 

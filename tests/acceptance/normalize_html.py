@@ -64,6 +64,27 @@ def _collapse(text: str) -> str:
     return _WS.sub(" ", html.unescape(text)).strip()
 
 
+# Layout containers. When one of these carries no attributes it holds no
+# information this gate is responsible for: it groups things visually and
+# nothing more. Emitting them makes a regenerated section report dozens of
+# `-<p>` / `+<p>` pairs that mean "a wrapper moved", which drowns the text
+# changes the gate exists to surface.
+#
+# What still covers them: Gate 1 compares every id, href, src and toggle target
+# exactly, so a link or control cannot go missing here; Gate 3's screenshots
+# compare rendered pixels, so a lost wrapper changes the layout and is caught
+# there. Inline elements (i, b, em, strong, sup, sub, a) are NOT in this list --
+# losing one changes how the text reads, so it must still fail.
+#
+# The blind spot, stated plainly: merging two attribute-less paragraphs into one
+# would pass this gate. Gate 3 is what catches that.
+LAYOUT_TAGS = {"div", "span", "p", "section", "article", "main"}
+
+
+def _is_layout_only(el) -> bool:
+    return el.name in LAYOUT_TAGS and not (set(el.attrs) - DROP_ATTRS)
+
+
 def _render_open_tag(el) -> str:
     attrs = []
     for name, value in sorted(el.attrs.items()):
@@ -100,6 +121,14 @@ def canonicalize(markup: str) -> str:
                 or (not isinstance(c, (NavigableString, Comment, Doctype)))
                 for c in child.children
             )
+            if _is_layout_only(child) and not empty:
+                # A bare wrapper. Descend without emitting it, and without
+                # indenting, so its children read the same whether or not it is
+                # there. An EMPTY one is still emitted (as `<p/>`): those are
+                # spacers, they occupy real vertical space, and dropping one is
+                # a deliberate change that should be registered.
+                walk(child, depth)
+                continue
             tag = _render_open_tag(child)
             lines.append(f"{'  ' * depth}{tag[:-1] + '/>' if empty else tag}")
             walk(child, depth + 1)
