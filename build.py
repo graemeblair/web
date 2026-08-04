@@ -20,7 +20,11 @@ REPO = Path(__file__).resolve().parent
 from sitegen.content import CONTENT, ContentError, load  # noqa: E402
 from sitegen.escape import unmapped_characters  # noqa: E402
 from sitegen.envs import STATIC  # noqa: E402
-from sitegen.targets import html as html_target, latex as latex_target  # noqa: E402
+from sitegen.targets import (  # noqa: E402
+    citations as citations_target,
+    html as html_target,
+    latex as latex_target,
+)
 
 
 def copy_static(out: Path) -> int:
@@ -65,6 +69,10 @@ def build(out: Path) -> None:
 
     page = html_target.write(content, out)
     print(f"html:    {page.relative_to(REPO)} ({len(page.read_bytes()):,} bytes)")
+
+    # After the static copy, which is where the behavior half comes from.
+    cites = citations_target.write(content, out)
+    print(f"cites:   {cites.relative_to(REPO)} ({len(cites.read_bytes()):,} bytes)")
 
     tex = latex_target.write(content, out)
     print(f"latex:   {tex.relative_to(REPO)} ({len(tex.read_bytes()):,} bytes)")

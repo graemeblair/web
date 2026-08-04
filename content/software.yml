@@ -11,6 +11,12 @@
 #
 # Download counts are deliberately absent. They live in cran_downloads.yml,
 # which is machine-written -- see tools/update_cran_counts.py.
+#
+# `year` is the package's first release, and appears nowhere on the site or the
+# CV: it is there because the Cite button needs one. The BibTeX entry behind
+# that button is built from these fields by sitegen/bibtex.py -- title from
+# `name` and `site_title`, author from `authors` with Graeme put back at the
+# front -- so a package is described in exactly one place.
 
 groups:
   - id: design
@@ -27,6 +33,7 @@ groups:
 
 packages:
   - name: DeclareDesign
+    year: 2016
     group: design
     site_title: Declare and Diagnose Research Designs.
     cv_description: R statistical package for diagnosing and improving research designs
@@ -39,6 +46,7 @@ packages:
       - {label: Cheatsheet, url: "https://raw.githubusercontent.com/rstudio/cheatsheets/master/declaredesign.pdf"}
 
   - name: estimatr
+    year: 2018
     group: design
     site_title: Fast Estimators for Design-Based Inference.
     cv_description: R statistical package for fast estimators for social scientists
@@ -52,6 +60,7 @@ packages:
 
   # DRIFT: the CV omitted Neal Fultz. One author list now feeds both.
   - name: fabricatr
+    year: 2018
     group: design
     site_title: Imagine Your Data Before You Collect It.
     cv_description: R statistical package for simulating social science data before it is collected
@@ -65,6 +74,7 @@ packages:
   # The CV linked http:// for both sensitivequestions.org packages; the site
   # already used https://. Normalized to https.
   - name: list
+    year: 2010
     group: sensitive
     # The collapse id is derived from the package name, which for `list`
     # collides with the "Statistical analysis of list experiments" paper in the
@@ -84,6 +94,7 @@ packages:
       - {label: Cite}
 
   - name: rr
+    year: 2015
     group: sensitive
     site_title: Statistical Methods for the Randomized Response Technique.
     cv_description: R statistical package for analysis of randomized response technique survey items designed to elicit truthful answers to sensitive questions

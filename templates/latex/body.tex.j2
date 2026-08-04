@@ -51,14 +51,14 @@ B.A., Political Science, Reed College, 2006 \\[.45em]
 %\clearpage
 {\large Research}\donotbreakhere
 {\large\it \hspace{.15em} Books}
-<<< publist(publications.publications | for_target | selectattr('kind', 'equalto', 'book') | list, citations) | raw_tex >>>
+<<< publist(publications.publications | for_target | selectattr('kind', 'equalto', 'book') | list) | raw_tex >>>
 \vspace{1em}
 %\clearpage
 
 %\begin{minipage}{\linewidth}   
 % \if0\complete \clearpage \fi
 {\large\it \hspace{.15em} Articles and chapters}\donotbreakhere
-<<< publist(publications.publications | for_target | rejectattr('kind', 'equalto', 'book') | list, citations) | raw_tex >>>
+<<< publist(publications.publications | for_target | rejectattr('kind', 'equalto', 'book') | list) | raw_tex >>>
 \vspace{1em}  %\end{minipage}
 
 % {\large\it \hspace{.15em} Invited contributions}

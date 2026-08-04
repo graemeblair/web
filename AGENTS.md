@@ -18,7 +18,7 @@ button pointed at a citation that did not exist.
 | To change | Edit |
 |---|---|
 | A paper, book, or abstract | `content/publications.yml` |
-| Bibliographic detail (volume, pages, publisher) | `content/citations.bib` |
+| Bibliographic detail (volume, issue, pages) | `content/publications.yml`, on the paper |
 | A court case or declaration | `content/expert.yml` |
 | An R package | `content/software.yml` |
 | A course | `content/teaching.yml` |
@@ -33,6 +33,15 @@ One-off prose that appears in exactly one place and never in the CV — the bio
 modal, the "For students" tab, the DeclareDesign card — lives in the template,
 not in YAML. Rule of thumb: repeated, structured, or shared with the CV → YAML;
 one-off site-only prose → template.
+
+**There is no `.bib` file.** The BibTeX behind every Cite button is generated
+from the same record the site and the CV render — `venue` is the journal,
+`volume`/`issue`/`pages` are the numbers, `authors` is the author list — by
+`sitegen/bibtex.py`, into `_site/js/citation.js`. There used to be a
+`content/citations.bib`, and it disagreed with the YAML about a dozen things:
+two author lists truncated at "and others", a chapter typed as an article, six
+titles in a different case, and one paper carrying another paper's volume and
+pages. Adding a `.bib` back fails Gate 5.
 
 ## Build and check
 

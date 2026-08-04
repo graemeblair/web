@@ -451,6 +451,94 @@ def test_gate5_no_duplicate_ids():
     assert inventory.build_file(BUILT_HTML)["duplicate_ids"] == []
 
 
+BUILT_CITATIONS = SITE / "js" / "citation.js"
+
+
+@needs_build
+def test_gate5_every_cite_button_has_an_entry():
+    """Every citation key on the page must resolve in the built citation.js.
+
+    The baseline fails this -- see test_baseline_has_an_undefined_citation_key,
+    where the ICE paper's Cite button opens an empty modal and logs to the
+    console. It could, because the key lived on the page, the BibTeX lived in a
+    hand-maintained .bib, and nothing joined the two. Both now come from the
+    same record, and this is what says so.
+    """
+    used = set(inventory.build_file(BUILT_HTML)["citations"])
+    defined = set(_citation_keys(BUILT_CITATIONS))
+    assert not used - defined, f"Cite buttons with no entry: {sorted(used - defined)}"
+
+
+@needs_build
+def test_gate5_generated_citations_are_not_stale():
+    """The built citation.js must match what the content renders right now.
+
+    Cheap, but it is the check that would catch a citation.js accidentally
+    committed under static/ and copied over the generated one.
+    """
+    from sitegen.content import CONTENT, load
+    from sitegen.targets import citations as citations_target
+
+    assert BUILT_CITATIONS.read_text(encoding="utf-8") == citations_target.render(
+        load(CONTENT)
+    )
+
+
+def test_gate5_cv_detail_overrides_say_something_new():
+    """A `cv_detail` must differ from the derived string, and not contradict it.
+
+    `cv_detail` exists for the five entries whose CV punctuation is its own
+    ("118 (42)", "5(3):1-8"). It is not a place to restate the numbers: a second
+    copy is how the CV came to cite volume 84 issue 1 of a paper whose .bib
+    entry said issue 4, with no way to tell which was right. An override that
+    merely repeats the derived string should be deleted; one that disagrees
+    about the volume or issue is a fact to settle, not a format to keep.
+    """
+    from sitegen.content import CONTENT, load_one
+    from sitegen.filters import volume_detail
+
+    problems = []
+    for pub in load_one(CONTENT / "publications.yml")["publications"]:
+        override = pub.get("cv_detail")
+        if not override:
+            continue
+        derived = volume_detail(pub)
+        if override == derived:
+            problems.append(f"{pub['slug']}: cv_detail restates {derived!r}")
+            continue
+        match = re.match(r"\s*(\d+)\s*(?:\((\d+)\))?", str(override))
+        if not match:
+            problems.append(f"{pub['slug']}: cv_detail {override!r} names no volume")
+            continue
+        volume, issue = match.group(1), match.group(2)
+        if volume != str(pub.get("volume")):
+            problems.append(
+                f"{pub['slug']}: cv_detail says volume {volume}, "
+                f"the record says {pub.get('volume')}"
+            )
+        if issue is not None and issue != str(pub.get("issue")):
+            problems.append(
+                f"{pub['slug']}: cv_detail says issue {issue}, "
+                f"the record says {pub.get('issue')}"
+            )
+    assert not problems, "\n".join(problems)
+
+
+def test_gate5_no_bibliography_file():
+    """There must be no .bib in the tree.
+
+    content/citations.bib was a second copy of every paper, and it had drifted
+    from content/publications.yml on a dozen fields before anyone noticed --
+    including one entry carrying another paper's volume and pages. The entries
+    are generated now; a .bib appearing again means someone has started keeping
+    a second copy.
+    """
+    tracked = subprocess.run(
+        ["git", "ls-files", "*.bib"], cwd=REPO, capture_output=True, text=True
+    ).stdout.split()
+    assert not tracked, f"bibliography files are tracked in git: {tracked}"
+
+
 # Built by the macOS XeLaTeX job and dropped into _site/ by CI, so it is absent
 # from a plain local `build.py` run. Its presence is asserted separately.
 CI_SUPPLIED = {"GraemeBlair-CV.pdf"}

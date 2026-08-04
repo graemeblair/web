@@ -1,14 +1,27 @@
 # Publications: books, articles, chapters and reports.
 #
-# Titles are stored in sentence case -- the form the website and
-# content/citations.bib both use -- and the CV's Title Case is derived by a
-# filter. The two had drifted on six titles; storing one and deriving the
-# other makes that impossible.
+# Titles are stored in sentence case -- the form the website prints -- and the
+# CV's Title Case is derived by a filter. The two had drifted on six titles;
+# storing one and deriving the other makes that impossible.
 #
-# Volume, issue, pages and publisher are NOT here. They live in
-# content/citations.bib, the canonical bibliographic record, and are joined
-# on `cite`. Author lists ARE here, because BibTeX truncates them: Science's
-# export gives 11 names for a paper with 25.
+# This is also the bibliographic record. A record with a `cite` key becomes a
+# BibTeX entry behind the site's Cite button, built by sitegen/bibtex.py from
+# these same fields: `venue` is the journal, `volume`/`issue`/`pages` are the
+# numbers, `authors` is the author list. There used to be a separate
+# content/citations.bib holding a second copy, and it disagreed with this file
+# about a dozen things -- truncated author lists, six titles in a different
+# case, one paper carrying another paper's volume and pages.
+#
+# `cv_detail` is a formatting override, NOT a second copy of the numbers: the
+# CV prints "118 (42)" where the derived form is "118(42): e2105570118". Every
+# entry that has one says why. A `cv_detail` that merely restates the derived
+# string, or that contradicts `volume`/`issue`, fails Gate 5.
+
+# Family-name-last is a guess the last word of a name usually satisfies -- and
+# a compound surname never does. Listed here so the exception sits beside the
+# data. See sitegen/bibtex.py:bib_name.
+bib_names:
+  Ken Ochieng' Opalo: Ochieng' Opalo, Ken
 
 columns:
 - id: policing
@@ -153,6 +166,7 @@ publications:
   venue: Nature Scientific Data
   column: policing
   cite: blair2025ice
+  bib_year: 2026
   authors:
   - Graeme Blair
   - David Hausman
@@ -174,6 +188,7 @@ publications:
   venue: Journal of Politics
   column: policing
   cite: blair2022point
+  bib_year: 2024
   authors:
   - Graeme Blair
   - Darin Christensen
@@ -203,10 +218,12 @@ publications:
   year: 2022
   column: policing
   cite: blair2022accessing
+  volume: 377
+  issue: 6602
+  pages: '150-151'
   authors:
   - Graeme Blair
   - Nirvikar Jassal
-  cv_detail: '377(6602): 150-151'
   links:
   - label: PDF
     url: /papers/helpdesks.pdf
@@ -230,11 +247,13 @@ publications:
   year: 2022
   column: policing
   cite: blair2022does
+  volume: 84
+  issue: 1
+  pages: '116-133'
   authors:
   - Graeme Blair
   - Darin Christensen
   - Valerie Wirtschafter
-  cv_detail: '84(1): 116-133'
   links:
   - label: PDF
     url: /papers/prospecting.pdf
@@ -262,7 +281,10 @@ publications:
   year: 2021
   column: policing
   cite: blair2021community
-  cv_detail: 374(6571)
+  volume: 374
+  issue: 6571
+  pages: 'eabd3446'
+  cv_detail: 374(6571)  # the CV cites the issue only
   links:
   - label: PDF
     url: /papers/mkiv.pdf
@@ -336,7 +358,10 @@ publications:
   - Anthony Etim
   - Chad Hazlett
   - Jiyoung Kim
-  cv_detail: 118 (42)
+  volume: 118
+  issue: 42
+  pages: 'e2105570118'
+  cv_detail: 118 (42)  # the CV cites the issue only
   links:
   - label: PDF
     url: https://www.pnas.org/content/pnas/118/42/e2105570118.full.pdf
@@ -375,11 +400,13 @@ publications:
   year: 2021
   column: policing
   cite: blair2021commodity
+  volume: 115
+  issue: 2
+  pages: '709-716'
   authors:
   - Graeme Blair
   - Darin Christensen
   - Aaron Rudkin
-  cv_detail: '115(2): 709-716'
   links:
   - label: PDF
     url: /papers/prices.pdf
@@ -413,7 +440,10 @@ publications:
   - Graeme Blair
   - Rebecca Littman
   - Elizabeth Levy Paluck
-  cv_detail: 5(3):1-8
+  volume: 5
+  issue: 3
+  pages: 'eaau5175'
+  cv_detail: 5(3):1-8  # the CV cites the article's length, not its number
   links:
   - label: PDF
     url: https://www.science.org/doi/pdf/10.1126/sciadv.aau5175
@@ -442,11 +472,13 @@ publications:
   year: 2013
   column: policing
   cite: lyall2013explaining
+  volume: 107
+  issue: 4
+  pages: '679-705'
   authors:
   - Jason Lyall
   - Graeme Blair
   - Kosuke Imai
-  cv_detail: '107(4): 679-705'
   links:
   - label: PDF
     url: /papers/afghan.pdf
@@ -474,12 +506,14 @@ publications:
   year: 2013
   column: policing
   cite: blair2013poverty
+  volume: 57
+  issue: 1
+  pages: '30-48'
   authors:
   - Graeme Blair
   - C. Christine Fair
   - Neil Malhotra
   - Jacob N. Shapiro
-  cv_detail: '57(1): 30-48'
   links:
   - label: PDF
     url: /papers/pakistan.pdf
@@ -552,7 +586,10 @@ publications:
   - Rebecca Wolfe
   - Graeme Blair
   - Sarah Ryan
-  cv_detail: 379(6629):247
+  volume: 379
+  issue: 6629
+  pages: '247'
+  cv_detail: 379(6629):247  # no space after the colon in the CV
   links:
   - label: PDF
     url: https://www.science.org/doi/10.1126/science.adf8329
@@ -574,6 +611,9 @@ publications:
   year: 2022
   column: methods
   cite: herman2022field
+  volume: 55
+  issue: 4
+  pages: '769-772'
   authors:
   - Biz Herman
   - Amma Panin
@@ -586,7 +626,6 @@ publications:
   - Yvonne Tan
   - Alex P. Dyzenhaus
   - Nicholas Owsley
-  cv_detail: '55(4): 769-772'
   links:
   - label: PDF
     url: papers/fieldexp.pdf
@@ -610,6 +649,7 @@ publications:
   year: 2021
   column: methods
   cite: blair2021conducting
+  pages: '411-428'
   kind: chapter
   book: Advances in Experimental Political Science
   editors:
@@ -641,11 +681,13 @@ publications:
   year: 2020
   column: methods
   cite: blair2020worry
+  volume: 114
+  issue: 4
+  pages: '1297-1315'
   authors:
   - Graeme Blair
   - Alexander Coppock
   - Margaret Moor
-  cv_detail: '114(4): 1297-1315'
   links:
   - label: PDF
     url: papers/sensitivity.pdf
@@ -671,12 +713,14 @@ publications:
   year: 2019
   column: methods
   cite: blair2019declaring
+  volume: 113
+  issue: 3
+  pages: '838-859'
   authors:
   - Graeme Blair
   - Jasper Cooper
   - Alexander Coppock
   - Macartan Humphreys
-  cv_detail: '113(3): 838-859'
   links:
   - label: PDF
     url: https://declaredesign.org/paper.pdf
@@ -704,11 +748,13 @@ publications:
   year: 2019
   column: methods
   cite: blair2019list
+  volume: 27
+  issue: 4
+  pages: '455-480'
   authors:
   - Graeme Blair
   - Winston Chou
   - Kosuke Imai
-  cv_detail: '27(4): 455-480'
   links:
   - label: PDF
     url: papers/listerror.pdf
@@ -737,11 +783,13 @@ publications:
   year: 2015
   column: methods
   cite: blair2015design
+  volume: 110
+  issue: 511
+  pages: '1304-1319'
   authors:
   - Graeme Blair
   - Kosuke Imai
   - Yang-Yang Zhou
-  cv_detail: '110(511): 1304-1319'
   links:
   - label: PDF
     url: papers/randresp.pdf
@@ -767,11 +815,13 @@ publications:
   year: 2014
   column: methods
   cite: blair2014comparing
+  volume: 58
+  issue: 4
+  pages: '1043-1063'
   authors:
   - Graeme Blair
   - Kosuke Imai
   - Jason Lyall
-  cv_detail: '58(4): 1043-1063'
   links:
   - label: PDF
     url: papers/listendorse.pdf
@@ -800,7 +850,10 @@ publications:
   authors:
   - Graeme Blair
   - Kosuke Imai
-  cv_detail: '20: 47-77'
+  volume: 20
+  issue: 1
+  pages: '47-77'
+  cv_detail: '20: 47-77'  # the CV omits the issue
   links:
   - label: PDF
     url: papers/list.pdf
@@ -833,7 +886,9 @@ publications:
   venue: Social Psychological and Personality Science
   year: 2017
   cite: gomila2017audio
-  cv_detail: '8(4): 424-433'
+  volume: 8
+  issue: 4
+  pages: '424-433'
   targets:
   - cv
   url: http://graemeblair.com/papers/audiocheck.pdf
@@ -845,7 +900,9 @@ publications:
   venue: APSA Comparative Politics Newsletter
   year: 2015
   cite: blair2015survey
-  cv_detail: '24(1): 12-16'
+  volume: 24
+  issue: 1
+  pages: '12-16'
   targets:
   - cv
   url: http://graemeblair.com/papers/sensitive.pdf

@@ -33,7 +33,7 @@ from markupsafe import Markup
 from .escape import raw_tex, tex_url
 from .filters import (
     authors, by_date_desc, by_year_desc, coauthors, cv_link, cv_url, downloads,
-    for_target, month_year, rcirc, starred, titlecase,
+    for_target, month_year, rcirc, starred, titlecase, volume_detail,
 )
 from .markup import to_html, to_tex
 
@@ -107,5 +107,6 @@ def latex_env() -> Environment:
     env.filters["starred"] = starred
     env.filters["by_year_desc"] = by_year_desc
     env.filters["cv_url"] = cv_url
+    env.filters["volume_detail"] = volume_detail
     env.filters["for_target"] = lambda items: for_target(items, "cv")
     return env

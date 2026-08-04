@@ -103,6 +103,24 @@ def by_date_desc(items: list[dict]) -> list[dict]:
     return sorted(items, key=lambda item: str(item.get("date", "")), reverse=True)
 
 
+def volume_detail(pub: dict) -> str:
+    """"115(2): 709-716" from a publication's volume, issue and pages.
+
+    The CV prints this after the journal name, and the same three fields become
+    the entry's BibTeX `volume`, `number` and `pages`. A publication that wants
+    a different string in the CV -- five do -- sets `cv_detail`, and Gate 5
+    checks that the override still says the same thing this does.
+    """
+    if not pub.get("volume"):
+        return ""
+    out = str(pub["volume"])
+    if pub.get("issue"):
+        out += f"({pub['issue']})"
+    if pub.get("pages"):
+        out += f": {pub['pages']}"
+    return out
+
+
 SELF = "Graeme Blair"
 
 
