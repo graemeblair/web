@@ -7,8 +7,14 @@
 {% if col.get('award') %}
                   <p class="paper-links"><a href="{{ col.award.url }}"><i class="{{ site.link_icons.Trophy }}"></i>{{ col.award.text }}</a></p>
 {% endif %}
+{# The site has two headings, the CV distinguishes four kinds. "Articles" here
+   means everything that is not the book -- the chapter in Druckman and Green
+   sits under it, as it did in the hand-written page. Testing `kind == 'article'`
+   instead dropped that entry from the site entirely. #}
 {% for kind, label in [('book', 'Book'), ('article', 'Articles')] %}
-{% set group = pubs | selectattr('column', 'equalto', col.id) | selectattr('kind', 'equalto', kind) | list %}
+{% set in_column = pubs | selectattr('column', 'equalto', col.id) | list %}
+{% set group = (in_column | selectattr('kind', 'equalto', 'book') | list) if kind == 'book'
+               else (in_column | rejectattr('kind', 'equalto', 'book') | list) %}
 {% if group %}
                   <p class="fs-18p fw-bolder"{% if kind == 'article' %} style="clear: both; padding-top: 20px;"{% endif %}>{{ label }}</p>
 {% for pub in group %}

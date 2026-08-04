@@ -1,9 +1,17 @@
 <<# Reverse-numbered lists, newest first.
 
-    Volume, issue and pages come from content/citations.bib rather than the
-    YAML, so nobody types "115(2): 709-716" into two places. Titles are stored
-    in sentence case and title-cased here -- deriving one from the other is what
-    stopped the two targets drifting apart on six of them.
+    Volume, issue and pages come from `cv_detail` where the CV carried its own
+    formatting for them, and otherwise from content/citations.bib -- so nobody
+    types "115(2): 709-716" into two places. Titles are stored in sentence case
+    and title-cased here; deriving one from the other is what stopped the two
+    targets drifting apart on six of them.
+
+    Four entry forms, because the hand-written CV had four and collapsing them
+    into one silently threw content away. A book is not a long article: it has
+    an editor marker, a contributor list running to 25 names, a series, and a
+    "manuscript at ..." note, and its title is italicized rather than quoted. A
+    chapter names the volume it sits in and that volume's editors. A report and
+    a codebook have no volume, issue, or year at all.
 
     EVERY \item MUST START ON ITS OWN LINE. A draft entry renders as `%\item`,
     and a LaTeX comment runs to end of line -- so when two items share a line, a
@@ -11,19 +19,61 @@
     \end{etaremune} with them. That produced a document XeLaTeX rejected with
     "Something's wrong--perhaps a missing \item", pointing at a line forty
     further down. Whitespace control below is load-bearing, not cosmetic. #>>
+
+<<# The names, with whichever authorship convention this entry uses. #>>
+<<% macro byline(pub) -%>>
+<<%- if pub.get('author_order') == 'randomized' -%>>
+<<< pub.authors | rcirc >>>
+<<%- elif pub.get('equal_authors') -%>>
+<<< pub.authors | starred(pub.equal_authors) | authors >>>
+<<%- else -%>>
+<<< pub.authors | authors >>>
+<<%- endif -%>>
+<<%- endmacro %>>
+
+<<# Volume/issue/pages. `cv_detail` wins where it is set: the CV's own
+    punctuation for these varied entry to entry ("118 (42)", "5(3):1-8"), and
+    that is a record of how the journal was cited, not a formatting choice to
+    normalize away. #>>
+<<% macro detail(pub, bib) -%>>
+<<%- if pub.get('cv_detail') %>> <<< pub.cv_detail >>><<% elif bib.get('volume') %>> <<< bib.volume >>><<% if bib.get('number') %>>(<<< bib.number >>>)<<% endif %>><<% if bib.get('pages') %>>: <<< bib.pages | replace('--', '-') >>><<% endif %>><<% endif -%>>
+<<%- endmacro %>>
+
+<<# Everything that belongs inside the \href, i.e. the citation proper. #>>
+<<% macro cite(pub, citations) -%>>
+<<%- set bib = citations.get(pub.get('cite'), {}) -%>>
+<<%- if pub.kind == 'book' -%>>
+<<< byline(pub) | raw_tex >>><<% if pub.get('role') == 'eds' %>> (eds.)<<% endif %>><<% if pub.get('contributors') %>> with <<< pub.contributors | authors >>><<% endif %>>. {\it <<< pub.title | titlecase >>>}. <<< pub.year >>>, <<< bib.get('publisher', pub.venue) >>><<% if bib.get('series') %>> (<<< bib.series >>> series)<<% endif %>>.<<% if pub.get('cv_note') %>> <<< pub.cv_note >>><<% endif %>>
+<<%- elif pub.kind == 'chapter' -%>>
+<<< byline(pub) | raw_tex >>>. ``<<< pub.title | titlecase >>>'' Chapter in {\it <<< pub.book >>>,} <<< pub.editors | authors >>> eds., <<< pub.year >>>. <<< pub.publisher_place >>>: <<< pub.publisher >>>.
+<<%- elif pub.kind in ('report', 'codebook') -%>>
+<<< byline(pub) | raw_tex >>>. ``<<< pub.title | titlecase >>>''
+<<%- else -%>>
+<<< byline(pub) | raw_tex >>>.<<% if pub.get('year') and not pub.get('status') %>> <<< pub.year >>>.<<% endif %>> ``<<< pub.title | titlecase >>>''<<% if pub.get('venue') and not pub.get('status') %>> {\it <<< pub.venue >>>}<<< detail(pub, bib) | raw_tex >>>.<<% endif %>>
+<<%- endif -%>>
+<<%- endmacro %>>
+
+<<# What follows the link: the status of an unpublished paper, the kind marker
+    on a report, and any authorship footnote. These sit outside the \href in the
+    hand-written CV -- the link is to the paper, not to the note about it. #>>
+<<% macro trailer(pub) -%>>
+<<%- if pub.get('status') %>> <<< pub.status >>>, \textit{<<< pub.venue >>>}.<<% endif -%>>
+<<%- if pub.kind == 'report' %>> Report.<<% endif -%>>
+<<%- if pub.get('author_order') == 'randomized' %>> *Author order randomized.<<% endif -%>>
+<<%- if pub.get('equal_authors') %>> * Equal authors.<<% endif -%>>
+<<%- endmacro %>>
+
 <<% macro entry(pub, citations) -%>>
-<<% set names = pub.authors | rcirc if pub.get('author_order') == 'randomized' else pub.authors | authors -%>>
-<<% set bib = citations.get(pub.get('cite'), {}) -%>>
-<<< names >>>.<<% if pub.get('year') %>> <<< pub.year >>>.<<% endif %>> ``<<< pub.title | titlecase >>>''<<% if pub.get('venue') %>><<% if pub.get('status') %>> <<< pub.status >>>, {\it <<< pub.venue >>>}.<<% else %>> {\it <<< pub.venue >>>}<<% if bib.get('volume') %>> <<< bib.volume >>><<% if bib.get('number') %>>(<<< bib.number >>>)<<% endif %>><<% if bib.get('pages') %>>: <<< bib.pages | replace('--', '-') >>><<% endif %>><<% endif %>>.<<% endif %>><<% elif pub.kind == 'report' %>> Report.<<% endif %>><<% if pub.get('author_order') == 'randomized' %>> *Author order randomized.<<% endif %>><<% if pub.get('equal_authors') %>> * Equal authors.<<% endif %>>
+<<%- set url = pub | cv_url -%>>
+<<%- if url %>>\href{<<< url | tex_url >>>}{<<< cite(pub, citations) | raw_tex >>>}<<% else %>><<< cite(pub, citations) | raw_tex >>><<% endif -%>>
+<<<- trailer(pub) | raw_tex >>>
 <<%- endmacro %>>
 
 <<% macro publist(pubs, citations) %>>
 \begin{etaremune}
-<<% for pub in pubs %>>
+<<% for pub in pubs | by_year_desc %>>
 <<% set line %>><<< entry(pub, citations) | raw_tex >>><<% endset %>>
-<<% if pub.get('draft') %>>%<<% endif %>>\item <<% if pub.get('url') %>>\href{<<< pub.url | tex_url >>>}{<<< line | raw_tex >>>}<<% else %>><<< line | raw_tex >>><<% endif +%>>
-<<% if pub.get('review') %>>\\[0.35em] Reviews: \textit{\href{<<< pub.review.url | tex_url >>>}{<<< pub.review.venue >>>}}<<% if pub.review.get('note') %>> (``<<< pub.review.note >>>'')<<% endif +%>>
-<<% endif %>>
+<<% if pub.get('draft') %>>%<<% endif %>>\item <<< line | raw_tex >>><<% if pub.get('review') %>>\\[0.35em] Reviews: \textit{\href{<<< pub.review.url | tex_url >>>}{<<< pub.review.venue >>>}}<<% if pub.review.get('note') %>> (``<<< pub.review.note >>>'')<<% endif %>><<% endif +%>>
 <<% if pub.get('commentary') %>>\\[0.35em] \href{<<< pub.commentary.url | tex_url >>>}{Invited perspective by <<< pub.commentary.author >>>, ``<<< pub.commentary.title >>>'' {\it <<< pub.commentary.venue >>>}.}
 <<% endif %>>
 <<% endfor %>>

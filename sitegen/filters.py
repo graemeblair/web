@@ -117,8 +117,69 @@ def coauthors(names: list[str]) -> list[str]:
 
 
 def rcirc(names: list[str]) -> str:
-    """Join names with the randomized-order symbol used by that convention."""
-    return " \u24c7 ".join(names)
+    """Join names with the randomized-order symbol used by that convention.
+
+    U+24E1 CIRCLED LATIN SMALL LETTER R, not U+24C7 -- the capital. Both look
+    like a circled r at a glance and only the lowercase one is in `escape.py`'s
+    Unicode table, so the capital passed through to XeLaTeX raw, where Hoefler
+    Text has no glyph for it: a missing character in the PDF and a warning
+    nobody reads. The site's own convention is the lowercase form too.
+
+    The last name is joined with "and" as well as the symbol, which is how both
+    the CV and the site wrote it by hand.
+    """
+    if len(names) < 2:
+        return "".join(names)
+    return " \u24e1 ".join(names[:-1]) + f" \u24e1 and {names[-1]}"
+
+
+def starred(names: list[str], count: int) -> list[str]:
+    """Mark the first `count` names with a trailing asterisk.
+
+    Equal-authorship notation: "Rebecca Littman*, Rebecca Wolfe*, Graeme Blair*,
+    and Sarah Ryan" means the first three contributed equally. The marker has to
+    sit on the names themselves -- a trailing "* Equal authors." with nothing
+    starred says only that the footnote exists.
+    """
+    return [f"{n}*" if i < count else n for i, n in enumerate(names)]
+
+
+SITE_BASE = "https://graemeblair.com"
+
+
+def cv_url(pub: dict) -> str | None:
+    """The one URL that should wrap this entry's CV line, if any.
+
+    The CV linked most entries to the paper itself. Which link that is comes
+    from the same ordered `links` list the site renders, so the two targets
+    cannot point at different copies of the same paper -- they already did on
+    three entries. Books with no readable copy online (the policing volume)
+    have no PDF and no "Read online", so they render unlinked, as before.
+
+    Relative site paths are absolutized: a PDF hyperlink reading `/papers/x.pdf`
+    resolves against the reader's filesystem, not the website.
+    """
+    links = {link["label"]: link.get("url") for link in pub.get("links") or []}
+    url = links.get("PDF") or links.get("Read online") or pub.get("url")
+    if not url:
+        return None
+    if url.startswith(("http://", "https://")):
+        return url
+    return f"{SITE_BASE}/{url.lstrip('/')}"
+
+
+def by_year_desc(items: list[dict]) -> list[dict]:
+    """Newest first, undated entries at the top, YAML order within a year.
+
+    The CV's publication order was maintained by hand and had drifted out of
+    order in two places; the YAML order is the *site's*, which is column-major
+    (policing, then methods) and so is not a CV ordering at all. Computing it
+    means an entry lands in the right place wherever it is added.
+
+    Undated entries sort first because they are forthcoming papers and living
+    codebooks -- not yet published, so ahead of everything that has been.
+    """
+    return sorted(items, key=lambda item: item.get("year") or 10_000, reverse=True)
 
 
 def cv_link(matter: dict) -> str | None:

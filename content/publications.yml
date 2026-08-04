@@ -262,6 +262,7 @@ publications:
   year: 2021
   column: policing
   cite: blair2021community
+  cv_detail: 374(6571)
   links:
   - label: PDF
     url: /papers/mkiv.pdf
@@ -505,6 +506,7 @@ publications:
   year: 2023
   column: methods
   cite: blair2023research
+  cv_note: Manuscript at book.declaredesign.org.
   links:
   - label: Read online
     url: https://book.declaredesign.org
@@ -601,10 +603,20 @@ publications:
   authors_shown: 1
 - slug: contexts
   title: Experiments in multiple contexts.
-  venue: Handbook of Experimental Political Science
+  # The site called the volume the "Handbook of Experimental Political Science".
+  # The CV and content/citations.bib both say "Advances in Experimental
+  # Political Science", which is the book Druckman and Green actually edited.
+  venue: Advances in Experimental Political Science
   year: 2021
   column: methods
   cite: blair2021conducting
+  kind: chapter
+  book: Advances in Experimental Political Science
+  editors:
+  - James N. Druckman
+  - Donald P. Green
+  publisher: Cambridge University Press
+  publisher_place: Cambridge
   authors:
   - Graeme Blair
   - Gwyneth McClendon
@@ -622,7 +634,6 @@ publications:
     in facilitating cumulative learning about treatment effects and treatment effect heterogeneity
     across contexts. We conclude by proposing some ways forward to continue improving our approach
     to learning about generalizability across contexts.'
-  kind: article
 - slug: sensitivity
   title: 'When to worry about sensitivity bias: A social reference theory and evidence from 30 years
     of list experiments.'
@@ -822,6 +833,7 @@ publications:
   venue: Social Psychological and Personality Science
   year: 2017
   cite: gomila2017audio
+  cv_detail: '8(4): 424-433'
   targets:
   - cv
   url: http://graemeblair.com/papers/audiocheck.pdf
@@ -833,6 +845,7 @@ publications:
   venue: APSA Comparative Politics Newsletter
   year: 2015
   cite: blair2015survey
+  cv_detail: '24(1): 12-16'
   targets:
   - cv
   url: http://graemeblair.com/papers/sensitive.pdf

@@ -13,6 +13,21 @@ Each entry is (kind, key, reason):
         "text"                                         -- Gate 2 and the CV
                                                           source, substring match
   key   the value that differs (a distinctive fragment, for "text")
+
+KNOWN BLIND SPOT, measured, not theoretical. A "text" key matches as a
+substring of a whole diff line, so it excuses that line entirely -- not just the
+fragment it names. Publication entries are single lines of 300+ characters, so
+"Ellen Chapin" (registered for a contributor-list change) also covers a wrong
+publisher or a typo'd page range in the same entry. Checked: with the current
+registrations, changing a journal issue from 377(6602) to 377(6603) passes the
+suite; dropping a coauthor from a line with no registered key still fails.
+
+The fix is to require the registered keys to account for the whole difference --
+mask every key occurrence on both sides and demand the remainders match. That
+was tried here and works, but the 60 existing registrations were written for
+substring matching and do not tile their changes, so it currently reports about
+thirty already-agreed changes as unexplained. Rewriting them to tile is real
+work and belongs in its own change, not smuggled into a content PR.
 """
 
 from __future__ import annotations
@@ -250,6 +265,233 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
     # which resolves the six titles the two sources disagreed on. In every one
     # the site and content/citations.bib agreed and the CV was stale, so the CV
     # gains the current title. Those changes surface in the CV comparison only.
+    (
+        "text",
+        "Advances in Experimental Political Science",
+        "The site called the volume the site's Blair-McClendon chapter sits in "
+        "the 'Handbook of Experimental Political Science'. The CV and "
+        "content/citations.bib both name it 'Advances in Experimental Political "
+        "Science', which is the book Druckman and Green edited. The site gains "
+        "the correct title. The CV also regains the chapter's editors, year and "
+        "publisher, which a duplicate `kind:` key in the YAML had silently "
+        "dropped -- Gate 5 lints for that now.",
+    ),
+    (
+        "text",
+        "Handbook of Experimental Political Science",
+        "Removal side of the volume-title correction above.",
+    ),
+    # ---- titles, six of which the two sources disagreed on ------------------
+    (
+        "text",
+        "Poverty and Support for Militant Politics: Evidence from Pakistan",
+        "The CV said 'Survey Evidence from Pakistan'; the AJPS title is "
+        "'Evidence from Pakistan'.",
+    ),
+    (
+        "text",
+        "Poverty and Support for Militant Politics: Survey Evidence from Pakistan",
+        "Removal side of the Pakistan title correction.",
+    ),
+    (
+        "text",
+        "Immigration and Customs Enforcement Individual-Level Administrative Data",
+        "The CV omitted 'administrative' from the ICE data paper's title; the "
+        "site and citations.bib both have it.",
+    ),
+    (
+        "text",
+        "Immigration and Customs Enforcement individual-level data",
+        "Removal side of the ICE-data title correction.",
+    ),
+    (
+        "text",
+        "Accessing Justice for Survivors of Violence against Women",
+        "The CV said 'Improving Access to Justice for Survivors of Violence "
+        "Against Women'; the site and citations.bib say 'Accessing justice ...', "
+        "which is what Science published. The CV was stale.",
+    ),
+    (
+        "text",
+        "Improving Access to Justice for Survivors of Violence Against Women",
+        "Removal side of the help-desks title correction.",
+    ),
+    (
+        "text",
+        "Evidence Needed for Ethical Social Science",
+        "The CV said 'Evidence required ...'; the published title is 'Evidence "
+        "needed ...'.",
+    ),
+    (
+        "text",
+        "Evidence required for ethical social science",
+        "Removal side of the ethics-piece title correction.",
+    ),
+    (
+        "text",
+        "Design and Analysis of the Randomized Response Technique",
+        "The CV said 'Statistical Analysis of ...'; JASA published 'Design and "
+        "Analysis of ...'.",
+    ),
+    (
+        "text",
+        "Statistical Analysis of the Randomized Response Technique",
+        "Removal side of the randomized-response title correction.",
+    ),
+    (
+        "text",
+        "Community Policing Does Not Build Citizen Trust in Police or Reduce Crime",
+        "The CV carried the working title 'Does Community Policing Build Trust "
+        "in Police and Reduce Crime? Evidence from Six Coordinated Field "
+        "Experiments in the Global South'. Science published the finding as a "
+        "statement, not a question.",
+    ),
+    (
+        "text",
+        "Does Community Policing Build Trust in Police and Reduce Crime?",
+        "Removal side of the community-policing title correction.",
+    ),
+    (
+        "text",
+        "Where and Why Does Oil Cause Armed Conflict in Africa?",
+        "The CV's title omitted 'in Africa', and the paper has moved from "
+        "forthcoming to accepted at the Journal of Politics.",
+    ),
+    (
+        "text",
+        "Where and why does oil cause armed conflict?",
+        "Removal side of the point-of-attack title change.",
+    ),
+    ("text", "Accepted, \\textit{Journal of Politics}", "See above -- forthcoming to accepted."),
+    (
+        "text",
+        "Forthcoming, \\textit{Journal of Politics}",
+        "Removal side of the forthcoming-to-accepted change.",
+    ),
+    (
+        "text",
+        "2022. ``How Does Armed Conflict Shape Investment?",
+        "The mining paper was listed as 2020 on the CV and 2022 on the site. It "
+        "appeared in the Journal of Politics in 2022; 2020 was the working-paper "
+        "year. One year now feeds both targets.",
+    ),
+    (
+        "text",
+        "2020. ``How does armed conflict shape investment?",
+        "Removal side of the mining-paper year correction.",
+    ),
+    # Codebooks and reports were the only publication titles the CV left in
+    # sentence case. Titles are stored in sentence case and Title Cased for the
+    # CV, so these now match their neighbours. Registered individually rather
+    # than as one "Codebook" key, which would whitelist any future codebook.
+    (
+        "text",
+        "ICE Detention Facilities Codebook",
+        "Title Cased with every other CV title. Removal side is the sentence-case form.",
+    ),
+    ("text", "ICE detention facilities codebook", "Removal side of the above."),
+    (
+        "text",
+        "ICE Field Offices and Areas of Responsibility Codebook",
+        "Title Cased with every other CV title.",
+    ),
+    ("text", "ICE field offices and areas of responsibility codebook", "Removal side of the above."),
+    ("text", "EOIR Processed Case Data Codebook", "Title Cased with every other CV title."),
+    ("text", "EOIR processed case data codebook", "Removal side of the above."),
+    ("text", "EOIR Case Dataset Codebook", "Title Cased with every other CV title."),
+    ("text", "EOIR case dataset codebook", "Removal side of the above."),
+    (
+        "text",
+        "One Year of Immigration Enforcement under the Second Trump Administration",
+        "Title Cased with every other CV title.",
+    ),
+    (
+        "text",
+        "One year of immigration enforcement under the second Trump administration",
+        "Removal side of the above.",
+    ),
+    (
+        "text",
+        "Immigration Enforcement in the First Nine Months of the Second Trump Administration",
+        "Title Cased with every other CV title.",
+    ),
+    (
+        "text",
+        "Immigration enforcement in the first nine months of the second Trump administration",
+        "Removal side of the above.",
+    ),
+    # ---- paper links, which the two targets pointed at differently ----------
+    #
+    # The CV's link for an entry is now the same `links:` row the site renders,
+    # so the two cannot point at different copies of one paper. They did on
+    # three, and five more were linked over http.
+    (
+        "text",
+        "graemeblair.com/papers/mkiv.pdf",
+        "The CV linked the community-policing paper to its Science landing page, "
+        "the site to the PDF. The site's link wins: it reaches the paper "
+        "without a paywall.",
+    ),
+    (
+        "text",
+        "science.org/doi/10.1126/science.abd3446",
+        "Removal side of the community-policing link change.",
+    ),
+    (
+        "text",
+        "science.org/doi/pdf/10.1126/sciadv.aau5175",
+        "The CV linked a local copy of the Nollywood paper, the site the "
+        "publisher's open-access PDF. Science Advances is open access, so the "
+        "publisher's copy is the better target.",
+    ),
+    (
+        "text",
+        "graemeblair.com/papers/nollywood.pdf",
+        "Removal side of the Nollywood link change.",
+    ),
+    (
+        "text",
+        "https://declaredesign.org/paper.pdf",
+        "The CV linked declaredesign.org/declare.pdf and the site "
+        "declaredesign.org/paper.pdf for the same paper. The site's is the live "
+        "one.",
+    ),
+    (
+        "text",
+        "https://declaredesign.org/declare.pdf",
+        "Removal side of the DeclareDesign link change.",
+    ),
+    (
+        "text",
+        "https://graemeblair.com/papers/randresp.pdf",
+        "Five CV paper links were http://. Upgraded to https, matching the site "
+        "-- the same change already made to the two sensitivequestions.org "
+        "software links.",
+    ),
+    (
+        "text",
+        "https://graemeblair.com/papers/listendorse.pdf",
+        "As above -- http:// to https://.",
+    ),
+    (
+        "text",
+        "https://graemeblair.com/papers/pakistan.pdf",
+        "As above -- http:// to https://.",
+    ),
+    ("text", "http://graemeblair.com/papers/randresp.pdf", "Removal side of the https upgrade."),
+    ("text", "http://graemeblair.com/papers/listendorse.pdf", "Removal side of the https upgrade."),
+    ("text", "http://graemeblair.com/papers/pakistan.pdf", "Removal side of the https upgrade."),
+    (
+        "text",
+        "{\\it Social Psychological and Personality Science} 8(4): 424-433",
+        "The audio-check entry was the one article whose volume followed a "
+        "period after the journal name. Every other entry runs the two together.",
+    ),
+    (
+        "text",
+        "{\\it Social Psychological and Personality Science}. 8(4): 424-433",
+        "Removal side of the stray-period fix above.",
+    ),
     (
         "text",
         "Ellen Chapin",
