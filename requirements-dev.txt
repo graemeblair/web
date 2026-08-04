@@ -1,0 +1,8 @@
+-r requirements.txt
+
+# Acceptance harness only. beautifulsoup4+lxml parse the baseline and the built
+# HTML for the inventory and normalized-text gates; pillow compares page images.
+beautifulsoup4>=4.12
+lxml>=5
+pillow>=10
+pytest>=8
