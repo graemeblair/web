@@ -101,6 +101,40 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
     ("text", "% Fall 2016 (as PS 209); Winter 2018", "Historical note, moved to teaching.yml."),
     ("text", "%Fall 2016 -- Winter 2017", "Historical note, moved to teaching.yml."),
     ("text", "% Politics 572 (Preceptor).", "Historical note, moved to teaching.yml."),
+    # ---- software, moved into content/software.yml -------------------------
+    #
+    # Three changes to the CV's software list, all of them normalizations the
+    # site already had right. The site's own rendering is unchanged.
+    (
+        "text",
+        "}, with Jasper Cooper",
+        "The \\href now covers the package name and description only; the "
+        "coauthor list sits outside it. The hand-written CV did this both ways "
+        "-- DeclareDesign, estimatr and fabricatr wrapped coauthors inside the "
+        "link, rr and list left them out.",
+    ),
+    ("text", "research designs, with Jasper Cooper", "Removal side of the above (DeclareDesign)."),
+    ("text", "social scientists, with Jasper Cooper", "Removal side of the above (estimatr)."),
+    ("text", "collected, with Jasper Cooper", "Removal side of the above (fabricatr)."),
+    (
+        "text",
+        "Aaron Rudkin, and Neal Fultz",
+        "fabricatr's author list disagreed: the site credited Neal Fultz, the "
+        "CV did not. One list now feeds both, and it includes him.",
+    ),
+    (
+        "text",
+        "https://rr.sensitivequestions.org",
+        "The CV linked http:// for both sensitivequestions.org packages while "
+        "the site already used https://.",
+    ),
+    (
+        "text",
+        "https://list.sensitivequestions.org",
+        "As above -- http:// to https://.",
+    ),
+    ("text", "http://rr.sensitivequestions.org", "Removal side of the https upgrade."),
+    ("text", "http://list.sensitivequestions.org", "Removal side of the https upgrade."),
 ]
 
 

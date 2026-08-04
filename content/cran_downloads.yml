@@ -1,0 +1,18 @@
+# MACHINE-WRITTEN. Do not hand-edit -- run tools/update_cran_counts.py.
+#
+# Total CRAN downloads per package, as integers. The site formats them
+# (85000 -> "~85,000 downloads"); the CV never shows them.
+#
+# Kept in its own file so the refresh script rewrites a small generated file
+# instead of reaching into software.yml and destroying its comments. It used to
+# rewrite index.html directly with a regex.
+#
+# checked: 2025-08-01 (carried over from the hand-written page; per
+# tools/README_CRAN_UPDATES.md these were estimates, not API data. The first
+# real run should land as its own commit so the movement is visible.)
+
+DeclareDesign: 85000
+estimatr: 220000
+fabricatr: 95000
+list: 180000
+rr: 65000

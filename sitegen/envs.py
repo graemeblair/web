@@ -31,7 +31,7 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined
 from markupsafe import Markup
 
 from .escape import raw_tex
-from .filters import for_target, titlecase
+from .filters import authors, downloads, for_target, titlecase
 from .markup import to_html, to_tex
 
 REPO = Path(__file__).resolve().parent.parent
@@ -60,6 +60,8 @@ def html_env() -> Environment:
     env.globals["inline"] = _inline
     env.filters["markup"] = to_html
     env.filters["titlecase"] = titlecase
+    env.filters["authors"] = authors
+    env.filters["downloads"] = downloads
     env.filters["for_target"] = lambda items: for_target(items, "site")
     return env
 
@@ -85,5 +87,7 @@ def latex_env() -> Environment:
     env.filters["raw_tex"] = raw_tex
     env.filters["markup"] = to_tex
     env.filters["titlecase"] = titlecase
+    env.filters["authors"] = authors
+    env.filters["downloads"] = downloads
     env.filters["for_target"] = lambda items: for_target(items, "cv")
     return env

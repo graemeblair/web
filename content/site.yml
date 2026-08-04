@@ -43,6 +43,19 @@ externals:
     src: https://cdn.jsdelivr.net/npm/citation-js@0.7.9/build/citation.min.js
     flags: [defer]
 
+# Link-row icons, keyed by label. Shared by software and publications so that a
+# label always renders with the same icon -- in the hand-written page the icon
+# travelled with each individual link, and they had already diverged (one PDF
+# link was missing the `paper-icon` class its neighbours all had).
+#
+# `Cite` genuinely has no `paper-icon`: it is a modal trigger, not a document
+# link, and spaces differently.
+link_icons:
+  Web: fas fa-globe-americas paper-icon
+  Cite: fas fa-quote-left
+  Cheatsheet: fas fa-info-circle paper-icon
+  Trophy: fas fa-trophy paper-icon
+
 tabs:
   - {id: research, label: Writing,        icon: fa-solid fa-book}
   - {id: data,     label: Data,           icon: fa-solid fa-database}

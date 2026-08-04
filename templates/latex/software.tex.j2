@@ -1,0 +1,12 @@
+<<# The link covers the package name and what it does; the coauthor list sits
+    outside it. The hand-written CV did this both ways -- DeclareDesign,
+    fabricatr and estimatr wrapped their coauthors inside the \href, while rr
+    and list left them out. Uniform now. #>>
+\begin{indnt}
+<<% for pkg in software.packages %>>
+<<# `+%>>` keeps the newline that trim_blocks would otherwise swallow. LaTeX
+    would not care -- these are one paragraph with explicit \\ breaks -- but a
+    single 2,000-character line is unreadable when diffing generated output. #>>
+\href{<<< pkg.url >>>}{<<< pkg.name >>>, <<< pkg.cv_description >>>}, with <<< pkg.authors | authors >>><<% if not loop.last %>>\\[.75em]<<% endif +%>>
+<<% endfor %>>
+\end{indnt}

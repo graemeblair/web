@@ -33,6 +33,26 @@ def titlecase(text: str) -> str:
     return " ".join(out)
 
 
+def authors(names: list[str], conjunction: str = "and") -> str:
+    """Render a name list as prose: "A", "A and B", "A, B, and C"."""
+    if not names:
+        return ""
+    if len(names) == 1:
+        return names[0]
+    if len(names) == 2:
+        return f"{names[0]} {conjunction} {names[1]}"
+    return ", ".join(names[:-1]) + f", {conjunction} {names[-1]}"
+
+
+def downloads(count: int) -> str:
+    """Format a CRAN download total the way the site shows it: 85000 -> 85,000.
+
+    Rounded to thousands because the number is refreshed periodically and
+    displayed with a leading "~"; false precision would be misleading.
+    """
+    return f"{round(count / 1000):,},000" if count >= 1000 else str(count)
+
+
 def targets(item: dict, target: str) -> bool:
     """Does this content item render into the given target ('site' or 'cv')?"""
     return target in item.get("targets", ["site", "cv"])

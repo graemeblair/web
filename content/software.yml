@@ -1,0 +1,95 @@
+# R packages. One record per package feeds the Software tab and the CV.
+#
+# `site_title` and `cv_description` are both kept on purpose -- unlike the
+# teaching titles, these are not two renderings of one string. The site shows
+# the package's own tagline ("Declare and Diagnose Research Designs"); the CV
+# explains what it does in prose ("R statistical package for diagnosing and
+# improving research designs"). Different facts, both wanted.
+#
+# `authors` IS one list, which settles the disagreement the two sources had:
+# the site credited Neal Fultz on fabricatr and the CV did not.
+#
+# Download counts are deliberately absent. They live in cran_downloads.yml,
+# which is machine-written -- see tools/update_cran_counts.py.
+
+groups:
+  - id: design
+    heading: Research design planning and implementation
+    awards:
+      - text: Polmeth Statistical Software Award
+        url: https://www.cambridge.org/core/membership/spm/about-us/awards/statistical-software-award
+      - text: SIPS Commendation
+        url: https://improvingpsych.org/mission/awards/
+
+  - id: sensitive
+    heading: Analyzing surveys with sensitive questions
+    heading_style: "padding-top: 10px; padding-bottom:5px"
+
+packages:
+  - name: DeclareDesign
+    group: design
+    site_title: Declare and Diagnose Research Designs.
+    cv_description: R statistical package for diagnosing and improving research designs
+    authors: [Jasper Cooper, Alexander Coppock, Macartan Humphreys, Neal Fultz]
+    url: https://declaredesign.org
+    cite: blair2016declaredesign
+    links:
+      - {label: Web, url: "https://declaredesign.org/r/declaredesign/"}
+      - {label: Cite}
+      - {label: Cheatsheet, url: "https://raw.githubusercontent.com/rstudio/cheatsheets/master/declaredesign.pdf"}
+
+  - name: estimatr
+    group: design
+    site_title: Fast Estimators for Design-Based Inference.
+    cv_description: R statistical package for fast estimators for social scientists
+    authors: [Jasper Cooper, Alexander Coppock, Macartan Humphreys, Luke Sonnet]
+    url: https://declaredesign.org/r/estimatr
+    cite: blair2018estimatr
+    links:
+      - {label: Web, url: "https://declaredesign.org/r/estimatr/"}
+      - {label: Cite}
+      - {label: Cheatsheet, url: "https://raw.githubusercontent.com/rstudio/cheatsheets/master/estimatr.pdf"}
+
+  # DRIFT: the CV omitted Neal Fultz. One author list now feeds both.
+  - name: fabricatr
+    group: design
+    site_title: Imagine Your Data Before You Collect It.
+    cv_description: R statistical package for simulating social science data before it is collected
+    authors: [Jasper Cooper, Alexander Coppock, Macartan Humphreys, Aaron Rudkin, Neal Fultz]
+    url: https://declaredesign.org/r/fabricatr
+    cite: blair2018fabricatr
+    links:
+      - {label: Web, url: "https://declaredesign.org/r/fabricatr/"}
+      - {label: Cite}
+
+  # The CV linked http:// for both sensitivequestions.org packages; the site
+  # already used https://. Normalized to https.
+  - name: list
+    group: sensitive
+    # The collapse id is derived from the package name, which for `list`
+    # collides with the "Statistical analysis of list experiments" paper in the
+    # Writing tab -- the original bug, where this chevron opened that abstract.
+    # An explicit slug keeps them apart; Gate 5's duplicate-id check is what
+    # catches it if anyone forgets.
+    slug: listPkg
+    site_title: Statistical Methods for the Item Count Technique and List Experiment.
+    # Typographic quotes, not straight ones: the LaTeX escaper maps them to
+    # ``...'' so XeTeX typesets real curly quotes, as the hand-written CV did.
+    cv_description: R statistical package for analysis of survey “list experiments” designed to elicit truthful answers to sensitive questions
+    authors: [Kosuke Imai]
+    url: https://list.sensitivequestions.org
+    cite: blair2010list
+    links:
+      - {label: Web, url: "https://list.sensitivequestions.org/"}
+      - {label: Cite}
+
+  - name: rr
+    group: sensitive
+    site_title: Statistical Methods for the Randomized Response Technique.
+    cv_description: R statistical package for analysis of randomized response technique survey items designed to elicit truthful answers to sensitive questions
+    authors: [Yang-Yang Zhou, Kosuke Imai]
+    url: https://rr.sensitivequestions.org
+    cite: blair2015rr
+    links:
+      - {label: Web, url: "https://rr.sensitivequestions.org/"}
+      - {label: Cite}

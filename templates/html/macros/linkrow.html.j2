@@ -1,0 +1,20 @@
+{#- A row of small icon links under a paper, package, or dataset.
+
+    `Cite` is special: it targets the citation modal by key rather than
+    carrying a URL, so it is expressed as {label: Cite} plus the item's `cite`
+    key rather than repeating the key on the link. #}
+{% macro linkrow(links, icons, cite_key=None) -%}
+<p class="paper-links">{% for link in links %}
+{%- if link.label == 'Cite' -%}
+<a href="#citation" data-citation="{{ cite_key }}"><i class="{{ icons['Cite'] }}"></i>Cite</a>
+{%- else -%}
+<a href="{{ link.url }}"><i class="{{ icons[link.label] }}"></i>{{ link.label }}</a>
+{%- endif -%}
+{% endfor %}</p>
+{%- endmacro %}
+
+{#- A collapsible abstract block: the chevron toggle plus the panel it opens.
+    `slug` names the panel, so the toggle and its target cannot disagree. #}
+{% macro chevron(slug) -%}
+<a href="#" data-bs-toggle="collapse" data-bs-target="#{{ slug }}Abstract" aria-expanded="false" aria-controls="{{ slug }}Abstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a>
+{%- endmacro %}

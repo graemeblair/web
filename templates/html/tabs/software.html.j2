@@ -1,36 +1,20 @@
+{% from 'macros/linkrow.html.j2' import linkrow, chevron %}
               <div class="row gx-5">
                 <div class="col-md-7">
-                  <h1>Research design planning and implementation</h1>
-                  <p class="paper-links"><a href="https://www.cambridge.org/core/membership/spm/about-us/awards/statistical-software-award"><i class="fas fa-trophy paper-icon"></i>Polmeth Statistical Software Award</a><a href="https://improvingpsych.org/mission/awards/"><i class="fas fa-trophy paper-icon"></i>SIPS Commendation</a></p>
-                  <p class="paper-title">&ldquo;<b>DeclareDesign</b>: Declare and Diagnose Research Designs.&rdquo; R package. With Jasper Cooper, Alexander Coppock, Macartan Humphreys, and Neal Fultz. ~85,000 downloads. &nbsp;<a href="#" data-bs-toggle="collapse" data-bs-target="#declaredesignAbstract" aria-expanded="false" aria-controls="declaredesignAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a></p>
-                  <div class="collapse abstract" id="declaredesignAbstract">
-                    <p class="paper-links"><a href="https://declaredesign.org/r/declaredesign/"><i class="fas fa-globe-americas paper-icon"></i>Web</a><a href="#citation" data-citation="blair2016declaredesign"><i class="fas fa-quote-left"></i>Cite</a><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/declaredesign.pdf"><i class="fas fa-info-circle paper-icon"></i>Cheatsheet</a></p>
-                  </div>
-                  <p class="paper-title">&ldquo;<b>estimatr</b>: Fast Estimators for Design-Based Inference.&rdquo; R package. With Jasper Cooper, Alexander Coppock, Macartan Humphreys, and Luke Sonnet. ~220,000 downloads.
-                    &nbsp;<a href="#" data-bs-toggle="collapse" data-bs-target="#estimatrAbstract" aria-expanded="false" aria-controls="estimatrAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a>
+{% for group in software.groups %}
+                  <h1{% if group.get('heading_style') %} style="{{ group.heading_style }}"{% endif %}>{{ group.heading }}</h1>
+{% if group.get('awards') %}
+                  <p class="paper-links">{% for award in group.awards %}<a href="{{ award.url }}"><i class="{{ site.link_icons.Trophy }}"></i>{{ award.text }}</a>{% endfor %}</p>
+{% endif %}
+{% for pkg in software.packages if pkg.group == group.id %}
+                  <p class="paper-title">&ldquo;<b>{{ pkg.name }}</b>: {{ pkg.site_title }}&rdquo; R package. With {{ pkg.authors | authors }}. ~{{ cran_downloads[pkg.name] | downloads }} downloads.
+                    &nbsp;{{ chevron(pkg.get('slug', pkg.name | lower)) }}
                   </p>
-                  <div class="collapse abstract" id="estimatrAbstract">
-                    <p class="paper-links"> <a href="https://declaredesign.org/r/estimatr/"><i class="fas fa-globe-americas paper-icon"></i>Web</a><a href="#citation" data-citation="blair2018estimatr"><i class="fas fa-quote-left"></i>Cite</a><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/estimatr.pdf"><i class="fas fa-info-circle paper-icon"></i>Cheatsheet</a></p>
+                  <div class="collapse abstract" id="{{ pkg.get('slug', pkg.name | lower) }}Abstract">
+                    {{ linkrow(pkg.links, site.link_icons, pkg.cite) }}
                   </div>
-                  <p class="paper-title">&ldquo;<b>fabricatr</b>: Imagine Your Data Before You Collect It.&rdquo; R package. With Jasper Cooper, Alexander Coppock, Macartan Humphreys, Aaron Rudkin, and Neal Fultz. ~95,000 downloads.
-                    &nbsp;<a href="#" data-bs-toggle="collapse" data-bs-target="#fabricatrAbstract" aria-expanded="false" aria-controls="fabricatrAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a>
-                  </p>
-                  <div class="collapse abstract" id="fabricatrAbstract">
-                    <p class="paper-links"><a href="https://declaredesign.org/r/fabricatr/"><i class="fas fa-globe-americas paper-icon"></i>Web</a><a href="#citation" data-citation="blair2018fabricatr"><i class="fas fa-quote-left"></i>Cite</a></p>
-                  </div>
-                  <h1 style="padding-top: 10px; padding-bottom:5px">Analyzing surveys with sensitive questions</h1>
-                  <p class="paper-title">&ldquo;<b>list</b>: Statistical Methods for the Item Count Technique and List Experiment.&rdquo; R package. With Kosuke Imai. ~180,000 downloads.
-                    &nbsp;<a href="#" data-bs-toggle="collapse" data-bs-target="#listPkgAbstract" aria-expanded="false" aria-controls="listPkgAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a>
-                  </p>
-                  <div class="collapse abstract" id="listPkgAbstract">
-                    <p class="paper-links"><a href="https://list.sensitivequestions.org/"><i class="fas fa-globe-americas paper-icon"></i>Web</a><a href="#citation" data-citation="blair2010list"><i class="fas fa-quote-left"></i>Cite</a></p>
-                  </div>
-                  <p class="paper-title">&ldquo;<b>rr</b>: Statistical Methods for the Randomized Response Technique.&rdquo; R package. With Yang-Yang Zhou and Kosuke Imai. ~65,000 downloads.
-                    &nbsp;<a href="#" data-bs-toggle="collapse" data-bs-target="#rrAbstract" aria-expanded="false" aria-controls="rrAbstract"><i class="far fa-arrow-alt-circle-down no-indent"></i></a>
-                  </p>
-                  <div class="collapse abstract" id="rrAbstract">
-                    <p class="paper-links"> <a href="https://rr.sensitivequestions.org/"><i class="fas fa-globe-americas paper-icon"></i>Web</a><a href="#citation" data-citation="blair2015rr"><i class="fas fa-quote-left"></i>Cite</a></p>
-                  </div>
+{% endfor %}
+{% endfor %}
                 </div>
                 <div class="col-md-5" >
                   <div class="card mb-3">

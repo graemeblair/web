@@ -1,52 +1,50 @@
-# CRAN Download Count Updates
+# Refreshing CRAN download counts
 
-This repository contains scripts to update the R package download counts displayed on the website.
-
-## Files Added
-
-- `update_cran_counts.py` - Script to fetch real-time download counts from CRAN APIs when internet access is available
-
-## Recent Updates
-
-The download counts in `index.html` have been updated with conservative estimates based on:
-
-- Package age and maturity
-- Typical R package adoption patterns  
-- Growth since last update
-- The stated total of 1M+ downloads across all packages
-
-### Updated Counts
-
-| Package | Previous Count | Updated Count | Growth |
-|---------|---------------|---------------|--------|
-| DeclareDesign | ~28,000 | ~85,000 | +204% |
-| estimatr | ~136,000 | ~220,000 | +62% |
-| fabricatr | ~43,000 | ~95,000 | +121% |
-| list | ~47,000 | ~180,000 | +283% |
-| rr | ~23,000 | ~65,000 | +183% |
-
-**Total estimated downloads: 645,000**
-
-## Future Updates
-
-To update with real CRAN data when internet access is available:
+The Software tab shows an approximate download total per R package. The numbers
+live in `content/cran_downloads.yml` and are written by a script, never by hand.
 
 ```bash
-python3 update_cran_counts.py
+python3 tools/update_cran_counts.py
+python build.py
+git add content/cran_downloads.yml && git commit
 ```
 
-This script will:
-1. Fetch current download counts from CRAN APIs
-2. Create a backup of the current HTML file
-3. Update the counts in index.html
-4. Show a summary of changes
+`--dry-run` prints the file instead of writing it.
 
-## Package Information
+The script fetches from `cranlogs.r-pkg.org`, falling back to METACRAN, and
+refuses to write unless every package resolved — a partial write would drop a
+package from the file and then fail the build on a missing key, which is a
+confusing way to find out that one API call timed out.
 
-- **DeclareDesign** (2016): Research design declaration and diagnosis
-- **estimatr** (2018): Fast estimators for design-based inference  
-- **fabricatr** (2018): Data simulation before collection
-- **list** (2010): Statistical methods for item count technique and list experiments
-- **rr** (2015): Statistical methods for randomized response technique
+## The numbers in the file today are estimates, not measurements
 
-All packages are actively maintained and continue to see steady adoption in the R community.
+The counts currently shown (DeclareDesign ~85,000, estimatr ~220,000, fabricatr
+~95,000, list ~180,000, rr ~65,000) were never fetched from an API. The previous
+version of this document described them plainly as conservative estimates based
+on "package age and maturity, typical R package adoption patterns, growth since
+last update".
+
+So the first real run will move them, possibly by a lot. **Land that run as its
+own commit**, so the movement is visible and reviewable rather than buried in a
+change about something else.
+
+## What changed
+
+This script used to rewrite `index.html` with a regex and leave a
+`.backup.<timestamp>` copy of the page in the repo root.
+
+`index.html` is generated from `content/` now, so editing it directly would be
+discarded by the next build — and until then would desync the page from
+`content/software.yml`, turning the acceptance gates red for whoever pushed
+next. The backups are gone too: git already does that job, and those copies
+would now be published as part of the site.
+
+## The packages
+
+| Package | Since | What it does |
+|---|---|---|
+| DeclareDesign | 2016 | Research design declaration and diagnosis |
+| estimatr | 2018 | Fast estimators for design-based inference |
+| fabricatr | 2018 | Data simulation before collection |
+| list | 2010 | Item count technique and list experiments |
+| rr | 2015 | Randomized response technique |
