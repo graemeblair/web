@@ -1,0 +1,18 @@
+{% extends 'base.html.j2' %}
+
+{#- One list of tabs drives both the nav (partials/nav.html.j2) and the panes
+    below. In the hand-written page these were two parallel lists that had to be
+    kept in step by hand. #}
+{% block tabs %}
+          <div class="tab-content" id="nav-tabContent">
+{% for tab in site.tabs %}
+            <div class="tab-pane fade{% if loop.first %} show active{% endif %} px-4" id="{{ tab.id }}" role="tabpanel" aria-labelledby="{{ tab.id }}-tab">
+{% include 'tabs/' ~ tab.id ~ '.html.j2' %}
+            </div>
+{% endfor %}
+            {#- Empty, but not free: Bootstrap gives <p> a bottom margin, so this
+                is real trailing space under every pane. Preserved from
+                index.html:1036 rather than dropped as noise. #}
+            <p></p>
+          </div>
+{% endblock %}

@@ -16,7 +16,16 @@ Each entry is (kind, key, reason):
 from __future__ import annotations
 
 EXPECTED_DIFFS: list[tuple[str, str, str]] = [
-    # --- filled in as changes are proposed; empty means "must match exactly" ---
+    (
+        "id",
+        "listPkgAbstract",
+        "VISIBLE BEHAVIOR CHANGE. `listAbstract` was used twice in the baseline "
+        "(index.html:340 for the list-experiments paper, :544 for the `list` R "
+        "package), so the Software tab's chevron expanded the Writing tab's "
+        "abstract instead of its own. The R package's collapse is renamed; the "
+        "paper keeps `listAbstract`. Clicking that chevron now does something "
+        "different -- and correct.",
+    ),
 ]
 
 

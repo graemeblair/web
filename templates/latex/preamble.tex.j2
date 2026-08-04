@@ -1,0 +1,53 @@
+
+\documentclass[10.9pt]{article}
+\usepackage{fontspec} 
+\usepackage{comment}
+\usepackage{etaremune, textcomp}
+
+% DOCUMENT LAYOUT
+\usepackage{geometry} 
+\geometry{textwidth=6.5in, textheight=9in, marginparsep=7pt, marginparwidth=.6in}
+\setlength\parindent{0in}
+
+% new command to avoid line breaks after titles
+\makeatletter 
+\newcommand\donotbreakhere{\par\nobreak\@afterheading\vspace{1em}} 
+\makeatother
+
+\def\monthname{\ifcase\month\or January\or February\or March\or April\or May\or June\or July\or August\or September\or October\or November\or December \fi}
+
+\newcommand{\complete}{1}
+
+% FONTS
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\defaultfontfeatures{Mapping=tex-text} % converts LaTeX specials (``quotes'' --- dashes etc.) to unicode
+\setromanfont [Ligatures={Common}, BoldFont={Hoefler Text Black}, ItalicFont={Hoefler Text Italic}]{Hoefler Text}
+\setmonofont[Scale=0.8]{Monaco} 
+% ---- CUSTOM AMPERSAND
+\newcommand{\amper}{{\fontspec[Scale=.95]{Gentium Basic Italic}\selectfont\itshape\&}}
+% ---- MARGIN YEARS
+\usepackage{marginnote}
+\newcommand{\years}[1]{\marginnote{\scriptsize #1}}
+\renewcommand*{\raggedleftmarginnote}{}
+\setlength{\marginparsep}{7pt}
+\reversemarginpar
+
+% HEADINGS
+\usepackage{sectsty} 
+\usepackage[normalem]{ulem} 
+\sectionfont{\rmfamily\mdseries\upshape\large}
+\subsectionfont{\rmfamily\bfseries\upshape\normalsize} 
+\subsubsectionfont{\rmfamily\mdseries\upshape\normalsize} 
+
+% PDF SETUP
+% ---- FILL IN HERE THE DOC TITLE AND AUTHOR
+\usepackage[bookmarks, colorlinks, breaklinks, pdftitle={Curriculum Vitae: Graeme Blair},pdfauthor={Graeme Blair}]{hyperref}  
+\hypersetup{linkcolor=blue,citecolor=blck,filecolor=black,urlcolor=black} 
+
+\newenvironment{indnt}{\begin{adjustwidth}{1em}{}}{\end{adjustwidth}}
+
+\usepackage{changepage}   % for the adjustwidth environment
+
+% DOCUMENT
+\begin{document}

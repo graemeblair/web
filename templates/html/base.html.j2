@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+{% include 'partials/head.html.j2' %}
+  <body>
+    <main role="main">
+{% block hero %}{% include 'partials/hero.html.j2' %}{% endblock %}
+      <div class="container pt-2">
+        <div>
+{% include 'partials/nav.html.j2' %}
+{% block tabs %}{% endblock %}
+        </div>
+      </div>
+      <!-- /container -->
+{% block modals %}
+{% include 'partials/bio_modal.html.j2' %}
+{% include 'partials/citation_modal.html.j2' %}
+{% endblock %}
+    </main>
+{% include 'partials/scripts.html.j2' %}
+  </body>
+</html>

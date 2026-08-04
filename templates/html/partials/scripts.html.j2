@@ -1,0 +1,10 @@
+    <script src="{{ site.externals.bootstrap_js.src }}" integrity="{{ site.externals.bootstrap_js.integrity }}" crossorigin="{{ site.externals.bootstrap_js.crossorigin }}"></script>
+    <!-- Citation Library -->
+    <script src="{{ site.externals.citation_js.src }}" defer></script>
+    <!-- Own script related to citations -->
+    <script src="./js/citation.js" defer></script>
+    {#- Tab and abstract-chevron wiring. Real file under static/, inlined here
+        so it stays a zero-latency inline script exactly as today. #}
+    <script>
+{{ inline('js/tabs.js') }}
+    </script>

@@ -1,0 +1,88 @@
+      h1 {
+        font-family: 'Merriweather', serif !important;
+        font-size: 15pt;
+        padding-bottom:5px
+      }
+
+		h2 {
+        font-family: 'Merriweather', serif !important;
+        font-size: 13pt;
+        padding-bottom:3px;
+		padding-top:5px
+      }
+      .abstracttext {
+        margin-bottom: 35px
+      }
+      .paper-links a {
+        margin-right: 10px
+      }
+      .paper-links i {
+        margin-right: 4px
+      }
+      .paper-icon {
+        margin-right: 4px
+      }
+      .no-indent {
+        text-indent: 0
+      }
+      .bg-cover {
+        background-attachment: static;
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 0;
+      }
+      .abstract {
+        padding-left: 0.6em
+      }
+      .paper-title {
+        padding-left: 0.6em;
+        text-indent: -1em;
+      }
+      .book-title {
+        padding-left: 0.6em;
+        text-indent: -0.6em;
+      }
+      .paper-journal {
+        margin-top: -13px;
+        padding-left: 1em;
+        text-indent: -1em;
+      }
+      .nav-item {
+        font-family: 'Merriweather', serif !important;
+        font-size: 17px;
+        --bs-nav-link-font-size: 17px;
+      }
+      .jumbotron {
+        min-height: 300px;
+      }
+      a, .nav-link:not(:hover) {
+        color: #5f9fb8
+      }
+      .btn-outline-info, .btn-outline-info:hover, .btn-outline-info:active, .btn-outline-info:visited {
+        color: #5f9fb8 !important;
+        border-color: #5f9fb8 !important
+      }
+      .btn-outline-info:hover {
+        background-color: #5f9fb8 !important;
+        color: white !important
+      }
+      a:not(:hover) {
+        text-decoration: none;
+      }
+      body {
+        font-family: 'Lato', sans-serif !important;
+      }
+      .fs-18p {
+        font-size: 18px;
+      }
+      #citation-output>.csl-bib-body,
+      #citation-output>pre {
+        padding: 10px 15px;
+        background: #f3f3f3;
+      }
+      @media (min-width: 992px) {
+        .jumbotron figure {
+          max-width: 255px;
+        }
+      }

@@ -1,0 +1,19 @@
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ site.title }}</title>
+    <link rel="preconnect" href="{{ site.fonts_url }}" as="style">
+    <link rel="stylesheet" href="{{ site.fonts_url }}" fetchpriority="high" />
+    <script src="{{ site.externals.fontawesome.src }}" crossorigin="{{ site.externals.fontawesome.crossorigin }}" async></script>
+    <link href="{{ site.externals.bootstrap_css.href }}" rel="stylesheet" integrity="{{ site.externals.bootstrap_css.integrity }}" crossorigin="{{ site.externals.bootstrap_css.crossorigin }}">
+{% for href in site.local_css %}
+    <link rel="stylesheet" href="{{ href }}">
+{% endfor %}
+    <link rel="preload" href="{{ site.preload_image }}" as="image" fetchpriority="high" />
+    {#- The stylesheet is a real file under static/, inlined at build time.
+        Turning it into a <link> would add a render-blocking round trip to a
+        page whose CSS currently costs zero latency. #}
+    <style>
+{{ inline('css/site.css') }}
+    </style>
+  </head>

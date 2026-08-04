@@ -12,13 +12,19 @@ usefully.
 
 Discarded:
   - comments
-  - the `class` and `style` attributes (purely presentational, and the
-    generator reformats them)
+  - `class` and `style` (purely presentational, and the generator reformats them)
+  - internal identifier attributes -- `id` and the attributes that reference one.
+    These name things; they are not content. Renaming a collapse target changes
+    no rendered pixel, and a generator deriving ids from a slug will rename some.
+    Wiring is checked precisely, and with an expected-diff escape hatch, by
+    inventory.py -- so checking it a second time here only produces failures
+    with no way to register a deliberate change.
   - all inter-element whitespace; runs inside text collapse to one space
   - HTML entity spelling (`&oacute;` and a literal `o-acute` compare equal)
 
 Kept:
   - element nesting and order
+  - `href` and `src` -- destinations are content, not names
   - every other attribute, sorted by name
   - every non-empty text run
 
@@ -39,6 +45,17 @@ from bs4 import BeautifulSoup, Comment, NavigableString, Doctype
 
 # Presentational only, and reformatted freely by the generator.
 DROP_ATTRS = {"class", "style"}
+
+# Internal names and references to them. See the module docstring: inventory.py
+# owns this, because only it can distinguish a registered rename from a
+# regression.
+DROP_ATTRS |= {
+    "id",
+    "aria-controls",
+    "aria-labelledby",
+    "data-bs-target",
+    "for",
+}
 
 _WS = re.compile(r"\s+")
 

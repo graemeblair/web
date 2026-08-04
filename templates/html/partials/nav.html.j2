@@ -1,0 +1,7 @@
+          <ul class="nav nav-tabs justify-content-center mb-5" id="mainNav" role="tablist">
+{% for tab in site.tabs %}
+            <li class="nav-item">
+              <a class="nav-link{% if loop.first %} active{% endif %}" id="{{ tab.id }}-tab" data-bs-toggle="tab" href="#{{ tab.id }}" role="tab" aria-controls="{{ tab.id }}" aria-selected="{{ 'true' if loop.first else 'false' }}"><i class="{{ tab.icon }} paper-icon"></i>&nbsp;{{ tab.label }}</a>
+            </li>
+{% endfor %}
+          </ul>
