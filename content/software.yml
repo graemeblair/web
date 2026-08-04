@@ -50,7 +50,7 @@ packages:
     group: design
     site_title: Fast Estimators for Design-Based Inference.
     cv_description: R statistical package for fast estimators for social scientists
-    authors: [Jasper Cooper, Alexander Coppock, Macartan Humphreys, Luke Sonnet]
+    authors: [Jasper Cooper, Alexander Coppock, Macartan Humphreys, Luke Sonnet, Neal Fultz]
     url: https://declaredesign.org/r/estimatr
     cite: blair2018estimatr
     links:
@@ -58,7 +58,8 @@ packages:
       - {label: Cite}
       - {label: Cheatsheet, url: "https://raw.githubusercontent.com/rstudio/cheatsheets/master/estimatr.pdf"}
 
-  # DRIFT: the CV omitted Neal Fultz. One author list now feeds both.
+  # DRIFT: the CV omitted Neal Fultz, as the estimatr entry above did until the
+  # bibliography merge surfaced it. One author list now feeds site, CV and Cite.
   - name: fabricatr
     year: 2018
     group: design

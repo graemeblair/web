@@ -146,6 +146,18 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
     ),
     (
         "text",
+        "Luke Sonnet, and Neal Fultz",
+        "estimatr had the same omission, in both the site and the CV: only the "
+        "deleted content/citations.bib credited Neal Fultz, and folding that "
+        "file into content/software.yml is what surfaced it. Owner confirmed he "
+        "should be listed. NOTE: this line was already excused by the '}, with "
+        "Jasper Cooper' key above, so the suite did not fail on it -- the "
+        "blind spot described at the top of this file. Registered anyway, "
+        "because the reason on that key is about \\href nesting and would not "
+        "tell a reader an author had been added.",
+    ),
+    (
+        "text",
         "https://rr.sensitivequestions.org",
         "The CV linked http:// for both sensitivequestions.org packages while "
         "the site already used https://.",
