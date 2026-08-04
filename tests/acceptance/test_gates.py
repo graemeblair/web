@@ -83,6 +83,34 @@ def test_canonicalizer_ignores_whitespace_and_entities():
     assert normalize_html.canonicalize(a) == normalize_html.canonicalize(b)
 
 
+def test_canonicalizer_ignores_bare_layout_wrappers():
+    """A moved <div>/<p> wrapper is not a content change; a lost <i> is.
+
+    Regenerating a section reshuffles wrappers, and reporting each one buries
+    the text changes that matter. Inline formatting stays in scope because
+    losing it changes how the text reads.
+    """
+    plain = "<div><p>Hello <i>world</i></p></div>"
+    rewrapped = "<span><div><p>Hello <i>world</i></p></div></span>"
+    assert normalize_html.canonicalize(plain) == normalize_html.canonicalize(rewrapped)
+
+    # A wrapper carrying an attribute this gate keeps is real. `id` is not one
+    # of them -- identifiers are Gate 1's business, and it compares them exactly.
+    assert normalize_html.canonicalize(plain) != normalize_html.canonicalize(
+        '<div role="alert"><p>Hello <i>world</i></p></div>'
+    )
+    assert normalize_html.canonicalize(plain) == normalize_html.canonicalize(
+        '<div id="x"><p>Hello <i>world</i></p></div>'
+    )
+    assert normalize_html.canonicalize(plain) != normalize_html.canonicalize(
+        "<div><p>Hello world</p></div>"
+    )
+    # An empty <p> is a spacer with real height, so it is still reported.
+    assert normalize_html.canonicalize(plain) != normalize_html.canonicalize(
+        "<div><p>Hello <i>world</i></p><p></p></div>"
+    )
+
+
 def test_canonicalizer_ignores_class_and_style_but_not_href():
     a = '<a class="x" style="color:red" href="/a">t</a>'
     b = '<a href="/a">t</a>'
