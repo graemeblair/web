@@ -135,6 +135,52 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
     ),
     ("text", "http://rr.sensitivequestions.org", "Removal side of the https upgrade."),
     ("text", "http://list.sensitivequestions.org", "Removal side of the https upgrade."),
+    (
+        "text",
+        "R statistical package for analysis of survey",
+        "The CV's software list is now in the site's order -- DeclareDesign, "
+        "estimatr, fabricatr, then list, rr, which is alphabetical within each "
+        "group. The CV had DeclareDesign, fabricatr, estimatr, rr, list, with "
+        "no evident rule. One list feeds both targets, so it needs one order. "
+        "This moves the `list` entry across a page break, which is what the "
+        "page-image comparison flagged.",
+    ),
+    (
+        "text",
+        "R statistical package for analysis of randomized response",
+        "Removal/addition sides of the reordering above (the `rr` entry).",
+    ),
+    # pdftotext wraps long entries, so a change or a move shows up on the
+    # continuation lines too. These are the tails of entries already registered
+    # above -- listed rather than papered over with a broad key.
+    (
+        "text",
+        "Macartan Humphreys, and Aaron Rudkin",
+        "Continuation line of the old fabricatr entry, before Neal Fultz.",
+    ),
+    (
+        "text",
+        "answers to sensitive questions, with Yang-Yang Zhou",
+        "Continuation line of the `rr` entry, moved by the reordering.",
+    ),
+    (
+        "text",
+        "questions, with Kosuke Imai",
+        "Continuation line of the `list` entry, moved by the reordering.",
+    ),
+    (
+        "text",
+        "District Court for the District of Maryland",
+        "Continuation line of the D.N.N. stray-period fix. Only that matter is "
+        "in Maryland, so this cannot cover anything else.",
+    ),
+    (
+        "text",
+        "District Court for the Northern District of California",
+        "Continuation line of the Stanford Daily change (parentheses and David "
+        "Hausman). Pablo Sequen is also in this district but its line is "
+        "unchanged, so it never reaches the diff.",
+    ),
     # ---- expert work, moved into content/expert.yml -------------------------
     (
         "text",

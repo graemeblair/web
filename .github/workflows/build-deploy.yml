@@ -41,8 +41,15 @@ jobs:
           python-version: '3.12'
           cache: pip
 
+      # poppler supplies pdftotext/pdfinfo/pdftoppm for the CV gates and tidy
+      # checks HTML validity. Both must be present before pytest runs, or those
+      # gates fail on a missing binary rather than reporting on the site.
       - name: Install dependencies
-        run: pip install -r requirements-dev.txt
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils tidy
+          pip install -r requirements-dev.txt
 
       - name: Build
         run: python build.py
@@ -76,12 +83,6 @@ jobs:
 
       - name: Acceptance gates
         run: python -m pytest tests/acceptance -q
-
-      - name: Check HTML validity
-        run: |
-          set -euo pipefail
-          sudo apt-get update -qq && sudo apt-get install -y -qq tidy
-          python -m pytest tests/acceptance -q -k tidy
 
       - uses: actions/upload-pages-artifact@v3
         with:

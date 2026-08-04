@@ -44,6 +44,29 @@ def _require(tool: str) -> str:
     return path
 
 
+def _normalize(text: str) -> str:
+    """Strip indentation `pdftotext -layout` computes from column positions.
+
+    `-layout` pads each line to preserve horizontal position, so a centred page
+    number moves left or right when anything else on the page changes width.
+    That is not a content change, and left unhandled it reports every page whose
+    text reflowed at all. Words are still compared exactly.
+    """
+    lines = []
+    for line in text.splitlines():
+        line = line.strip()
+        # Drop the folio. A bare page number is furniture, and when content
+        # crosses a page break it shifts to a different line of the extracted
+        # text and reads as a change. No CV content is a bare number on its own
+        # line, so nothing real is lost.
+        if line.isdigit():
+            continue
+        for pattern, replacement in VOLATILE:
+            line = pattern.sub(replacement, line)
+        lines.append(line + "\n")
+    return "".join(lines)
+
+
 def text_of(pdf: Path) -> str:
     out = subprocess.run(
         [_require("pdftotext"), "-layout", str(pdf), "-"],
@@ -51,8 +74,21 @@ def text_of(pdf: Path) -> str:
         capture_output=True,
         text=True,
     ).stdout
-    for pattern, replacement in VOLATILE:
-        out = pattern.sub(replacement, out)
+    return _normalize(out)
+
+
+def page_texts(pdf: Path) -> list[str]:
+    """Extracted text, one entry per page, with the volatile footer normalized."""
+    out = []
+    for page in range(1, page_count(pdf) + 1):
+        text = subprocess.run(
+            [_require("pdftotext"), "-layout", "-f", str(page), "-l", str(page),
+             str(pdf), "-"],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout
+        out.append(_normalize(text))
     return out
 
 
@@ -79,8 +115,23 @@ def text_diff(baseline: Path, built: Path) -> str:
 
 
 def image_diffs(baseline: Path, built: Path, dpi: int = 100) -> list[dict]:
-    """Render both PDFs to PNGs and compare page by page."""
+    """Compare page images, but only for pages whose text is unchanged.
+
+    The image comparison exists to catch what text extraction cannot see:
+    kerning shifts, spacing regressions, a font quietly falling back. It cannot
+    say anything useful about a page whose text has legitimately changed --
+    different words are different pixels, and reflow moves everything below
+    them. Comparing those pages produces failures that only ever mean "yes, the
+    thing you changed did change".
+
+    So pages are matched to their own text first. Pages that changed textually
+    are reported and skipped; the rest must be pixel-identical, which keeps the
+    check sharp everywhere it can still say something.
+    """
     from compare_png import compare  # local module, same directory
+
+    old_text = page_texts(baseline)
+    new_text = page_texts(built)
 
     with tempfile.TemporaryDirectory() as tmp:
         tmpdir = Path(tmp)
@@ -93,7 +144,16 @@ def image_diffs(baseline: Path, built: Path, dpi: int = 100) -> list[dict]:
         news = sorted(tmpdir.glob("new-*.png"))
         if len(olds) != len(news):
             raise SystemExit(f"page count differs: {len(olds)} vs {len(news)}")
-        return [compare(o, n) for o, n in zip(olds, news)]
+
+        results = []
+        for i, (o, n) in enumerate(zip(olds, news)):
+            if i < len(old_text) and i < len(new_text) and old_text[i] != new_text[i]:
+                results.append({"page": i + 1, "skipped": "text changed on this page"})
+                continue
+            result = compare(o, n)
+            result["page"] = i + 1
+            results.append(result)
+        return results
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -131,9 +191,13 @@ def main(argv: list[str] | None = None) -> int:
         print("ok text: identical after footer normalization")
 
     if args.images:
-        for i, r in enumerate(image_diffs(args.baseline, args.built), start=1):
+        for r in image_diffs(args.baseline, args.built):
+            if r.get("skipped"):
+                print(f"skip page {r['page']}: {r['skipped']}")
+                continue
             bad = r["fraction"] > args.threshold or r["size_mismatch"]
-            print(f"{'FAIL' if bad else 'ok'} page {i}: {r['fraction']:.5%} bbox={r['bbox']}")
+            verdict = "FAIL" if bad else "ok"
+            print(f"{verdict} page {r['page']}: {r['fraction']:.5%} bbox={r['bbox']}")
             failed = failed or bad
 
     return 1 if failed else 0

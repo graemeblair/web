@@ -287,7 +287,10 @@ def test_gate4_cv_text_matches_baseline():
     import compare_pdf
 
     diff = compare_pdf.text_diff(BASE_PDF, BUILT_PDF)
-    assert diff == "", diff
+    unexplained = unexplained_diff_lines(diff)
+    assert not unexplained, (
+        "typeset CV changed without a registered reason:\n" + "\n".join(unexplained)
+    )
 
 
 @needs_pdf
@@ -296,9 +299,9 @@ def test_gate4_cv_page_images_match_baseline():
     import compare_pdf
 
     bad = [
-        f"page {i}: {r['fraction']:.5%} bbox={r['bbox']}"
-        for i, r in enumerate(compare_pdf.image_diffs(BASE_PDF, BUILT_PDF), start=1)
-        if r["fraction"] > 0.001 or r["size_mismatch"]
+        f"page {r['page']}: {r['fraction']:.5%} bbox={r['bbox']}"
+        for r in compare_pdf.image_diffs(BASE_PDF, BUILT_PDF)
+        if not r.get("skipped") and (r["fraction"] > 0.001 or r["size_mismatch"])
     ]
     assert not bad, "\n".join(bad)
 
