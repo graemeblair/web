@@ -1,0 +1,13 @@
+<<# Flat and reverse-chronological, ignoring the site's grouping by legal
+    theory. Where a matter marks a document `cv_link`, the whole line is wrapped
+    in it -- the hand-written CV linked only three of fourteen entries, with no
+    evident rule. #>>
+\begin{indnt}
+<<% for matter in expert.matters | for_target | by_date_desc %>>
+<<% set line -%>>
+<<< expert.roles[matter.role].cv >>>, <<% if matter.get('court') %>>\textit{<<< matter.case >>>}, <<< matter.date | month_year >>>, <<< matter.court >>><<% else %>><<< matter.case >>>, <<< matter.ongoing_from >>>--<<% endif %>><<% if matter.get('with') %>> (with <<< matter['with'] | authors >>>)<<% endif %>>
+<<%- endset %>>
+<<% set url = matter | cv_link %>>
+<<% if url %>>\href{<<< url | tex_url >>>}{<<< line | raw_tex >>>}<<% else %>><<< line | raw_tex >>><<% endif %>><<% if not loop.last %>>\\[.75em]<<% endif +%>>
+<<% endfor %>>
+\end{indnt}

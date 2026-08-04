@@ -7,6 +7,6 @@
 <<# `+%>>` keeps the newline that trim_blocks would otherwise swallow. LaTeX
     would not care -- these are one paragraph with explicit \\ breaks -- but a
     single 2,000-character line is unreadable when diffing generated output. #>>
-\href{<<< pkg.url >>>}{<<< pkg.name >>>, <<< pkg.cv_description >>>}, with <<< pkg.authors | authors >>><<% if not loop.last %>>\\[.75em]<<% endif +%>>
+\href{<<< pkg.url | tex_url >>>}{<<< pkg.name >>>, <<< pkg.cv_description >>>}, with <<< pkg.authors | authors >>><<% if not loop.last %>>\\[.75em]<<% endif +%>>
 <<% endfor %>>
 \end{indnt}

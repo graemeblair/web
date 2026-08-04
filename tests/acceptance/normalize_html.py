@@ -90,7 +90,18 @@ def canonicalize(markup: str) -> str:
                 if text:
                     lines.append(f"{'  ' * depth}#text {text}")
                 continue
-            lines.append(f"{'  ' * depth}{_render_open_tag(child)}")
+            # An element with no children is rendered `<p/>` rather than `<p>`.
+            # Empty elements are usually spacers, and they are exactly the kind
+            # of thing a generator drops; distinguishing them lets a deliberate
+            # removal be registered by a key that means "an empty <p>" rather
+            # than one that would whitelist every paragraph in the document.
+            empty = not any(
+                (isinstance(c, NavigableString) and _collapse(str(c)))
+                or (not isinstance(c, (NavigableString, Comment, Doctype)))
+                for c in child.children
+            )
+            tag = _render_open_tag(child)
+            lines.append(f"{'  ' * depth}{tag[:-1] + '/>' if empty else tag}")
             walk(child, depth + 1)
 
     walk(soup, 0)

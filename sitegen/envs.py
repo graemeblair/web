@@ -30,8 +30,10 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 from markupsafe import Markup
 
-from .escape import raw_tex
-from .filters import authors, downloads, for_target, titlecase
+from .escape import raw_tex, tex_url
+from .filters import (
+    authors, by_date_desc, cv_link, downloads, for_target, month_year, titlecase,
+)
 from .markup import to_html, to_tex
 
 REPO = Path(__file__).resolve().parent.parent
@@ -62,6 +64,9 @@ def html_env() -> Environment:
     env.filters["titlecase"] = titlecase
     env.filters["authors"] = authors
     env.filters["downloads"] = downloads
+    env.filters["month_year"] = month_year
+    env.filters["by_date_desc"] = by_date_desc
+    env.filters["cv_link"] = cv_link
     env.filters["for_target"] = lambda items: for_target(items, "site")
     return env
 
@@ -85,9 +90,13 @@ def latex_env() -> Environment:
         undefined=StrictUndefined,
     )
     env.filters["raw_tex"] = raw_tex
+    env.filters["tex_url"] = tex_url
     env.filters["markup"] = to_tex
     env.filters["titlecase"] = titlecase
     env.filters["authors"] = authors
     env.filters["downloads"] = downloads
+    env.filters["month_year"] = month_year
+    env.filters["by_date_desc"] = by_date_desc
+    env.filters["cv_link"] = cv_link
     env.filters["for_target"] = lambda items: for_target(items, "cv")
     return env

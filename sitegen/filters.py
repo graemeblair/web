@@ -53,6 +53,47 @@ def downloads(count: int) -> str:
     return f"{round(count / 1000):,},000" if count >= 1000 else str(count)
 
 
+_MONTHS = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+]
+
+
+def month_year(value) -> str:
+    """Render a YYYY-MM date as "October 2025".
+
+    PyYAML parses an unquoted `2025-10` as the string it is (a full `2025-10-01`
+    would become a date object), so both forms are handled.
+    """
+    if hasattr(value, "year"):
+        return f"{_MONTHS[value.month - 1]} {value.year}"
+    year, month = str(value).split("-")[:2]
+    return f"{_MONTHS[int(month) - 1]} {year}"
+
+
+def by_date_desc(items: list[dict]) -> list[dict]:
+    """Reverse-chronological, stable within a date.
+
+    Ordering is computed so a new entry can be added anywhere in the file and
+    still appear in the right place -- the CV's list was previously kept in
+    order by hand.
+    """
+    return sorted(items, key=lambda item: str(item.get("date", "")), reverse=True)
+
+
+def cv_link(matter: dict) -> str | None:
+    """The one document URL that should wrap this matter's CV line, if any.
+
+    The hand-written CV linked three of fourteen expert-work entries with no
+    evident rule. Marking the intended document with `cv_link: true` in the data
+    makes the choice explicit and keeps it next to the document it refers to.
+    """
+    for document in matter.get("documents") or []:
+        if document.get("cv_link"):
+            return document["url"]
+    return None
+
+
 def targets(item: dict, target: str) -> bool:
     """Does this content item render into the given target ('site' or 'cv')?"""
     return target in item.get("targets", ["site", "cv"])

@@ -135,6 +135,56 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
     ),
     ("text", "http://rr.sensitivequestions.org", "Removal side of the https upgrade."),
     ("text", "http://list.sensitivequestions.org", "Removal side of the https upgrade."),
+    # ---- expert work, moved into content/expert.yml -------------------------
+    (
+        "text",
+        "Expert declaration for amicus brief,",
+        "Stanford Daily was the one matter of twelve written without the "
+        "parentheses its siblings all had. Roles are a controlled vocabulary "
+        "now, so each phrasing is written once and every matter with the same "
+        "role reads identically.",
+    ),
+    (
+        "text",
+        "gov.uscourts.cand.454120",
+        "Stanford Daily's CV line gains its amicus-brief link, and gains David "
+        "Hausman -- the site credited him, the CV did not.",
+    ),
+    (
+        "text",
+        "D.N.N. et al. v. Liggins et al.}, December 2025",
+        "This was the only expert-work line ending in a stray period before its "
+        "line break.",
+    ),
+    # The CV linked three of fourteen expert-work entries with no evident rule.
+    # Every matter with a public amicus brief now links it, which is the rule
+    # the site already followed. These keys match both sides of the diff -- the
+    # unlinked line and the same line wrapped in \href -- because that pairing
+    # IS the registered change.
+    (
+        "text",
+        "Mahdawi v. Trump et al.}, August 2025",
+        "CV line gains its amicus-brief link (2d Cir.).",
+    ),
+    (
+        "text",
+        "Mahdawi v. Trump et al.}, April 2025",
+        "CV line gains its amicus-brief link (D. Vt.).",
+    ),
+    (
+        "text",
+        "Chung v. Trump}, March 2025",
+        "CV line gains its amicus-brief link (S.D.N.Y.).",
+    ),
+    (
+        "text",
+        "<p/>",
+        "The Expert work tab had a bare <p></p> after two of its five case "
+        "lists and not the other three, so section spacing was uneven. The "
+        "sections render uniformly now. (normalize_html.py renders an empty "
+        "element as `<p/>`, so this key cannot whitelist a paragraph that has "
+        "content.)",
+    ),
 ]
 
 

@@ -257,6 +257,10 @@ def test_gate4_cv_source_changes_are_all_registered():
             # `PS200E` compare equal, and this gate exists to catch exactly that
             # kind of slip.
             line = re.sub(r" +(\\\\)", r"\1", line)
+            # `\\[0.75em]` and `\\[.75em]` are the same length; the
+            # hand-written CV used both, 29 times and 85 times respectively.
+            # A notation difference, not a content one.
+            line = re.sub(r"\[0\.(\d+em\])", r"[.\1", line)
             out.append(line + "\n")
         return out
 

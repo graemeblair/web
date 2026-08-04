@@ -53,6 +53,23 @@ def raw_tex(value) -> RawTeX:
     return RawTeX("" if value is None else str(value))
 
 
+def tex_url(value) -> RawTeX:
+    """Pass a URL into LaTeX unescaped.
+
+    hyperref reads the argument of \\href and \\url essentially verbatim, so a
+    URL keeps its raw `_`, `#` and `%`. Escaping them puts a literal backslash
+    into the link target and breaks it -- and because the PDF still compiles,
+    the only symptom is a link that quietly goes nowhere.
+
+    Guarded rather than trusted: a `}` in a URL would close the \\href argument
+    early and produce unpredictable output, so it is rejected loudly.
+    """
+    url = "" if value is None else str(value)
+    if "}" in url or "\\" in url:
+        raise ValueError(f"URL cannot be used unescaped in LaTeX: {url!r}")
+    return RawTeX(url)
+
+
 def latex_escape(value):
     """Jinja `finalize`: escape every interpolated value for LaTeX."""
     if value is None:
