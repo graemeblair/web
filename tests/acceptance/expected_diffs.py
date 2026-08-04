@@ -80,6 +80,13 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "UCLA_PS170A_Syllabus.pdf",
         "Syllabus renamed alongside the course renumbering.",
     ),
+    (
+        "text",
+        "UCLA_PS179_Syllabus.pdf",
+        "Removal side of the syllabus rename. Registered as text as well as "
+        "href because Gate 2 reads the rendered link and only consults text "
+        "keys, while Gate 1 compares the href set.",
+    ),
     # The removal side of each teaching rename. Keys are deliberately specific
     # so each retires exactly one old string and cannot whitelist a future edit.
     (
@@ -303,6 +310,59 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "Both sides of the randomized-order author list above.",
     ),
     (
+        "text-exact",
+        "#text .",
+        "Removal side of the ICE byline move: the text node after the venue was "
+        "a bare period, and now carries the coauthors. Registered as an exact "
+        "match because '.' as a substring would whitelist the whole document.",
+    ),
+    (
+        "text",
+        "Forthcoming,",
+        "Addition side of the ICE byline move -- its coauthors now follow the "
+        "venue, as every other paper's do.",
+    ),
+    (
+        "text",
+        "With Rebecca Littman, Elizabeth Nugent",
+        "Removal side of the PNAS author-list correction.",
+    ),
+    (
+        "text",
+        "With Christine Fair",
+        "Removal side of the C. Christine Fair correction.",
+    ),
+    (
+        "text",
+        "With Nicholas Owsley.",
+        "Removal side: the extractor had collapsed the field-experiments "
+        "paper's Ⓡ-separated names into a single string, leaving one coauthor.",
+    ),
+    # Bylines are rendered by one filter now, so they punctuate consistently.
+    # The hand-written page did not: some lists had a serial "and" before the
+    # last name and a closing period, some had neither.
+    (
+        "text",
+        "and Macartan Humphreys.",
+        "Byline punctuation normalized -- the site omitted the serial 'and' and "
+        "the closing period here.",
+    ),
+    (
+        "text",
+        "Alexander Coppock, Macartan Humphreys",
+        "Removal side of the byline punctuation normalization.",
+    ),
+    (
+        "text",
+        "With Kosuke Imai and Yang-Yang Zhou.",
+        "Byline punctuation normalized -- see above.",
+    ),
+    (
+        "text",
+        "With Kosuke Imai, Yang-Yang Zhou.",
+        "Removal side of the byline punctuation normalization.",
+    ),
+    (
         "text",
         "<p/>",
         "The Expert work tab had a bare <p></p> after two of its five case "
@@ -326,12 +386,48 @@ def unexplained_diff_lines(diff: str) -> list[str]:
     a diff line carries indentation and neighbouring words that are noise.
     """
     keys = [v for k, v, _ in EXPECTED_DIFFS if k == "text"]
+
+    changed = [
+        line
+        for line in diff.splitlines()
+        if line.startswith(("+", "-"))
+        and not line.startswith(("+++", "---"))
+        and line[1:].strip()
+    ]
+
+    # A line that appears as both a removal and an addition moved; it did not
+    # change. difflib re-pairs surrounding context whenever a neighbour changes
+    # length, so a regenerated section reports its unchanged chevrons and
+    # wrappers as -/+ pairs. Cancelling them out leaves only real edits.
+    #
+    # Safe because it is symmetric: a line that is genuinely deleted has no
+    # matching addition and still fails.
+    from collections import Counter
+
+    # Compare stripped, so a line that merely shifted indentation -- because a
+    # wrapper above it was dropped -- still cancels as moved.
+    removed = Counter(line[1:].strip() for line in changed if line.startswith("-"))
+    added = Counter(line[1:].strip() for line in changed if line.startswith("+"))
+    # Both sides of a moved line must be skippable, so each sign gets its own
+    # allowance. Sharing one pool let the removals exhaust it and reported every
+    # addition as unexplained.
+    shared = removed & added  # multiset intersection
+    budget = {"-": Counter(shared), "+": Counter(shared)}
+
+    # "text" keys match as substrings; "text-exact" keys must be the whole line.
+    # The exact form exists for fragments too short to be safe as substrings --
+    # a bare "." would otherwise whitelist most of the document.
+    exact = {v for k, v, _ in EXPECTED_DIFFS if k == "text-exact"}
+
     unexplained = []
-    for line in diff.splitlines():
-        if not line.startswith(("+", "-")) or line.startswith(("+++", "---")):
-            continue
+    for line in changed:
         body = line[1:]
-        if not body.strip():
+        stripped = body.strip()
+        pool = budget[line[0]]
+        if pool.get(stripped):
+            pool[stripped] -= 1
+            continue
+        if stripped in exact:
             continue
         if not any(key in body for key in keys):
             unexplained.append(line)

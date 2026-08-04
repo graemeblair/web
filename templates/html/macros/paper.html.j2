@@ -13,7 +13,7 @@
 {#- Randomized author order is part of the published record, so the full list
     stays intact -- including Graeme, wherever the randomization put him -- and
     is joined with the convention's Ⓡ symbol in the panel below. #}
-{% set rest = pub.authors[1:] if pub.get('author_order') == 'randomized' else pub.authors | coauthors %}
+{% set rest = pub.authors if pub.get('author_order') == 'randomized' else pub.authors | coauthors %}
 {%- if pub.get('authors_shown') and rest | length > pub.authors_shown -%}
 {{ 'Lead author with' if pub.get('lead_author') else 'With' }} {{ rest[:pub.authors_shown] | join(', ') }}, &amp; ...
 {%- elif rest -%}
@@ -23,7 +23,7 @@ With {{ rest | authors }}.
 
 {% macro paper(pub, icons) %}
 {% set slug = pub.slug %}
-{% set co = pub.authors[1:] if pub.get('author_order') == 'randomized' else pub.authors | coauthors %}
+{% set co = pub.authors if pub.get('author_order') == 'randomized' else pub.authors | coauthors %}
 {% set overflow = co[pub.authors_shown:] if pub.get('authors_shown') and co | length > pub.authors_shown else [] %}
                   <p class="{{ 'book-title' if pub.kind == 'book' else 'paper-title' }}">
 {%- if pub.kind == 'book' %}<i>{{ pub.title }}</i>. <b>{{ pub.venue }}</b>{% if pub.get('venue_note') %}, {{ pub.venue_note }}. {{ pub.year }}.{% else %}, {{ pub.year }}.{% endif %} With {{ pub.authors | coauthors | authors }}{{ ' (eds.)' if pub.get('role') == 'eds' }}.

@@ -271,6 +271,22 @@ def test_gate4_cv_source_changes_are_all_registered():
     baseline = (BASELINE / "GraemeBlair-CV.tex").read_text(encoding="utf-8")
     built = BUILT_TEX.read_text(encoding="utf-8")
 
+    # The publication lists are generated wholesale from content/publications.yml
+    # and content/citations.bib, so their SOURCE no longer resembles the
+    # hand-written original line for line -- every entry is reformatted, and
+    # comparing that tells you nothing useful. What must not change is the
+    # typeset result, and Gate 4's pdftotext and page-image comparisons check
+    # exactly that, against the same registered-reasons list.
+    #
+    # Everything outside these blocks is still compared line by line.
+    import re as _re
+
+    def drop_etaremune(text: str) -> str:
+        return _re.sub(r"\\begin\{etaremune\}.*?\\end\{etaremune\}",
+                       "<<generated publication list>>", text, flags=_re.S)
+
+    baseline, built = drop_etaremune(baseline), drop_etaremune(built)
+
     import difflib
     import re
 
@@ -420,3 +436,19 @@ def test_gate5_no_build_output_committed():
         text=True,
     ).stdout.split()
     assert not tracked, f"generated files are tracked in git: {tracked}"
+
+
+def test_moved_lines_cancel_but_deletions_do_not():
+    """Both sides of a moved line are skipped; a one-sided change still fails.
+
+    The first version of this shared one allowance between removals and
+    additions, so the removals exhausted it and every addition was reported as
+    unexplained.
+    """
+    from expected_diffs import unexplained_diff_lines
+
+    moved = "--- a\n+++ b\n-  <a>\n-  <i/>\n+text\n+  <a>\n+  <i/>\n"
+    assert unexplained_diff_lines(moved) == ["+text"]
+
+    deleted = "--- a\n+++ b\n-  <a>\n"
+    assert unexplained_diff_lines(deleted) == ["-  <a>"]
