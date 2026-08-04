@@ -36,6 +36,14 @@ VOLATILE = [
     (re.compile(r"Last updated \w+ \d{4}"), "Last updated <DATE>"),
 ]
 
+# Hoefler Text sets "fi" and "fl" as single glyphs and `pdftotext` extracts them
+# as the Unicode ligature characters, so "conflict" comes back as "conﬂict" and
+# no reason registered against the source ever matches it. Undone on both sides:
+# the ligature is a property of the typeface, not of the text.
+LIGATURES = str.maketrans({
+    "ﬁ": "fi", "ﬂ": "fl", "ﬀ": "ff", "ﬃ": "ffi", "ﬄ": "ffl", "ﬅ": "ft", "ﬆ": "st",
+})
+
 
 def _require(tool: str) -> str:
     path = shutil.which(tool)
@@ -53,7 +61,7 @@ def _normalize(text: str) -> str:
     text reflowed at all. Words are still compared exactly.
     """
     lines = []
-    for line in text.splitlines():
+    for line in text.translate(LIGATURES).splitlines():
         line = line.strip()
         # Drop the folio. A bare page number is furniture, and when content
         # crosses a page break it shifts to a different line of the extracted
@@ -64,7 +72,48 @@ def _normalize(text: str) -> str:
         for pattern, replacement in VOLATILE:
             line = pattern.sub(replacement, line)
         lines.append(line + "\n")
-    return "".join(lines)
+    return _unwrap_entries(lines)
+
+
+_ITEM = re.compile(r"^(\d+)\.\s+(?=\S)")
+
+
+def _unwrap_entries(lines: list[str]) -> str:
+    """Reflow each numbered publication entry back onto one line.
+
+    `pdftotext` breaks an entry wherever the typeset column ended, so a title
+    the CV changed arrives split across two lines with a soft hyphen in the
+    middle -- "...Reduce Crime? Evidence from Six Coordinated Field Ex-" /
+    "periments...". A registered reason names the fragment that changed, and no
+    fragment longer than about ten words survives that. Registering the wrapped
+    halves instead would tie every reason to the current pagination: reword an
+    entry three items above and the keys below it stop matching.
+
+    So the wrapping is undone before comparing, which is also what makes a
+    change legible in the failure output. The entry number is dropped with it:
+    it comes from the entry's position, the list is reverse-numbered, and
+    inserting one paper renumbers every paper below it. Order is checked
+    directly by test_gate4_cv_publications_are_in_order.
+    """
+    out: list[str] = []
+    in_entry = False
+    for line in lines:
+        stripped = line.rstrip("\n")
+        if _ITEM.match(stripped):
+            out.append(_ITEM.sub("", stripped))
+            in_entry = True
+        elif in_entry and stripped.strip():
+            previous = out[-1]
+            # A trailing hyphen is `pdftotext`'s rendering of TeX's
+            # hyphenation, not a character in the text.
+            if previous.endswith("-"):
+                out[-1] = previous[:-1] + stripped.strip()
+            else:
+                out[-1] = previous + " " + stripped.strip()
+        else:
+            out.append(stripped)
+            in_entry = False
+    return "".join(line + "\n" for line in out)
 
 
 def text_of(pdf: Path) -> str:

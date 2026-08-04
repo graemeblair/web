@@ -380,6 +380,18 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "2020. ``How does armed conflict shape investment?",
         "Removal side of the mining-paper year correction.",
     ),
+    (
+        "text",
+        "2022. “How Does Armed Conflict Shape Investment?",
+        "Quote-mark-free form of the mining-paper year correction, for the PDF "
+        "comparison: the source writes the opening quote as ``, the typeset text "
+        "as a curly quote, so a key with one never matches the other.",
+    ),
+    (
+        "text",
+        "2020. “How does armed conflict shape investment?",
+        "Removal side of the above, in typeset form.",
+    ),
     # Codebooks and reports were the only publication titles the CV left in
     # sentence case. Titles are stored in sentence case and Title Cased for the
     # CV, so these now match their neighbours. Registered individually rather
@@ -491,6 +503,17 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "text",
         "{\\it Social Psychological and Personality Science}. 8(4): 424-433",
         "Removal side of the stray-period fix above.",
+    ),
+    (
+        "text",
+        "Personality Science 8(4): 424-433",
+        "Brace-free form of the audio-check stray-period fix, for the PDF "
+        "comparison, which reads typeset text rather than LaTeX.",
+    ),
+    (
+        "text",
+        "Personality Science. 8(4): 424-433",
+        "Removal side of the above, brace-free.",
     ),
     (
         "text",
