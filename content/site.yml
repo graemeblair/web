@@ -51,10 +51,22 @@ externals:
 # `Cite` genuinely has no `paper-icon`: it is a modal trigger, not a document
 # link, and spaces differently.
 link_icons:
-  Web: fas fa-globe-americas paper-icon
+  PDF: far fa-file-pdf paper-icon
   Cite: fas fa-quote-left
+  Replication: fas fa-table paper-icon
+  Appendices: far fa-file-alt paper-icon
+  Preanalysis plan: far fa-file-alt paper-icon
+  Policy brief: far fa-file-alt paper-icon
+  Project: fas fa-globe-americas paper-icon
+  Web: fas fa-globe-americas paper-icon
+  Read online: fas fa-book paper-icon
+  Press: fa-solid fa-shop paper-icon
+  Amazon: fa-brands fa-amazon paper-icon
   Cheatsheet: fas fa-info-circle paper-icon
   Trophy: fas fa-trophy paper-icon
+  Data: fas fa-table paper-icon
+  Codebook: far fa-file-alt paper-icon
+  Related paper: far fa-file-pdf paper-icon
 
 tabs:
   - {id: research, label: Writing,        icon: fa-solid fa-book}

@@ -237,6 +237,71 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "D.N.N. et al. v. Liggins",
         "Brace-free form of the stray-period fix above, for the PDF comparison.",
     ),
+    # ---- publications, moved into content/publications.yml -----------------
+    #
+    # Titles are stored once in sentence case and the CV's Title Case derived,
+    # which resolves the six titles the two sources disagreed on. In every one
+    # the site and content/citations.bib agreed and the CV was stale, so the CV
+    # gains the current title. Those changes surface in the CV comparison only.
+    (
+        "text",
+        "Ellen Chapin",
+        "The policing book's contributor list differed. The CV credited Ellen "
+        "Chapin, Ahsan Farooqui, Zulfiqar Hameed, Andrew Miller and Fatiq "
+        "Nadeem; the site did not, and credited Lily Tsai instead -- it was "
+        "reusing the Science article's author list for the book. Owner "
+        "confirmed the CV's 25-name list is the book's.",
+    ),
+    (
+        "text",
+        "Ben Kachero, Dorothy Kronick, Benjamin Morse, Robert Muggah, Matthew Nanes",
+        "Removal side of the book contributor change above.",
+    ),
+    (
+        "text",
+        "Elizabeth R. Nugent",
+        "The PNAS paper's author list on the site omitted Rebecca Wolfe "
+        "entirely and abbreviated Elizabeth R. Nugent. One list feeds both "
+        "targets now, and it is the CV's -- a journal's author list is a matter "
+        "of record.",
+    ),
+    (
+        "text",
+        "Rebecca Wolfe, Mohammed Bukar",
+        "Rebecca Wolfe restored to the PNAS author list -- see above.",
+    ),
+    (
+        "text",
+        "Mohammed Bukar, Benjamin Crisman",
+        "Removal side of the PNAS author-list change.",
+    ),
+    (
+        "text",
+        "C. Christine Fair",
+        "The site dropped the initial from C. Christine Fair's name. One list "
+        "feeds both targets.",
+    ),
+    (
+        "text",
+        "With David Hausman and Phil Neff",
+        "The ICE paper put its coauthors before the venue while every other "
+        "paper puts them after. Uniform now.",
+    ),
+    (
+        "text",
+        "Ⓡ",
+        "The Global South field-experiments paper has a randomized author "
+        "order, and the two sources disagreed on both the order and several "
+        "names (the site had 'Nicholas Owlsley', 'Alex Dyzenhaus', 'Ken "
+        "Opalo'; the CV has 'Nicholas Owsley', 'Alex P. Dyzenhaus', 'Ken "
+        "Ochieng' Opalo'). Randomized order is part of the published record, so "
+        "the CV's list and order are used.",
+    ),
+    (
+        "text",
+        "Biz Herman",
+        "Both sides of the randomized-order author list above.",
+    ),
     (
         "text",
         "<p/>",

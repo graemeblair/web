@@ -1,0 +1,60 @@
+{% from 'macros/linkrow.html.j2' import linkrow, chevron %}
+
+{#- One publication: its title line plus the collapsible panel beneath it.
+
+    Replaces roughly 170 lines of hand-written markup that repeated this shape
+    twenty-one times, drifting a little each time -- one PDF link had lost the
+    `paper-icon` class its neighbours all carried.
+
+    `authors_shown` handles the long collaborations: the title line names that
+    many coauthors and then "& ...", and the rest appear inside the panel. The
+    Science policing paper has 24 names and the PNAS one 9. #}
+{% macro byline(pub) -%}
+{#- Randomized author order is part of the published record, so the full list
+    stays intact -- including Graeme, wherever the randomization put him -- and
+    is joined with the convention's Ⓡ symbol in the panel below. #}
+{% set rest = pub.authors[1:] if pub.get('author_order') == 'randomized' else pub.authors | coauthors %}
+{%- if pub.get('authors_shown') and rest | length > pub.authors_shown -%}
+{{ 'Lead author with' if pub.get('lead_author') else 'With' }} {{ rest[:pub.authors_shown] | join(', ') }}, &amp; ...
+{%- elif rest -%}
+With {{ rest | authors }}.
+{%- endif %}
+{%- endmacro %}
+
+{% macro paper(pub, icons) %}
+{% set slug = pub.slug %}
+{% set co = pub.authors[1:] if pub.get('author_order') == 'randomized' else pub.authors | coauthors %}
+{% set overflow = co[pub.authors_shown:] if pub.get('authors_shown') and co | length > pub.authors_shown else [] %}
+                  <p class="{{ 'book-title' if pub.kind == 'book' else 'paper-title' }}">
+{%- if pub.kind == 'book' %}<i>{{ pub.title }}</i>. <b>{{ pub.venue }}</b>{% if pub.get('venue_note') %}, {{ pub.venue_note }}. {{ pub.year }}.{% else %}, {{ pub.year }}.{% endif %} With {{ pub.authors | coauthors | authors }}{{ ' (eds.)' if pub.get('role') == 'eds' }}.
+{%- else %}&ldquo;{{ pub.title }}&rdquo;
+{%- if pub.get('status') %} {{ pub.status }}, <b>{{ pub.venue }}</b>.
+{%- elif pub.get('venue') %} <b>{{ pub.venue }}</b>, {{ pub.year }}.
+{%- endif %}
+{%- if pub.authors | coauthors %} {{ byline(pub) }}
+{%- endif %}
+{%- endif %}
+                    &nbsp;{{ chevron(slug) }}
+                  </p>
+                  <div class="collapse abstract" id="{{ slug }}Abstract">
+{% if pub.get('contributors') %}
+                    <p>With {{ pub.contributors | authors }}.</p>
+{% endif %}
+{% if overflow %}
+                    <p class="paper-authors">{% if pub.get('author_order') == 'randomized' %}{{ pub.authors | rcirc }}{% else %}{{ overflow | authors }}.{% endif %}</p>
+{% endif %}
+                    {{ linkrow(pub.get('links', []), icons, pub.get('cite')) }}
+{% if pub.get('award') %}
+                    <p><a href="{{ pub.award.url }}"><i class="{{ icons.Trophy }}"></i>{{ pub.award.text }}</a></p>
+{% endif %}
+{% if pub.get('review') %}
+                    <p>Reviewed in <i><a href="{{ pub.review.url }}">{{ pub.review.venue }}</a></i></p>
+{% endif %}
+{% if pub.get('commentary') %}
+                    <p class="paper-title" style="margin-left: 0.6em">Commentary: <a href="{{ pub.commentary.url }}">&ldquo;{{ pub.commentary.title }}&rdquo;</a> By {{ pub.commentary.author }}. <b>{{ pub.commentary.venue }}</b>.</p>
+{% endif %}
+{% if pub.get('abstract') %}
+                    <p class="abstracttext">{{ pub.abstract | markup }}</p>
+{% endif %}
+                  </div>
+{% endmacro %}

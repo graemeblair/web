@@ -2,34 +2,56 @@
 
 from __future__ import annotations
 
-# Words that stay lowercase inside a title unless they lead it. Deliberately
-# short: this exists to render six course titles, not to be a general
-# title-casing library.
+# Chicago style: articles, coordinating conjunctions and prepositions stay
+# lowercase inside a title. Checked against the titles actually in this CV, not
+# assembled from a style guide in the abstract.
 _LOWER = {
-    "a", "an", "and", "as", "at", "but", "by", "for", "from", "in", "nor",
-    "of", "on", "or", "the", "to", "via", "with",
+    # articles and coordinating conjunctions
+    "a", "an", "and", "as", "but", "for", "nor", "or", "so", "the", "yet",
+    # prepositions
+    "about", "above", "across", "after", "against", "along", "among", "around",
+    "at", "before", "behind", "below", "beneath", "beside", "between", "beyond",
+    "by", "despite", "down", "during", "except", "from", "in", "inside", "into",
+    "near", "of", "off", "on", "onto", "out", "outside", "over", "past", "per",
+    "since", "than", "through", "throughout", "to", "toward", "under", "until",
+    "up", "upon", "via", "with", "within", "without",
 }
+
+# A title restarts after these, so the next word is capitalized even if it is a
+# preposition -- "Armed Conflict? Evidence from ...".
+_RESTART = ".:?!—–"
+
+
+def _cap(word: str) -> str:
+    """Capitalize, treating a hyphenated compound as separate words.
+
+    "community-minded" -> "Community-Minded", which is how the CV writes it.
+    """
+    return "-".join(p[:1].upper() + p[1:] for p in word.split("-"))
 
 
 def titlecase(text: str) -> str:
     """Title Case a sentence-case string.
 
-    Course titles are stored in sentence case because that is the CV's house
-    style and it is unambiguous; the website's convention is Title Case. Storing
-    one and deriving the other is what stops the two from drifting.
+    Titles are stored once, in sentence case -- the form the website and the
+    BibTeX both use -- and the CV's Title Case is derived. Storing one and
+    deriving the other is what stops the two from drifting apart again, as they
+    already had on six paper titles.
 
     Words containing an uppercase letter or a digit are left alone, so "R",
-    "200X" and "DeclareDesign" survive intact.
+    "200X", "DeclareDesign" and "ICE" survive intact.
     """
     words = text.split(" ")
     out = []
-    for i, word in enumerate(words):
+    starts_phrase = True
+    for word in words:
         if any(c.isupper() or c.isdigit() for c in word):
             out.append(word)
-        elif i != 0 and word.lower() in _LOWER:
+        elif not starts_phrase and word.lower().strip(_RESTART) in _LOWER:
             out.append(word.lower())
         else:
-            out.append(word[:1].upper() + word[1:])
+            out.append(_cap(word))
+        starts_phrase = bool(word) and word[-1] in _RESTART
     return " ".join(out)
 
 
@@ -79,6 +101,24 @@ def by_date_desc(items: list[dict]) -> list[dict]:
     order by hand.
     """
     return sorted(items, key=lambda item: str(item.get("date", "")), reverse=True)
+
+
+SELF = "Graeme Blair"
+
+
+def coauthors(names: list[str]) -> list[str]:
+    """Everyone except Graeme, in order.
+
+    Not `authors[1:]`: he is not always first. He is second on the Afghanistan
+    survey paper and third on the ethics piece, and on the Global South field
+    experiments paper the author order is explicitly randomized.
+    """
+    return [n for n in names if n != SELF]
+
+
+def rcirc(names: list[str]) -> str:
+    """Join names with the randomized-order symbol used by that convention."""
+    return " \u24c7 ".join(names)
 
 
 def cv_link(matter: dict) -> str | None:

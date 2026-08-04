@@ -1,0 +1,25 @@
+<<# Reverse-numbered lists, newest first.
+
+    Volume, issue and pages come from content/citations.bib rather than the
+    YAML, so nobody types "115(2): 709-716" into two places. Titles are stored
+    in sentence case and title-cased here -- deriving one from the other is what
+    stopped the two targets drifting apart on six of them. #>>
+<<% macro entry(pub, citations) -%>>
+<<% set names = pub.authors | rcirc if pub.get('author_order') == 'randomized' else pub.authors | authors -%>>
+<<% set bib = citations.get(pub.get('cite'), {}) -%>>
+<<< names >>>.<<% if pub.get('year') %>> <<< pub.year >>>.<<% endif %>> ``<<< pub.title | titlecase >>>''<<% if pub.get('venue') %>><<% if pub.get('status') %>> <<< pub.status >>>, {\it <<< pub.venue >>>}.<<% else %>> {\it <<< pub.venue >>>}<<% if bib.get('volume') %>> <<< bib.volume >>><<% if bib.get('number') %>>(<<< bib.number >>>)<<% endif %>><<% if bib.get('pages') %>>: <<< bib.pages | replace('--', '-') >>><<% endif %>><<% endif %>>.<<% endif %>><<% elif pub.kind == 'report' %>> Report.<<% endif %>>
+<<%- endmacro %>>
+
+<<% macro publist(pubs, citations) %>>
+\begin{etaremune}
+<<% for pub in pubs %>>
+<<% set line %>><<< entry(pub, citations) | raw_tex >>><<% endset %>>
+<<% if pub.get('draft') %>>%<<% endif %>>\item <<% if pub.get('url') %>>\href{<<< pub.url | tex_url >>>}{<<< line | raw_tex >>>}<<% else %>><<< line | raw_tex >>><<% endif %>><<% if pub.get('author_order') == 'randomized' %>> *Author order randomized.<<% endif %>><<% if pub.get("equal_authors") %>> * Equal authors.<<% endif +%>>
+<<%- if pub.get('review') %>>\\[0.35em]
+Reviews: \textit{\href{<<< pub.review.url | tex_url >>>}{<<< pub.review.venue >>>}}<<% if pub.review.get('note') %>> (``<<< pub.review.note >>>'')<<% endif %>>
+<<%- endif %>>
+<<%- if pub.get('commentary') %>>\\[0.35em] \href{<<< pub.commentary.url | tex_url >>>}{Invited perspective by <<< pub.commentary.author >>>, ``<<< pub.commentary.title >>>'' {\it <<< pub.commentary.venue >>>}.}
+<<%- endif %>>
+<<% endfor %>>
+\end{etaremune}
+<<% endmacro %>>

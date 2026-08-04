@@ -37,6 +37,14 @@ def load(directory: Path = CONTENT) -> dict:
             raise ContentError(f"{path.name} is empty")
         data[path.stem] = value
 
+    # The bibliographic record is BibTeX, not YAML -- it is the format the data
+    # already existed in, and it is what the Cite buttons consume.
+    bib = directory / "citations.bib"
+    if bib.exists():
+        from .bibtex import load as load_bib
+
+        data["citations"] = load_bib(bib)
+
     _reject_unresolved(data)
     return data
 
