@@ -138,7 +138,7 @@ cases:
         with: [David Hausman]
         documents:
           - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.ca4.178756/gov.uscourts.ca4.178756.50.1.pdf", cv_link: true}
-          - {label: Appeals court opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.ca4.178756/gov.uscourts.ca4.178756.133.0.pdf"}
+          - {label: Opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.ca4.178756/gov.uscourts.ca4.178756.133.0.pdf"}
 
   - case: Mahdawi v. Trump et al.
     group: foreign-policy
@@ -157,7 +157,7 @@ cases:
         with: [David Hausman]
         documents:
           - {label: Amicus brief, url: "https://assets.aclu.org/live/uploads/2025/04/157.2-Immigration-Lawyers-Profs-and-Scholars-Amicus-Brief.pdf", cv_link: true}
-          - {label: Appeals court opinion, url: "https://ww3.ca2.uscourts.gov/decisions/OPN/25-1113_complete_opn.pdf"}
+          - {label: Opinion, url: "https://ww3.ca2.uscourts.gov/decisions/OPN/25-1113_complete_opn.pdf"}
 
   - case: Vasquez Perdomo v. Noem
     group: street
@@ -203,7 +203,7 @@ cases:
         with: [David Hausman]
         documents:
           - {label: Amicus brief, url: "https://assets.aclu.org/live/uploads/2025/03/2025.9.17-Immigr.-Law-Scholars.pdf", cv_link: true}
-          - {label: Appeals court opinion, url: "https://www2.ca3.uscourts.gov/opinarch/252162p.pdf"}
+          - {label: Opinion, url: "https://www2.ca3.uscourts.gov/opinarch/252162p.pdf"}
       # No public document yet: the Third Circuit stayed its mandate and the
       # certiorari deadline was extended to September 21, 2026 (No. 26A90).
       # Add a `documents` entry when the amicus brief is docketed.

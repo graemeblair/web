@@ -747,6 +747,21 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "reads. Covers the first line of the entry however it wraps -- nothing "
         "can wrap before 'August 2026', two-thirds of the way to the margin.",
     ),
+    # The appellate opinions' document links, renamed. Both sides registered:
+    # the old label and the new one, which the three appellate stages (Khan
+    # Suri, Mahdawi, Khalil) now share with D.N.N.'s district-court opinion.
+    (
+        "text",
+        "Appeals court opinion",
+        "Removal side of the label rename to 'Opinion', on all three appellate "
+        "stages.",
+    ),
+    (
+        "text-exact",
+        "#text Opinion",
+        "Addition side of the rename. Exact, because 'Opinion' as a substring "
+        "would whitelist every line mentioning an opinion.",
+    ),
     (
         "text",
         "Hausman)",
