@@ -716,7 +716,7 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
     ("text-exact", "#text ·", "Middot between two document links in the new form."),
     # Structure: two matters merged into the case entry they belong to.
     ("text-exact", "<li>", "Thirteen matter bullets became eleven case entries: Khalil's and Mahdawi's second filings merged into their cases."),
-    ("text-exact", "<i>", "Case names are no longer italicized: the thirteen <i> wrappers the old matter bullets carried are gone. The names render bold via the case-name class instead, which this gate does not track."),
+    ("text-exact", "<i>", "The thirteen <i> wrappers the old matter bullets carried are gone: each case name is now the heading of its entry, italicized by the case-name class, which this gate does not track."),
     ("text-exact", "#text Mahdawi v. Trump et al.", "Mahdawi's name appeared in each of its two entries and now appears once, as the case name."),
     (
         "text",
