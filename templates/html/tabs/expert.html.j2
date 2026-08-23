@@ -3,15 +3,25 @@
                   <h1>Expert work</h1>
                   <p>{{ expert.intro }}</p>
 {% for group in expert.groups %}
-{% set matters = expert.matters | for_target | selectattr('group', 'equalto', group.id) | list | by_date_desc %}
-{% if matters %}
+{% set cases = expert.cases | for_target | selectattr('group', 'equalto', group.id) | list | by_latest_stage_desc %}
+{% if cases %}
                   <h2>{{ group.heading }}</h2>
 {% if group.get('note') %}
                   <p><i>{{ group.note | markup }}</i></p>
 {% endif %}
-                  <ul>
-{% for matter in matters %}
-                    <li>{{ expert.roles[matter.role].site }}, <i>{{ matter.case }}</i>, {{ matter.date | month_year }}, {{ matter.court }}{% if matter.get('with') %} (with {{ matter['with'] | authors }}){% endif %}{% if matter.get('documents') %} ({% for doc in matter.documents %}<a href="{{ doc.url }}">{{ doc.label }}</a>{{ ", " if not loop.last }}{% endfor %}){% endif %}</li>
+                  <ul class="case-list">
+{% for case in cases %}
+                    <li>
+                      <p class="case-name">{{ case.case }}</p>
+                      <div class="case-stages">
+{% for stage in case.stages | by_date_asc %}
+                        <div class="case-stage">
+                          <p class="stage-court">{{ stage.court }} &middot; {{ stage.date | month_year }}{% if stage.get('caption') %} &middot; as {{ stage.caption }}{% endif %}</p>
+                          <p class="stage-detail">{{ expert.roles[stage.role].site }}{% if stage.get('with') %} (with {{ stage['with'] | authors }}){% endif %}{% if stage.get('documents') %} &mdash; {% for doc in stage.documents %}<a href="{{ doc.url }}">{{ doc.label }}</a>{% if not loop.last %} &middot; {% endif %}{% endfor %}{% endif %}</p>
+                        </div>
+{% endfor %}
+                      </div>
+                    </li>
 {% endfor %}
                   </ul>
 {% endif %}

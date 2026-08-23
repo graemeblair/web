@@ -76,6 +76,39 @@
       .fs-18p {
         font-size: 18px;
       }
+      .case-list {
+        list-style: none;
+        padding-left: 0;
+      }
+      .case-list > li {
+        margin-bottom: 1.4em;
+      }
+      .case-name {
+        margin-bottom: .3em;
+        font-weight: 700;
+      }
+      .case-stages {
+        padding-left: 1.3em;
+      }
+      .case-stage {
+        position: relative;
+        padding-bottom: .6em;
+      }
+      .case-stage:last-child {
+        padding-bottom: 0;
+      }
+      .case-stage::before {
+        content: "\2022";
+        position: absolute;
+        left: -1em;
+      }
+      .stage-court {
+        margin-bottom: .1em;
+        font-size: .95em;
+      }
+      .stage-detail {
+        margin-bottom: 0;
+      }
       #citation-output>.csl-bib-body,
       #citation-output>pre {
         padding: 10px 15px;

@@ -32,8 +32,9 @@ from markupsafe import Markup
 
 from .escape import raw_tex, tex_url
 from .filters import (
-    authors, by_date_desc, by_year_desc, coauthors, cv_link, cv_url, downloads,
-    for_target, month_year, rcirc, starred, titlecase, volume_detail,
+    authors, by_date_asc, by_date_desc, by_latest_stage_desc, by_year_desc,
+    coauthors, cv_link, cv_url, downloads, flatten_stages, for_target,
+    month_year, rcirc, starred, titlecase, volume_detail,
 )
 from .markup import to_html, to_tex
 
@@ -67,6 +68,8 @@ def html_env() -> Environment:
     env.filters["downloads"] = downloads
     env.filters["month_year"] = month_year
     env.filters["by_date_desc"] = by_date_desc
+    env.filters["by_date_asc"] = by_date_asc
+    env.filters["by_latest_stage_desc"] = by_latest_stage_desc
     env.filters["cv_link"] = cv_link
     env.filters["coauthors"] = coauthors
     env.filters["rcirc"] = rcirc
@@ -101,6 +104,7 @@ def latex_env() -> Environment:
     env.filters["downloads"] = downloads
     env.filters["month_year"] = month_year
     env.filters["by_date_desc"] = by_date_desc
+    env.filters["flatten_stages"] = flatten_stages
     env.filters["cv_link"] = cv_link
     env.filters["coauthors"] = coauthors
     env.filters["rcirc"] = rcirc

@@ -200,6 +200,45 @@ def by_year_desc(items: list[dict]) -> list[dict]:
     return sorted(items, key=lambda item: item.get("year") or 10_000, reverse=True)
 
 
+def flatten_stages(cases: list[dict]) -> list[dict]:
+    """One flat matter per stage: the CV's shape for the by-case expert data.
+
+    The site renders a case once and traces its stages through the courts; the
+    CV keeps one line per stage, captioned as the case was at that posture
+    (`caption` falls back to the case name -- Khalil was Khalil v. Joyce in the
+    district court). Case-level `targets` rides along so a CV-only case stays
+    CV-only after flattening.
+    """
+    flat = []
+    for case in cases:
+        for stage in case["stages"]:
+            matter = dict(stage)
+            matter["case"] = matter.pop("caption", case["case"])
+            if "targets" in case:
+                matter["targets"] = case["targets"]
+            flat.append(matter)
+    return flat
+
+
+def by_latest_stage_desc(cases: list[dict]) -> list[dict]:
+    """Cases newest-first by their most recent stage, stable within a date.
+
+    A case that moves through the courts keeps one entry on the site, placed
+    by its latest activity -- so an appeal moves the whole case up rather than
+    adding a second entry.
+    """
+    return sorted(
+        cases,
+        key=lambda case: max(str(s.get("date", "")) for s in case["stages"]),
+        reverse=True,
+    )
+
+
+def by_date_asc(items: list[dict]) -> list[dict]:
+    """Chronological, oldest first -- the order a case moved through its postures."""
+    return sorted(items, key=lambda item: str(item.get("date", "")))
+
+
 def cv_link(matter: dict) -> str | None:
     """The one document URL that should wrap this matter's CV line, if any.
 

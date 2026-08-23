@@ -648,6 +648,76 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "element as `<p/>`, so this key cannot whitelist a paragraph that has "
         "content.)",
     ),
+    # ---- expert work, reorganized by case (site only) ------------------------
+    #
+    # VISIBLE PRESENTATION CHANGE, owner requested. The Expert work tab used to
+    # list every filing as its own bullet, so a case that moved through the
+    # courts appeared two or three times -- Mahdawi twice, Khalil twice under
+    # two captions. Each case now appears once inside its legal-theory section,
+    # with its postures traced beneath it: a muted court-and-date line, then the
+    # role and document links. The CV is untouched -- its flat reverse-
+    # chronological list renders byte-identically from the same data.
+    #
+    # Every entry line changed shape, so each old text node and its replacement
+    # is registered below, almost all as text-exact so no key can excuse more
+    # than the node it names. Three matters' lines (Pablo Sequen, D.N.N.,
+    # Stanford Daily) are already excused by the district-court continuation
+    # keys registered further up.
+    #
+    # The old "role, case, date, court (docs)" nodes, one per matter:
+    ("text-exact", "#text , June 2026, U.S. District Court for the Southern District of Indiana (", "Sarsour's old one-line entry."),
+    ("text-exact", "#text , March 2026, U.S. District Court for the Southern District of Ohio", "Peralta's old one-line entry."),
+    ("text-exact", "#text , October 2025, U.S. Court of Appeals for the Fourth Circuit (with David Hausman) (", "Khan Suri's old one-line entry."),
+    ("text-exact", "#text , September 2025, U.S. Court of Appeals for the Third Circuit (with David Hausman) (", "The old Khalil v. Trump entry, now the appellate stage of the Khalil case."),
+    ("text-exact", "#text , August 2025, U.S. Court of Appeals for the Second Circuit (with David Hausman) (", "The old second Mahdawi entry, now the appellate stage of the Mahdawi case."),
+    ("text-exact", "#text , August 2025, U.S. District Court for the Central District of California", "Vasquez Perdomo's old one-line entry."),
+    ("text-exact", "#text , July 2025, U.S. Court of Appeals for the Ninth Circuit", "Calderon's old one-line entry."),
+    ("text-exact", "#text , April 2025, U.S. District Court for the District of Vermont (with David Hausman) (", "The old first Mahdawi entry, now the district stage of the Mahdawi case."),
+    ("text-exact", "#text , March 2025, U.S. District Court for the Southern District of New York (with David Hausman) (", "Chung's old one-line entry."),
+    ("text-exact", "#text , March 2025, U.S. District Court for the District of New Jersey (with David Hausman) (", "The old Khalil v. Joyce entry, now the district stage of the Khalil case."),
+    # The new court-and-date line each stage renders instead:
+    ("text-exact", "#text U.S. District Court for the Southern District of Indiana · June 2026", "Sarsour's stage line."),
+    ("text-exact", "#text U.S. District Court for the Southern District of Ohio · March 2026", "Peralta's stage line."),
+    ("text-exact", "#text U.S. Court of Appeals for the Fourth Circuit · October 2025", "Khan Suri's stage line."),
+    ("text-exact", "#text U.S. Court of Appeals for the Third Circuit · September 2025", "Khalil's appellate stage line."),
+    ("text-exact", "#text U.S. Court of Appeals for the Second Circuit · August 2025", "Mahdawi's appellate stage line."),
+    ("text-exact", "#text U.S. District Court for the Central District of California · August 2025", "Vasquez Perdomo's stage line."),
+    ("text-exact", "#text U.S. Court of Appeals for the Ninth Circuit · July 2025", "Calderon's stage line."),
+    ("text-exact", "#text U.S. District Court for the District of Vermont · April 2025", "Mahdawi's district stage line."),
+    ("text-exact", "#text U.S. District Court for the Southern District of New York · March 2025", "Chung's stage line."),
+    ("text-exact", "#text U.S. District Court for the District of New Jersey · March 2025 · as Khalil v. Joyce et al.", "Khalil's district stage line, noting the caption the case carried there."),
+    ("text-exact", "#text Khalil v. Joyce et al.", "The old entry's italicized caption text; it now sits unitalicized inside the stage line above."),
+    # The role, which led the old line and now sits under the court line. The
+    # trailing comma is the old form, the em dash (before document links) or
+    # bare form the new one:
+    ("text-exact", "#text Declaration,", "Old role prefix, nine matters."),
+    ("text-exact", "#text Declaration —", "New role line, Sarsour and Pablo Sequen."),
+    ("text-exact", "#text Declaration (with David Hausman) —", "New role line, the seven matters with David Hausman."),
+    ("text-exact", "#text Consulting,", "Old role prefix, Peralta."),
+    ("text-exact", "#text Consulting", "New role line, Peralta (no documents, so no dash)."),
+    ("text-exact", "#text Expert report,", "Old role prefix, D.N.N."),
+    ("text-exact", "#text Expert report —", "New role line, D.N.N."),
+    ("text-exact", "#text Brief of amicus curiae,", "Old role prefix, Calderon."),
+    ("text-exact", "#text Brief of amicus curiae", "New role line, Calderon (no documents)."),
+    ("text-exact", "#text Declarations (for motion to certify class and reply in support of motion to certify class),", "Old role prefix, Vasquez Perdomo."),
+    ("text-exact", "#text Declarations (for motion to certify class and reply in support of motion to certify class)", "New role line, Vasquez Perdomo (no documents)."),
+    # Punctuation nodes around the document links: the old form wrapped them in
+    # parentheses and joined with commas, the new form joins with middots.
+    ("text-exact", "#text )", "Closing paren of an old document-link list, ten matters."),
+    ("text-exact", "#text ,", "Comma between two old document links."),
+    ("text-exact", "#text ·", "Middot between two document links in the new form."),
+    # Structure: two matters merged into the case entry they belong to.
+    ("text-exact", "<li>", "Thirteen matter bullets became eleven case entries: Khalil's and Mahdawi's second filings merged into their cases."),
+    ("text-exact", "<i>", "Case names are no longer italicized: the thirteen <i> wrappers the old matter bullets carried are gone. The names render bold via the case-name class instead, which this gate does not track."),
+    ("text-exact", "#text Mahdawi v. Trump et al.", "Mahdawi's name appeared in each of its two entries and now appears once, as the case name."),
+    (
+        "text",
+        ".jumbotron { min-height: 300px; }",
+        "site.css gains the case-list and stage-timeline styles for the "
+        "reorganized Expert work tab. The inlined stylesheet is a single "
+        "canonical text line, so this key names a stable fragment present on "
+        "both sides of the change.",
+    ),
 ]
 
 

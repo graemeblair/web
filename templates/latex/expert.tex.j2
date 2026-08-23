@@ -1,9 +1,11 @@
 <<# Flat and reverse-chronological, ignoring the site's grouping by legal
-    theory. Where a matter marks a document `cv_link`, the whole line is wrapped
-    in it -- the hand-written CV linked only three of fourteen entries, with no
-    evident rule. #>>
+    theory and its tracing of a case through its postures: each stage of a case
+    is one line here, under the caption the case carried at that posture. Where
+    a stage marks a document `cv_link`, the whole line is wrapped in it -- the
+    hand-written CV linked only three of fourteen entries, with no evident
+    rule. #>>
 \begin{indnt}
-<<% for matter in expert.matters | for_target | by_date_desc %>>
+<<% for matter in expert.cases | flatten_stages | for_target | by_date_desc %>>
 <<% set line -%>>
 <<< expert.roles[matter.role].cv >>>, <<% if matter.get('court') %>>\textit{<<< matter.case >>>}, <<< matter.date | month_year >>>, <<< matter.court >>><<% else %>><<< matter.case >>>, <<< matter.ongoing_from >>>--<<% endif %>><<% if matter.get('with') %>> (with <<< matter['with'] | authors >>>)<<% endif %>>
 <<%- endset %>>

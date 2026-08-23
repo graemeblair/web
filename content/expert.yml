@@ -1,10 +1,18 @@
 # Expert work in immigration litigation.
 #
 # The two targets present this very differently and both presentations are
-# wanted: the site groups matters by the legal theory at issue and links the
-# resulting documents, while the CV is one flat reverse-chronological list. Both
-# are derived from the same `matters` list -- `group` drives the site's sections
-# and `date` drives the ordering, so adding a case means adding it once.
+# wanted: the site groups cases by the legal theory at issue and traces each
+# case through its postures -- district court, then appeal -- while the CV is
+# one flat reverse-chronological list with one line per declaration or brief.
+# Both are derived from the same `cases` list. A case holds one stage per
+# posture; the site renders the case once with its stages in chronological
+# order, and the CV flattens every stage back out and sorts by `date`. Adding
+# a posture means adding one stage to the case it belongs to.
+#
+# A stage's `caption` is the name the case carried at that posture, where it
+# differs from the case's name -- Khalil was Khalil v. Joyce in the district
+# court and Khalil v. Trump on appeal. The CV lists each posture under its own
+# caption, as it always has; the site notes the earlier caption on the stage.
 #
 # Roles are a controlled vocabulary rather than free text. Each phrasing is
 # written once, below, so every matter with the same role reads identically --
@@ -54,128 +62,145 @@ groups:
   - id: cat
     heading: Evidence on torture risk in Convention Against Torture cases
 
-# Sorted by `date` descending for both targets, so the CV's ordering is computed
-# rather than maintained by hand.
-matters:
+# Both orderings are computed rather than maintained by hand: the site orders
+# cases within a group by their latest stage, newest first, and the CV sorts
+# the flattened stages by `date`. One thing IS order-sensitive here: the CV's
+# sort is stable, so stages sharing a month keep this file's case order. Four
+# pairs tie today -- the sentencing project and D.N.N. (December 2025),
+# Stanford Daily and Khan Suri (October 2025), Mahdawi's appeal and Vasquez
+# Perdomo (August 2025), Chung and Khalil's district declaration (March 2025)
+# -- and each pair sits here in the CV's long-standing order, which is why
+# Khalil is listed after Chung despite its later appellate stage.
+cases:
   - case: Sarsour v. Swearingen
     group: foreign-policy
-    role: declaration_amicus
-    date: 2026-06
-    court: U.S. District Court for the Southern District of Indiana
-    documents:
-      - {label: Order on motion for release, url: "https://www.aclu-il.org/app/uploads/2026/06/55-Order-Releasing-Salah.pdf"}
+    stages:
+      - role: declaration_amicus
+        date: 2026-06
+        court: U.S. District Court for the Southern District of Indiana
+        documents:
+          - {label: Order on motion for release, url: "https://www.aclu-il.org/app/uploads/2026/06/55-Order-Releasing-Salah.pdf"}
 
   - case: Peralta v. Department of Homeland Security
     group: street
-    role: consulting_pi
-    date: 2026-03
-    court: U.S. District Court for the Southern District of Ohio
+    stages:
+      - role: consulting_pi
+        date: 2026-03
+        court: U.S. District Court for the Southern District of Ohio
 
   - case: Pablo Sequen v. Albarran
     group: courthouse
-    role: declaration
-    date: 2026-01
-    court: U.S. District Court for the Northern District of California
-    documents:
-      - {label: Order, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.453807/gov.uscourts.cand.453807.205.0.pdf"}
+    stages:
+      - role: declaration
+        date: 2026-01
+        court: U.S. District Court for the Northern District of California
+        documents:
+          - {label: Order, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.453807/gov.uscourts.cand.453807.205.0.pdf"}
 
   # Ongoing, so it has a start year and no end. Dated 2025-12 purely for
   # ordering, which keeps it exactly where the CV has always had it -- after
   # January 2026 and before December 2025.
   - case: University of California Sentencing Project
-    role: consultant
-    date: 2025-12
-    ongoing_from: 2025
     targets: [cv]
+    stages:
+      - role: consultant
+        date: 2025-12
+        ongoing_from: 2025
 
   - case: D.N.N. et al. v. Liggins et al.
     group: holdrooms
-    role: declaration_pi
-    date: 2025-12
-    court: U.S. District Court for the District of Maryland
-    documents:
-      - {label: Opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.170.0_3.pdf"}
-      - {label: Order for preliminary injunction, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.171.0_1.pdf"}
+    stages:
+      - role: declaration_pi
+        date: 2025-12
+        court: U.S. District Court for the District of Maryland
+        documents:
+          - {label: Opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.170.0_3.pdf"}
+          - {label: Order for preliminary injunction, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.171.0_1.pdf"}
 
   # The CV omitted David Hausman here; the site credited him.
   - case: Stanford Daily Publishing Corporation et al. v. Rubio et al.
     group: foreign-policy
-    role: declaration_amicus
-    date: 2025-10
-    court: U.S. District Court for the Northern District of California
-    with: [David Hausman]
-    documents:
-      - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.454120/gov.uscourts.cand.454120.41.1.pdf", cv_link: true}
+    stages:
+      - role: declaration_amicus
+        date: 2025-10
+        court: U.S. District Court for the Northern District of California
+        with: [David Hausman]
+        documents:
+          - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.454120/gov.uscourts.cand.454120.41.1.pdf", cv_link: true}
 
+  # Only the appellate posture is on record here.
   - case: Khan Suri v. Trump et al.
     group: foreign-policy
-    role: declaration_amicus
-    date: 2025-10
-    court: U.S. Court of Appeals for the Fourth Circuit
-    with: [David Hausman]
-    documents:
-      - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.ca4.178756/gov.uscourts.ca4.178756.50.1.pdf", cv_link: true}
-      - {label: Appeals court opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.ca4.178756/gov.uscourts.ca4.178756.133.0.pdf"}
-
-  - case: Khalil v. Trump et al.
-    group: foreign-policy
-    role: declaration_amicus
-    date: 2025-09
-    court: U.S. Court of Appeals for the Third Circuit
-    with: [David Hausman]
-    documents:
-      - {label: Amicus brief, url: "https://assets.aclu.org/live/uploads/2025/03/2025.9.17-Immigr.-Law-Scholars.pdf", cv_link: true}
-      - {label: Appeals court opinion, url: "https://www2.ca3.uscourts.gov/opinarch/252162p.pdf"}
+    stages:
+      - role: declaration_amicus
+        date: 2025-10
+        court: U.S. Court of Appeals for the Fourth Circuit
+        with: [David Hausman]
+        documents:
+          - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.ca4.178756/gov.uscourts.ca4.178756.50.1.pdf", cv_link: true}
+          - {label: Appeals court opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.ca4.178756/gov.uscourts.ca4.178756.133.0.pdf"}
 
   - case: Mahdawi v. Trump et al.
     group: foreign-policy
-    role: declaration_amicus
-    date: 2025-08
-    court: U.S. Court of Appeals for the Second Circuit
-    with: [David Hausman]
-    documents:
-      - {label: Amicus brief, url: "https://assets.aclu.org/live/uploads/2025/04/157.2-Immigration-Lawyers-Profs-and-Scholars-Amicus-Brief.pdf", cv_link: true}
-      - {label: Appeals court opinion, url: "https://ww3.ca2.uscourts.gov/decisions/OPN/25-1113_complete_opn.pdf"}
+    stages:
+      - role: declaration_amicus
+        date: 2025-04
+        court: U.S. District Court for the District of Vermont
+        with: [David Hausman]
+        documents:
+          - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.vtd.39338/gov.uscourts.vtd.39338.23.1.pdf", cv_link: true}
+          - {label: Declaration, url: "https://storage.courtlistener.com/recap/gov.uscourts.vtd.39338/gov.uscourts.vtd.39338.23.2.pdf"}
+          - {label: Order on motion for release, url: "https://storage.courtlistener.com/recap/gov.uscourts.vtd.39338/gov.uscourts.vtd.39338.54.0.pdf"}
+      - role: declaration_amicus
+        date: 2025-08
+        court: U.S. Court of Appeals for the Second Circuit
+        with: [David Hausman]
+        documents:
+          - {label: Amicus brief, url: "https://assets.aclu.org/live/uploads/2025/04/157.2-Immigration-Lawyers-Profs-and-Scholars-Amicus-Brief.pdf", cv_link: true}
+          - {label: Appeals court opinion, url: "https://ww3.ca2.uscourts.gov/decisions/OPN/25-1113_complete_opn.pdf"}
 
   - case: Vasquez Perdomo v. Noem
     group: street
-    role: declarations_class_cert
-    date: 2025-08
-    court: U.S. District Court for the Central District of California
+    stages:
+      - role: declarations_class_cert
+        date: 2025-08
+        court: U.S. District Court for the Central District of California
 
   - case: Calderon v. Bondi
     group: cat
-    role: amicus_brief
-    date: 2025-07
-    court: U.S. Court of Appeals for the Ninth Circuit
-
-  - case: Mahdawi v. Trump et al.
-    group: foreign-policy
-    role: declaration_amicus
-    date: 2025-04
-    court: U.S. District Court for the District of Vermont
-    with: [David Hausman]
-    documents:
-      - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.vtd.39338/gov.uscourts.vtd.39338.23.1.pdf", cv_link: true}
-      - {label: Declaration, url: "https://storage.courtlistener.com/recap/gov.uscourts.vtd.39338/gov.uscourts.vtd.39338.23.2.pdf"}
-      - {label: Order on motion for release, url: "https://storage.courtlistener.com/recap/gov.uscourts.vtd.39338/gov.uscourts.vtd.39338.54.0.pdf"}
+    stages:
+      - role: amicus_brief
+        date: 2025-07
+        court: U.S. Court of Appeals for the Ninth Circuit
 
   - case: Chung v. Trump
     group: foreign-policy
-    role: declaration_amicus
-    date: 2025-03
-    court: U.S. District Court for the Southern District of New York
-    with: [David Hausman]
-    documents:
-      - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.28.1_1.pdf", cv_link: true}
-      - {label: Order granting preliminary injunction, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.57.0.pdf"}
+    stages:
+      - role: declaration_amicus
+        date: 2025-03
+        court: U.S. District Court for the Southern District of New York
+        with: [David Hausman]
+        documents:
+          - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.28.1_1.pdf", cv_link: true}
+          - {label: Order granting preliminary injunction, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.57.0.pdf"}
 
-  - case: Khalil v. Joyce et al.
+  # One habeas case across two postures: filed in the District of New Jersey
+  # as Khalil v. Joyce, captioned Khalil v. Trump on appeal.
+  - case: Khalil v. Trump et al.
     group: foreign-policy
-    role: declaration_amicus
-    date: 2025-03
-    court: U.S. District Court for the District of New Jersey
-    with: [David Hausman]
-    documents:
-      - {label: Amicus brief, url: "https://ccrjustice.org/sites/default/files/attach/2025/03/110-1_3-24-25_Immigration-amicus-brief_w.pdf", cv_link: true}
-      - {label: Opinion and order, url: "https://storage.courtlistener.com/recap/gov.uscourts.njd.564334/gov.uscourts.njd.564334.299.0.pdf"}
+    stages:
+      - caption: Khalil v. Joyce et al.
+        role: declaration_amicus
+        date: 2025-03
+        court: U.S. District Court for the District of New Jersey
+        with: [David Hausman]
+        documents:
+          - {label: Amicus brief, url: "https://ccrjustice.org/sites/default/files/attach/2025/03/110-1_3-24-25_Immigration-amicus-brief_w.pdf", cv_link: true}
+          - {label: Opinion and order, url: "https://storage.courtlistener.com/recap/gov.uscourts.njd.564334/gov.uscourts.njd.564334.299.0.pdf"}
+      - role: declaration_amicus
+        date: 2025-09
+        court: U.S. Court of Appeals for the Third Circuit
+        with: [David Hausman]
+        documents:
+          - {label: Amicus brief, url: "https://assets.aclu.org/live/uploads/2025/03/2025.9.17-Immigr.-Law-Scholars.pdf", cv_link: true}
+          - {label: Appeals court opinion, url: "https://www2.ca3.uscourts.gov/opinarch/252162p.pdf"}
