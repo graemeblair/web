@@ -204,3 +204,10 @@ cases:
         documents:
           - {label: Amicus brief, url: "https://assets.aclu.org/live/uploads/2025/03/2025.9.17-Immigr.-Law-Scholars.pdf", cv_link: true}
           - {label: Appeals court opinion, url: "https://www2.ca3.uscourts.gov/opinarch/252162p.pdf"}
+      # No public document yet: the Third Circuit stayed its mandate and the
+      # certiorari deadline was extended to September 21, 2026 (No. 26A90).
+      # Add a `documents` entry when the amicus brief is docketed.
+      - role: declaration_amicus
+        date: 2026-08
+        court: U.S. Supreme Court
+        with: [David Hausman]

@@ -726,6 +726,37 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "canonical text line, so this key names a stable fragment present on "
         "both sides of the change.",
     ),
+    # ---- Khalil's Supreme Court stage, added August 2026 ---------------------
+    #
+    # NEW CONTENT, owner requested. The Khalil case gains its Supreme Court
+    # posture: an expert declaration for the forthcoming amicus brief, with
+    # David Hausman. No document is linked yet -- the Third Circuit stayed its
+    # mandate and the certiorari deadline was extended to September 21, 2026
+    # (No. 26A90) -- so the entry carries no URL until the brief is docketed.
+    ("text-exact", "#text U.S. Supreme Court · August 2026", "The new stage's court line on the site."),
+    ("text-exact", "#text Declaration (with David Hausman)", "The new stage's role line on the site -- no dash, because there are no documents to link yet."),
+    (
+        "text",
+        "Khalil v. Trump et al.}, August 2026",
+        "The new CV line, in LaTeX source form.",
+    ),
+    (
+        "text",
+        "Khalil v. Trump et al., August 2026",
+        "The new CV line as typeset, in the brace-free form the PDF comparison "
+        "reads. Covers the first line of the entry however it wraps -- nothing "
+        "can wrap before 'August 2026', two-thirds of the way to the margin.",
+    ),
+    (
+        "text",
+        "Hausman)",
+        "The typeset continuation of the new CV line. The entry is long enough "
+        "to wrap and the wrap point depends on font metrics this suite cannot "
+        "reproduce without XeLaTeX, so the key is the fragment every possible "
+        "continuation ends with. Broader than its neighbours: it would also "
+        "excuse a future diff line ending '(with ... Hausman)' -- accepted, "
+        "because any real change to those lines still trips on its other words.",
+    ),
 ]
 
 
