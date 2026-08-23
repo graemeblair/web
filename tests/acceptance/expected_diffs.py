@@ -194,6 +194,14 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
     ),
     (
         "text",
+        "Macartan Humphreys, and Luke Sonnet",
+        "Continuation line of the old estimatr entry, before Neal Fultz -- the "
+        "same wrap-tail as fabricatr's above. Visible only in the typeset "
+        "comparison, which is why CI's PDF gate caught it while the local "
+        "suite (which skips the PDF gates without XeLaTeX) stayed green.",
+    ),
+    (
+        "text",
         "answers to sensitive questions, with Yang-Yang Zhou",
         "Continuation line of the `rr` entry, moved by the reordering.",
     ),
