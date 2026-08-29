@@ -796,6 +796,28 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "excuse a future diff line ending '(with ... Hausman)' -- accepted, "
         "because any real change to those lines still trips on its other words.",
     ),
+    # ---- D.N.N. enforcement memo link, added August 2026 ---------------------
+    (
+        "href",
+        "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.197.1.pdf",
+        "Owner requested adding the D.N.N. memo filed for the motion to enforce "
+        "the preliminary injunction.",
+    ),
+    (
+        "text",
+        "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.197.1.pdf",
+        "Gate 2 sees the rendered anchor line; register the new D.N.N. memo URL there too.",
+    ),
+    (
+        "text-exact",
+        "#text Memo (for motion to enforce preliminary injunction) —",
+        "New D.N.N. stage role line on the site.",
+    ),
+    (
+        "text-exact",
+        "#text Memo",
+        "New D.N.N. memo document label on the site.",
+    ),
 ]
 
 
