@@ -79,7 +79,7 @@ cases:
         date: 2026-06
         court: U.S. District Court for the Southern District of Indiana
         documents:
-          - {label: Order on motion for release, url: "https://www.aclu-il.org/app/uploads/2026/06/55-Order-Releasing-Salah.pdf"}
+          - {label: Order, url: "https://www.aclu-il.org/app/uploads/2026/06/55-Order-Releasing-Salah.pdf"}
 
   - case: Peralta v. Department of Homeland Security
     group: street
@@ -115,7 +115,7 @@ cases:
         court: U.S. District Court for the District of Maryland
         documents:
           - {label: Opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.170.0_3.pdf"}
-          - {label: Order for preliminary injunction, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.171.0_1.pdf"}
+          - {label: Order, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.171.0_1.pdf"}
 
   # The CV omitted David Hausman here; the site credited him.
   - case: Stanford Daily Publishing Corporation et al. v. Rubio et al.
@@ -127,7 +127,7 @@ cases:
         with: [David Hausman]
         documents:
           - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.454120/gov.uscourts.cand.454120.41.1.pdf", cv_link: true}
-          - {label: Opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.454120/gov.uscourts.cand.454120.108.0.pdf"}
+          - {label: Decision, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.454120/gov.uscourts.cand.454120.108.0.pdf"}
 
   # Only the appellate posture is on record here.
   - case: Khan Suri v. Trump et al.
@@ -151,7 +151,7 @@ cases:
         documents:
           - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.vtd.39338/gov.uscourts.vtd.39338.23.1.pdf", cv_link: true}
           - {label: Declaration, url: "https://storage.courtlistener.com/recap/gov.uscourts.vtd.39338/gov.uscourts.vtd.39338.23.2.pdf"}
-          - {label: Order on motion for release, url: "https://storage.courtlistener.com/recap/gov.uscourts.vtd.39338/gov.uscourts.vtd.39338.54.0.pdf"}
+          - {label: Order, url: "https://storage.courtlistener.com/recap/gov.uscourts.vtd.39338/gov.uscourts.vtd.39338.54.0.pdf"}
       - role: declaration_amicus
         date: 2025-08
         court: U.S. Court of Appeals for the Second Circuit
@@ -173,6 +173,8 @@ cases:
       - role: amicus_brief
         date: 2025-07
         court: U.S. Court of Appeals for the Ninth Circuit
+        documents:
+          - {label: Opinion, url: "https://cdn.ca9.uscourts.gov/datastore/opinions/2026/08/28/25-2204.pdf"}
 
   - case: Chung v. Trump
     group: foreign-policy
@@ -183,7 +185,7 @@ cases:
         with: [David Hausman]
         documents:
           - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.28.1_1.pdf", cv_link: true}
-          - {label: Order granting preliminary injunction, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.57.0.pdf"}
+          - {label: Order, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.57.0.pdf"}
 
   # One habeas case across two postures: filed in the District of New Jersey
   # as Khalil v. Joyce, captioned Khalil v. Trump on appeal.
@@ -197,7 +199,7 @@ cases:
         with: [David Hausman]
         documents:
           - {label: Amicus brief, url: "https://ccrjustice.org/sites/default/files/attach/2025/03/110-1_3-24-25_Immigration-amicus-brief_w.pdf", cv_link: true}
-          - {label: Opinion and order, url: "https://storage.courtlistener.com/recap/gov.uscourts.njd.564334/gov.uscourts.njd.564334.299.0.pdf"}
+          - {label: Decision, url: "https://storage.courtlistener.com/recap/gov.uscourts.njd.564334/gov.uscourts.njd.564334.299.0.pdf"}
       - role: declaration_amicus
         date: 2025-09
         court: U.S. Court of Appeals for the Third Circuit
