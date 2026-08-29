@@ -127,6 +127,7 @@ cases:
         with: [David Hausman]
         documents:
           - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.454120/gov.uscourts.cand.454120.41.1.pdf", cv_link: true}
+          - {label: Opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.454120/gov.uscourts.cand.454120.108.0.pdf"}
 
   # Only the appellate posture is on record here.
   - case: Khan Suri v. Trump et al.
