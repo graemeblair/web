@@ -714,6 +714,12 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
     ("text-exact", "#text Brief of amicus curiae,", "Old role prefix, Calderon."),
     ("text-exact", "#text Brief of amicus curiae", "New role line, Calderon (no documents)."),
     ("text-exact", "#text Brief of amicus curiae —", "Calderon now includes a linked opinion, so the role line carries the document-list dash."),
+    ("text-exact", "#text Order granting preliminary injunction", "Old long-form document label on Chung's district-court stage."),
+    ("text-exact", "#text Order for preliminary injunction", "Old long-form document label on D.N.N.'s district-court stage."),
+    ("text-exact", "#text Order on motion for release", "Old long-form document label on Sarsour and Mahdawi district-court stages."),
+    ("text-exact", "#text Opinion and order", "Old compound document label on Khalil's district-court stage."),
+    ("text-exact", "#text Decision", "New short-form document label requested for Stanford Daily and Khalil district-court documents."),
+    ("text-exact", "#text Order", "New short-form document label requested for district-court order documents."),
     ("text-exact", "#text Declarations (for motion to certify class and reply in support of motion to certify class),", "Old role prefix, Vasquez Perdomo."),
     ("text-exact", "#text Declarations (for motion to certify class and reply in support of motion to certify class)", "New role line, Vasquez Perdomo (no documents)."),
     # Punctuation nodes around the document links: the old form wrapped them in
