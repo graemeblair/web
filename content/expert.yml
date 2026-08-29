@@ -64,48 +64,28 @@ groups:
 
 # Both orderings are computed rather than maintained by hand: the site orders
 # cases within a group by their latest stage, newest first, and the CV sorts
-# the flattened stages by `date`. One thing IS order-sensitive here: the CV's
-# sort is stable, so stages sharing a month keep this file's case order. Four
-# pairs tie today -- the sentencing project and D.N.N. (December 2025),
-# Stanford Daily and Khan Suri (October 2025), Mahdawi's appeal and Vasquez
-# Perdomo (August 2025), Chung and Khalil's district declaration (March 2025)
-# -- and each pair sits here in the CV's long-standing order, which is why
-# Khalil is listed after Chung despite its later appellate stage.
+# the flattened stages by `date`. This source list is kept in alphabetical
+# order by case name for deterministic tie ordering in the CV.
 cases:
-  - case: Sarsour v. Swearingen
+  - case: Calderon v. Bondi
+    group: cat
+    stages:
+      - role: amicus_brief
+        date: 2025-07
+        court: U.S. Court of Appeals for the Ninth Circuit
+        documents:
+          - {label: Opinion, url: "https://cdn.ca9.uscourts.gov/datastore/opinions/2026/08/28/25-2204.pdf"}
+
+  - case: Chung v. Trump
     group: foreign-policy
     stages:
       - role: declaration_amicus
-        date: 2026-06
-        court: U.S. District Court for the Southern District of Indiana
+        date: 2025-03
+        court: U.S. District Court for the Southern District of New York
+        with: [David Hausman]
         documents:
-          - {label: Order on motion for release, url: "https://www.aclu-il.org/app/uploads/2026/06/55-Order-Releasing-Salah.pdf"}
-
-  - case: Peralta v. Department of Homeland Security
-    group: street
-    stages:
-      - role: consulting_pi
-        date: 2026-03
-        court: U.S. District Court for the Southern District of Ohio
-
-  - case: Pablo Sequen v. Albarran
-    group: courthouse
-    stages:
-      - role: declaration
-        date: 2026-01
-        court: U.S. District Court for the Northern District of California
-        documents:
-          - {label: Order, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.453807/gov.uscourts.cand.453807.205.0.pdf"}
-
-  # Ongoing, so it has a start year and no end. Dated 2025-12 purely for
-  # ordering, which keeps it exactly where the CV has always had it -- after
-  # January 2026 and before December 2025.
-  - case: University of California Sentencing Project
-    targets: [cv]
-    stages:
-      - role: consultant
-        date: 2025-12
-        ongoing_from: 2025
+          - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.28.1_1.pdf", cv_link: true}
+          - {label: Order granting preliminary injunction, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.57.0.pdf"}
 
   - case: D.N.N. et al. v. Liggins et al.
     group: holdrooms
@@ -117,19 +97,34 @@ cases:
           - {label: Opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.170.0_3.pdf"}
           - {label: Order for preliminary injunction, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.171.0_1.pdf"}
 
-  # The CV omitted David Hausman here; the site credited him.
-  - case: Stanford Daily Publishing Corporation et al. v. Rubio et al.
+  # One habeas case across two postures: filed in the District of New Jersey
+  # as Khalil v. Joyce, captioned Khalil v. Trump on appeal.
+  - case: Khalil v. Trump et al.
     group: foreign-policy
     stages:
-      - role: declaration_amicus
-        date: 2025-10
-        court: U.S. District Court for the Northern District of California
+      - caption: Khalil v. Joyce et al.
+        role: declaration_amicus
+        date: 2025-03
+        court: U.S. District Court for the District of New Jersey
         with: [David Hausman]
         documents:
-          - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.454120/gov.uscourts.cand.454120.41.1.pdf", cv_link: true}
-          - {label: Opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.454120/gov.uscourts.cand.454120.108.0.pdf"}
+          - {label: Amicus brief, url: "https://ccrjustice.org/sites/default/files/attach/2025/03/110-1_3-24-25_Immigration-amicus-brief_w.pdf", cv_link: true}
+          - {label: Opinion and order, url: "https://storage.courtlistener.com/recap/gov.uscourts.njd.564334/gov.uscourts.njd.564334.299.0.pdf"}
+      - role: declaration_amicus
+        date: 2025-09
+        court: U.S. Court of Appeals for the Third Circuit
+        with: [David Hausman]
+        documents:
+          - {label: Amicus brief, url: "https://assets.aclu.org/live/uploads/2025/03/2025.9.17-Immigr.-Law-Scholars.pdf", cv_link: true}
+          - {label: Opinion, url: "https://www2.ca3.uscourts.gov/opinarch/252162p.pdf"}
+      # No public document yet: the Third Circuit stayed its mandate and the
+      # certiorari deadline was extended to September 21, 2026 (No. 26A90).
+      # Add a `documents` entry when the amicus brief is docketed.
+      - role: declaration_amicus
+        date: 2026-08
+        court: U.S. Supreme Court
+        with: [David Hausman]
 
-  # Only the appellate posture is on record here.
   - case: Khan Suri v. Trump et al.
     group: foreign-policy
     stages:
@@ -160,55 +155,55 @@ cases:
           - {label: Amicus brief, url: "https://assets.aclu.org/live/uploads/2025/04/157.2-Immigration-Lawyers-Profs-and-Scholars-Amicus-Brief.pdf", cv_link: true}
           - {label: Opinion, url: "https://ww3.ca2.uscourts.gov/decisions/OPN/25-1113_complete_opn.pdf"}
 
+  - case: Pablo Sequen v. Albarran
+    group: courthouse
+    stages:
+      - role: declaration
+        date: 2026-01
+        court: U.S. District Court for the Northern District of California
+        documents:
+          - {label: Order, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.453807/gov.uscourts.cand.453807.205.0.pdf"}
+
+  - case: Peralta v. Department of Homeland Security
+    group: street
+    stages:
+      - role: consulting_pi
+        date: 2026-03
+        court: U.S. District Court for the Southern District of Ohio
+
+  - case: Sarsour v. Swearingen
+    group: foreign-policy
+    stages:
+      - role: declaration_amicus
+        date: 2026-06
+        court: U.S. District Court for the Southern District of Indiana
+        documents:
+          - {label: Order on motion for release, url: "https://www.aclu-il.org/app/uploads/2026/06/55-Order-Releasing-Salah.pdf"}
+
+  # The CV omitted David Hausman here; the site credited him.
+  - case: Stanford Daily Publishing Corporation et al. v. Rubio et al.
+    group: foreign-policy
+    stages:
+      - role: declaration_amicus
+        date: 2025-10
+        court: U.S. District Court for the Northern District of California
+        with: [David Hausman]
+        documents:
+          - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.454120/gov.uscourts.cand.454120.41.1.pdf", cv_link: true}
+          - {label: Opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.cand.454120/gov.uscourts.cand.454120.108.0.pdf"}
+
+  # Ongoing, so it has a start year and no end. Dated 2025-12 purely for
+  # ordering in date-sorted CV output.
+  - case: University of California Sentencing Project
+    targets: [cv]
+    stages:
+      - role: consultant
+        date: 2025-12
+        ongoing_from: 2025
+
   - case: Vasquez Perdomo v. Noem
     group: street
     stages:
       - role: declarations_class_cert
         date: 2025-08
         court: U.S. District Court for the Central District of California
-
-  - case: Calderon v. Bondi
-    group: cat
-    stages:
-      - role: amicus_brief
-        date: 2025-07
-        court: U.S. Court of Appeals for the Ninth Circuit
-
-  - case: Chung v. Trump
-    group: foreign-policy
-    stages:
-      - role: declaration_amicus
-        date: 2025-03
-        court: U.S. District Court for the Southern District of New York
-        with: [David Hausman]
-        documents:
-          - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.28.1_1.pdf", cv_link: true}
-          - {label: Order granting preliminary injunction, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.57.0.pdf"}
-
-  # One habeas case across two postures: filed in the District of New Jersey
-  # as Khalil v. Joyce, captioned Khalil v. Trump on appeal.
-  - case: Khalil v. Trump et al.
-    group: foreign-policy
-    stages:
-      - caption: Khalil v. Joyce et al.
-        role: declaration_amicus
-        date: 2025-03
-        court: U.S. District Court for the District of New Jersey
-        with: [David Hausman]
-        documents:
-          - {label: Amicus brief, url: "https://ccrjustice.org/sites/default/files/attach/2025/03/110-1_3-24-25_Immigration-amicus-brief_w.pdf", cv_link: true}
-          - {label: Opinion and order, url: "https://storage.courtlistener.com/recap/gov.uscourts.njd.564334/gov.uscourts.njd.564334.299.0.pdf"}
-      - role: declaration_amicus
-        date: 2025-09
-        court: U.S. Court of Appeals for the Third Circuit
-        with: [David Hausman]
-        documents:
-          - {label: Amicus brief, url: "https://assets.aclu.org/live/uploads/2025/03/2025.9.17-Immigr.-Law-Scholars.pdf", cv_link: true}
-          - {label: Opinion, url: "https://www2.ca3.uscourts.gov/opinarch/252162p.pdf"}
-      # No public document yet: the Third Circuit stayed its mandate and the
-      # certiorari deadline was extended to September 21, 2026 (No. 26A90).
-      # Add a `documents` entry when the amicus brief is docketed.
-      - role: declaration_amicus
-        date: 2026-08
-        court: U.S. Supreme Court
-        with: [David Hausman]
