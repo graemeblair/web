@@ -239,6 +239,12 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "Hausman -- the site credited him, the CV did not.",
     ),
     (
+        "href",
+        "https://storage.courtlistener.com/recap/gov.uscourts.cand.454120/gov.uscourts.cand.454120.108.0.pdf",
+        "NEW CONTENT, owner requested: Stanford Daily gains the district-court "
+        "decision link posted on 2026-08-29.",
+    ),
+    (
         "text",
         "D.N.N. et al. v. Liggins et al.}, December 2025",
         "This was the only expert-work line ending in a stray period before its "
