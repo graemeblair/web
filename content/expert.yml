@@ -33,6 +33,9 @@ roles:
   declaration_pi:
     site: Expert report
     cv: Expert declaration (for motion for preliminary injunction)
+  memo_enforce_pi:
+    site: Memo (for motion to enforce preliminary injunction)
+    cv: Memo (for motion to enforce preliminary injunction)
   declarations_class_cert:
     site: Declarations (for motion to certify class and reply in support of motion to certify class)
     cv: Expert declarations (for motion to certify class and reply in support of motion to certify class)
@@ -116,6 +119,11 @@ cases:
         documents:
           - {label: Opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.170.0_3.pdf"}
           - {label: Order, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.171.0_1.pdf"}
+      - role: memo_enforce_pi
+        date: 2025-12
+        court: U.S. District Court for the District of Maryland
+        documents:
+          - {label: Memo, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.197.1.pdf"}
 
   # The CV omitted David Hausman here; the site credited him.
   - case: Stanford Daily Publishing Corporation et al. v. Rubio et al.
