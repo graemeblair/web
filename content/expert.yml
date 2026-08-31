@@ -120,7 +120,7 @@ cases:
           - {label: Opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.170.0_3.pdf"}
           - {label: Order, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.171.0_1.pdf"}
       - role: memo_enforce_pi
-        date: 2025-12
+        date: 2026-08
         court: U.S. District Court for the District of Maryland
         documents:
           - {label: Memo, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.197.1.pdf"}
