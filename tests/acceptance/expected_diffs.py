@@ -218,6 +218,12 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
     ),
     (
         "text",
+        "Court for the District of Maryland",
+        "D.N.N. continuation line wrapping at a different break point after the "
+        "enforcement memo was added. Only D.N.N. is in Maryland.",
+    ),
+    (
+        "text",
         "District Court for the Northern District of California",
         "Continuation line of the Stanford Daily change (parentheses and David "
         "Hausman). Pablo Sequen is also in this district but its line is "
