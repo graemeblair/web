@@ -818,6 +818,16 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "#text Memo",
         "New D.N.N. memo document label on the site.",
     ),
+    (
+        "text",
+        "Available for media requests",
+        "Owner requested: sabbatical line now ends with 'Available for media requests.'",
+    ),
+    (
+        "text-exact",
+        "#text at Stanford University.",
+        "Old end of sabbatical sentence, now replaced by 'Available for media requests.'",
+    ),
 ]
 
 
