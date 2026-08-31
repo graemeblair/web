@@ -826,13 +826,23 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
     ),
     (
         "text",
-        "Available for media requests",
-        "Owner requested: sabbatical line now ends with 'Available for media requests.'",
+        "I remain available for media requests.",
+        "Owner requested: sabbatical line now reads 'I remain available for media requests.'",
+    ),
+    (
+        "text",
+        "as a fellow at the",
+        "Owner requested: sabbatical line now uses 'as a fellow at the' phrasing.",
+    ),
+    (
+        "text",
+        "I am on sabbatical through July 2027, and will be a fellow at the",
+        "Old sabbatical sentence phrasing, replaced with 'as a fellow at the' form.",
     ),
     (
         "text-exact",
         "#text at Stanford University.",
-        "Old end of sabbatical sentence, now replaced by 'Available for media requests.'",
+        "Old end of sabbatical sentence, now replaced by 'I remain available for media requests.'",
     ),
 ]
 
