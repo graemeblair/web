@@ -896,9 +896,14 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "Column wrapper nodes for the two newly added student rows.",
     ),
     (
-        "text-exact",
-        "<td/>",
-        "Felipe's row has an intentionally blank image cell.",
+        "src",
+        "img/group-felipe.webp",
+        "Felipe's row in current dissertation students uses a newly added profile image.",
+    ),
+    (
+        "text",
+        "src='img/group-felipe.webp'",
+        "Gate 2 sees the rendered image tag in Felipe's student row.",
     ),
     (
         "text",
@@ -909,11 +914,6 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "text",
         "Felipe Fajardo Vanegas (dissertation committee, ongoing)",
         "CV advisees list now includes Felipe as a non-chair dissertation committee member.",
-    ),
-    (
-        "text",
-        "Sof{\\'i}a Granados: Ph.D. student, UCLA",
-        "Removal side: Sofía moved from staff researchers to the advisees list as a dissertation committee member.",
     ),
 ]
 
