@@ -856,6 +856,76 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "#text at Stanford University.",
         "Old end of sabbatical sentence, now replaced by 'I remain available for media requests.'",
     ),
+    # ---- students, add Sofía and Felipe --------------------------------------
+    (
+        "href",
+        "https://co.linkedin.com/in/dankat-sofia-granados-sotelo",
+        "Owner requested adding Sofía Granados Sotelo to current dissertation students.",
+    ),
+    (
+        "src",
+        "img/group-sofia.webp",
+        "Sofía's row in current dissertation students uses the existing group-sofia image.",
+    ),
+    (
+        "text",
+        "src='img/group-sofia.webp'",
+        "Gate 2 sees the rendered image tag in Sofía's new student row.",
+    ),
+    (
+        "text",
+        "href='https://co.linkedin.com/in/dankat-sofia-granados-sotelo'",
+        "Gate 2 sees the rendered anchor tag in Sofía's new student row.",
+    ),
+    (
+        "text",
+        "Sofía Granados Sotelo",
+        "Owner requested adding Sofía Granados Sotelo to the current student list.",
+    ),
+    (
+        "text",
+        "Felipe Fajardo Vanegas",
+        "Owner requested adding Felipe Fajardo Vanegas to the current student list.",
+    ),
+    (
+        "text-exact",
+        "#text Comparative politics",
+        "Both newly added students are in comparative politics.",
+    ),
+    (
+        "text-exact",
+        "#text —",
+        "The two newly added students have no dissertation title listed yet, so the title cell is an em dash.",
+    ),
+    (
+        "text-exact",
+        "<tr>",
+        "Two student rows were added to the current dissertation students table.",
+    ),
+    (
+        "text-exact",
+        "<td>",
+        "Column wrapper nodes for the two newly added student rows.",
+    ),
+    (
+        "src",
+        "img/group-felipe.webp",
+        "Felipe's row in current dissertation students uses a newly added profile image.",
+    ),
+    (
+        "text",
+        "src='img/group-felipe.webp'",
+        "Gate 2 sees the rendered image tag in Felipe's student row.",
+    ),
+    (
+        "text",
+        "Sof{\\'i}a Granados Sotelo (dissertation committee, ongoing)",
+        "CV advisees list now includes Sofía as a non-chair dissertation committee member.",
+    ),
+    (
+        "text",
+        "Felipe Fajardo Vanegas (dissertation committee, ongoing)",
+        "CV advisees list now includes Felipe as a non-chair dissertation committee member.",
     # ---- Moreno Gonzalez v. Noem, added September 2026 -----------------------
     #
     # Owner requested: new holdrooms case, statistical consulting during
