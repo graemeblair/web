@@ -14,9 +14,11 @@
                     <li>
                       <p class="case-name">{{ case.case }}</p>
                       <div class="case-stages">
+{% set ns = namespace(prev_court='') %}
 {% for stage in case.stages | by_date_asc %}
                         <div class="case-stage">
-                          <p class="stage-court">{{ stage.court }} &middot; {{ stage.date | month_year }}{% if stage.get('caption') %} &middot; as {{ stage.caption }}{% endif %}</p>
+                          <p class="stage-court">{% if stage.get('court') and stage.court != ns.prev_court %}{{ stage.court }} &middot; {% endif %}{{ stage.date | month_year }}{% if stage.get('caption') %} &middot; as {{ stage.caption }}{% endif %}</p>
+{% if stage.get('court') %}{% set ns.prev_court = stage.court %}{% endif %}
                           <p class="stage-detail">{{ expert.roles[stage.role].site }}{% if stage.get('with') %} (with {{ stage['with'] | authors }}){% endif %}{% if stage.get('documents') %} &mdash; {% for doc in stage.documents %}<a href="{{ doc.url }}">{{ doc.label }}</a>{% if not loop.last %} &middot; {% endif %}{% endfor %}{% endif %}</p>
                         </div>
 {% endfor %}
