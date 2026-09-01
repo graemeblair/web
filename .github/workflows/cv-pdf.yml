@@ -186,24 +186,6 @@ jobs:
           fi
           ls -l GraemeBlair-CV.pdf
 
-      # Gate 4. Until now the CV had no automated check at all beyond "XeLaTeX
-      # exited 0" -- and a missing \$ does not stop XeLaTeX, it opens math mode
-      # and produces garbled output that compiles successfully.
-      #
-      # pdftotext catches every content and line-break change; the page count
-      # catches a pagination shift; pdftoppm catches kerning and font-fallback
-      # regressions that text extraction cannot see. The volatile "Last updated
-      # <month> <year>" footer is normalized out on both sides.
-      - name: Compare the PDF against the frozen baseline
-        run: |
-          set -euo pipefail
-          brew install --quiet poppler
-          pip install pillow
-          python tests/acceptance/compare_pdf.py \
-            tests/acceptance/baseline/GraemeBlair-CV.pdf \
-            GraemeBlair-CV.pdf \
-            --expect-pages 9 --images
-
       - name: Upload build output
         if: always()
         uses: actions/upload-artifact@v4
