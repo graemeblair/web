@@ -856,6 +856,30 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "#text at Stanford University.",
         "Old end of sabbatical sentence, now replaced by 'I remain available for media requests.'",
     ),
+    # ---- Moreno Gonzalez v. Noem, added September 2026 -----------------------
+    #
+    # Owner requested: new holdrooms case, statistical consulting during
+    # motion for preliminary injunction, Northern District of Illinois.
+    (
+        "text-exact",
+        "#text Moreno Gonzalez v. Noem",
+        "New holdrooms case name on the site.",
+    ),
+    (
+        "text-exact",
+        "#text U.S. District Court for the Northern District of Illinois · April 2026",
+        "Moreno Gonzalez's stage line on the site.",
+    ),
+    (
+        "text",
+        "Moreno Gonzalez v. Noem}, April 2026",
+        "New CV line for Moreno Gonzalez.",
+    ),
+    (
+        "text",
+        "Moreno Gonzalez v. Noem, April 2026",
+        "New CV line for Moreno Gonzalez as typeset (brace-free form).",
+    ),
 ]
 
 
