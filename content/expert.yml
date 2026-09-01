@@ -110,6 +110,13 @@ cases:
         date: 2025-12
         ongoing_from: 2025
 
+  - case: Moreno Gonzalez v. Noem
+    group: holdrooms
+    stages:
+      - role: consulting_pi
+        date: 2026-04
+        court: U.S. District Court for the Northern District of Illinois
+
   - case: D.N.N. et al. v. Liggins et al.
     group: holdrooms
     stages:

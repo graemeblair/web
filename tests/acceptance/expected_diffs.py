@@ -802,6 +802,18 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "excuse a future diff line ending '(with ... Hausman)' -- accepted, "
         "because any real change to those lines still trips on its other words.",
     ),
+    # ---- D.N.N. second-stage court suppressed, September 2026 ----------------
+    #
+    # Both D.N.N. stages are in the same court, so the template now omits the
+    # court name on the second stage to avoid repeating it. The removal of
+    # "District Court for the District of Maryland · August 2026" is covered
+    # by the existing "Court for the District of Maryland" entry above.
+    (
+        "text-exact",
+        "#text August 2026",
+        "D.N.N.'s second stage now shows only the date, court suppressed as "
+        "a repeat of the first stage's court.",
+    ),
     # ---- D.N.N. enforcement memo link, added August 2026 ---------------------
     (
         "href",
@@ -843,6 +855,30 @@ EXPECTED_DIFFS: list[tuple[str, str, str]] = [
         "text-exact",
         "#text at Stanford University.",
         "Old end of sabbatical sentence, now replaced by 'I remain available for media requests.'",
+    ),
+    # ---- Moreno Gonzalez v. Noem, added September 2026 -----------------------
+    #
+    # Owner requested: new holdrooms case, statistical consulting during
+    # motion for preliminary injunction, Northern District of Illinois.
+    (
+        "text-exact",
+        "#text Moreno Gonzalez v. Noem",
+        "New holdrooms case name on the site.",
+    ),
+    (
+        "text-exact",
+        "#text U.S. District Court for the Northern District of Illinois · April 2026",
+        "Moreno Gonzalez's stage line on the site.",
+    ),
+    (
+        "text",
+        "Moreno Gonzalez v. Noem}, April 2026",
+        "New CV line for Moreno Gonzalez.",
+    ),
+    (
+        "text",
+        "Moreno Gonzalez v. Noem, April 2026",
+        "New CV line for Moreno Gonzalez as typeset (brace-free form).",
     ),
 ]
 
