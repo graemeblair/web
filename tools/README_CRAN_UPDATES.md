@@ -35,9 +35,8 @@ This script used to rewrite `index.html` with a regex and leave a
 
 `index.html` is generated from `content/` now, so editing it directly would be
 discarded by the next build — and until then would desync the page from
-`content/software.yml`, turning the acceptance gates red for whoever pushed
-next. The backups are gone too: git already does that job, and those copies
-would now be published as part of the site.
+`content/software.yml`. The backups are gone too: git already does that job,
+and those copies would now be published as part of the site.
 
 ## The packages
 

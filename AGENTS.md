@@ -4,9 +4,8 @@
 
 There is no `index.html` and no `GraemeBlair-CV.tex` in this repository. They are
 built from YAML by `build.py`, along with the CV PDF, and published straight to
-GitHub Pages from a workflow run. If you create either file, CI will fail — and
-if you somehow got one into the tree, the next build would discard your edit
-without telling anyone.
+GitHub Pages from a workflow run. If you somehow got either file into the tree,
+the next build would discard your edit without telling anyone.
 
 That is the whole point of the arrangement. The site and the CV used to state
 the same facts separately, and they drifted: paper titles diverged, a course had
@@ -34,40 +33,25 @@ modal, the "For students" tab, the DeclareDesign card — lives in the template,
 not in YAML. Rule of thumb: repeated, structured, or shared with the CV → YAML;
 one-off site-only prose → template.
 
-**There is no `.bib` file.** The BibTeX behind every Cite button is generated
-from the same record the site and the CV render — `venue` is the journal,
-`volume`/`issue`/`pages` are the numbers, `authors` is the author list — by
-`sitegen/bibtex.py`, into `_site/js/citation.js`. There used to be a
-`content/citations.bib`, and it disagreed with the YAML about a dozen things:
-two author lists truncated at "and others", a chapter typed as an article, six
-titles in a different case, and one paper carrying another paper's volume and
-pages. Adding a `.bib` back fails Gate 5.
+**There is no `.bib` file, and none should be added.** The BibTeX behind every
+Cite button is generated from the same record the site and the CV render —
+`venue` is the journal, `volume`/`issue`/`pages` are the numbers, `authors` is
+the author list — by `sitegen/bibtex.py`, into `_site/js/citation.js`. There
+used to be a `content/citations.bib`, and it disagreed with the YAML about a
+dozen things: two author lists truncated at "and others", a chapter typed as an
+article, six titles in a different case, and one paper carrying another paper's
+volume and pages.
 
-## Build and check
+## Build
 
 ```bash
-python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python build.py
-.venv/bin/python -m pytest tests/acceptance -q
 ```
 
-`build.py` writes `_site/`, which is gitignored.
-
-## The acceptance gates
-
-`tests/acceptance/baseline/` is a frozen snapshot of the hand-written site as it
-shipped. The gates compare what you built against it: structure (ids, links,
-toggle targets, citation keys), prose, the CV's source and typeset PDF, and a set
-of standing invariants.
-
-**A gate failing means your change altered something. That is usually the bug,
-not the gate.** When a change is deliberate, add an entry to
-`tests/acceptance/expected_diffs.py` with a reason a reader can evaluate — a
-rename needs both its old and new value registered, so neither side of the diff
-passes unexplained. Do not widen a key until a failure goes away; a key broad
-enough to whitelist a whole page proves nothing.
-
-Do not edit `tests/acceptance/baseline/`. It is the oracle.
+`build.py` writes `_site/`, which is gitignored. There is no test suite; after
+a change, open `_site/index.html` (and, for CV changes, read
+`_site/GraemeBlair-CV.tex`) and check your edit rendered as intended.
 
 ## Two things that will bite
 

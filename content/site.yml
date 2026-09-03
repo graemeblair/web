@@ -23,7 +23,7 @@ local_css:
 #
 # NOTE: fontawesome and citation_js carry no integrity hash today. Adding one is
 # a real improvement but a behavior change (a wrong hash kills the Cite button
-# outright), so it is a follow-up, verified under Gate 3 -- not part of the
+# outright), so it is a follow-up to verify in a browser -- not part of the
 # migration.
 externals:
   fontawesome:

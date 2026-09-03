@@ -80,8 +80,7 @@ packages:
     # The collapse id is derived from the package name, which for `list`
     # collides with the "Statistical analysis of list experiments" paper in the
     # Writing tab -- the original bug, where this chevron opened that abstract.
-    # An explicit slug keeps them apart; Gate 5's duplicate-id check is what
-    # catches it if anyone forgets.
+    # An explicit slug keeps them apart.
     slug: listPkg
     site_title: Statistical Methods for the Item Count Technique and List Experiment.
     # Typographic quotes, not straight ones: the LaTeX escaper maps them to

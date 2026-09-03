@@ -108,8 +108,8 @@ def volume_detail(pub: dict) -> str:
 
     The CV prints this after the journal name, and the same three fields become
     the entry's BibTeX `volume`, `number` and `pages`. A publication that wants
-    a different string in the CV -- five do -- sets `cv_detail`, and Gate 5
-    checks that the override still says the same thing this does.
+    a different string in the CV -- five do -- sets `cv_detail`, which must
+    still say the same thing this does.
     """
     if not pub.get("volume"):
         return ""
@@ -237,6 +237,28 @@ def by_latest_stage_desc(cases: list[dict]) -> list[dict]:
 def by_date_asc(items: list[dict]) -> list[dict]:
     """Chronological, oldest first -- the order a case moved through its postures."""
     return sorted(items, key=lambda item: str(item.get("date", "")))
+
+
+def court_runs(stages: list[dict]) -> list[dict]:
+    """Consecutive same-court stages merged into one run, for the site.
+
+    A multi-stage run shares one court line, with one sub-bullet per stage --
+    D.N.N.'s two district-court motions. Every other case has one stage per
+    court, so it gets single-stage runs and renders exactly as before. The CV
+    is unaffected: it flattens stages, one line each, regardless.
+    """
+    runs: list[dict] = []
+    for stage in stages:
+        prev = runs[-1] if runs else None
+        if (
+            prev is not None
+            and stage.get("court")
+            and stage.get("court") == prev["court"]
+        ):
+            prev["stages"].append(stage)
+        else:
+            runs.append({"court": stage.get("court"), "stages": [stage]})
+    return runs
 
 
 def cv_link(matter: dict) -> str | None:

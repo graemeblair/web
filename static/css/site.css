@@ -109,6 +109,19 @@
       .stage-detail {
         margin-bottom: 0;
       }
+      .stage-motions {
+        list-style: none;
+        padding-left: 1.3em;
+        margin-bottom: 0;
+      }
+      .stage-motions > li {
+        position: relative;
+      }
+      .stage-motions > li::before {
+        content: "\2013";
+        position: absolute;
+        left: -1.1em;
+      }
       #citation-output>.csl-bib-body,
       #citation-output>pre {
         padding: 10px 15px;

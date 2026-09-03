@@ -14,6 +14,10 @@
 # court and Khalil v. Trump on appeal. The CV lists each posture under its own
 # caption, as it always has; the site notes the earlier caption on the stage.
 #
+# On the site, consecutive stages in the same court share one court line, with
+# one sub-bullet per stage (D.N.N.'s two district-court motions); the CV still
+# renders each stage as its own line.
+#
 # Roles are a controlled vocabulary rather than free text. Each phrasing is
 # written once, below, so every matter with the same role reads identically --
 # which was not true before: Stanford Daily said "Expert declaration for amicus
@@ -23,25 +27,32 @@ intro: >-
   I provide data analysis for strategic litigation on immigration enforcement in
   the United States. Below are selected cases I have worked on.
 
+# Site texts name the posture in comma style -- "Declaration, motion for
+# preliminary injunction" -- so every stage line says what the filing was for.
+# The CV texts keep their long-standing parenthetical form.
 roles:
   declaration:
     site: Declaration
     cv: Expert declaration
   declaration_amicus:
-    site: Declaration
+    site: Declaration, amicus brief
     cv: Expert declaration (for amicus brief)
   declaration_pi:
-    site: Expert report
+    site: Declaration, motion for preliminary injunction
     cv: Expert declaration (for motion for preliminary injunction)
   memo_enforce_pi:
-    site: Memo (for motion to enforce preliminary injunction)
+    site: Memo, motion to enforce preliminary injunction
     cv: Memo (for motion to enforce preliminary injunction)
   declarations_class_cert:
-    site: Declarations (for motion to certify class and reply in support of motion to certify class)
+    site: Declarations, motion to certify class and reply in support of motion to certify class
     cv: Expert declarations (for motion to certify class and reply in support of motion to certify class)
   consulting_pi:
-    site: Consulting
+    site: Consulting, motion for preliminary injunction
     cv: Statistical consulting (during motion for preliminary injunction)
+  # Consulting not tied to a particular motion, so no posture (Moreno).
+  consulting:
+    site: Consulting
+    cv: Statistical consulting
   consultant:
     site: Statistical consultant
     cv: Statistical consultant
@@ -113,7 +124,7 @@ cases:
   - case: Moreno Gonzalez v. Noem
     group: holdrooms
     stages:
-      - role: consulting_pi
+      - role: consulting
         date: 2026-04
         court: U.S. District Court for the Northern District of Illinois
 
@@ -202,8 +213,9 @@ cases:
           - {label: Amicus brief, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.28.1_1.pdf", cv_link: true}
           - {label: Order, url: "https://storage.courtlistener.com/recap/gov.uscourts.nysd.639187/gov.uscourts.nysd.639187.57.0.pdf"}
 
-  # One habeas case across two postures: filed in the District of New Jersey
-  # as Khalil v. Joyce, captioned Khalil v. Trump on appeal.
+  # One matter across three postures: filed in the District of New Jersey as
+  # Khalil v. Joyce, captioned Khalil v. Trump on appeal to the Third Circuit,
+  # and Khalil v. Blanche in the Fifth Circuit.
   - case: Khalil v. Trump et al.
     group: foreign-policy
     stages:
@@ -222,10 +234,10 @@ cases:
         documents:
           - {label: Amicus brief, url: "https://assets.aclu.org/live/uploads/2025/03/2025.9.17-Immigr.-Law-Scholars.pdf", cv_link: true}
           - {label: Opinion, url: "https://www2.ca3.uscourts.gov/opinarch/252162p.pdf"}
-      # No public document yet: the Third Circuit stayed its mandate and the
-      # certiorari deadline was extended to September 21, 2026 (No. 26A90).
-      # Add a `documents` entry when the amicus brief is docketed.
-      - role: declaration_amicus
+      # Filed August 21, 2026, No. 26-60344. No public document linked yet;
+      # add a `documents` entry when one is available.
+      - caption: Khalil v. Blanche
+        role: declaration_amicus
         date: 2026-08
-        court: U.S. Supreme Court
+        court: U.S. Court of Appeals for the Fifth Circuit
         with: [David Hausman]

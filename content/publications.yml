@@ -15,7 +15,8 @@
 # `cv_detail` is a formatting override, NOT a second copy of the numbers: the
 # CV prints "118 (42)" where the derived form is "118(42): e2105570118". Every
 # entry that has one says why. A `cv_detail` that merely restates the derived
-# string, or that contradicts `volume`/`issue`, fails Gate 5.
+# string should be deleted; one that contradicts `volume`/`issue` is a fact to
+# settle, not a format to keep.
 
 # Family-name-last is a guess the last word of a name usually satisfies -- and
 # a compound surname never does. Listed here so the exception sits beside the

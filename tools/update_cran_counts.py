@@ -9,8 +9,7 @@ This used to rewrite index.html directly with a regex, and dropped a
 `.backup.<timestamp>` copy of the page into the repo root each time. Both
 behaviours are gone: it now writes one small generated YAML file, and git is
 the backup. The regex approach would also have silently desynced the page from
-content/software.yml, turning the acceptance gates red for a reason that had
-nothing to do with whoever pushed next.
+content/software.yml.
 
 The fetch logic is unchanged -- cranlogs first, METACRAN as a fallback.
 """
