@@ -38,10 +38,10 @@ roles:
     site: Declaration, amicus brief
     cv: Expert declaration (for amicus brief)
   declaration_pi:
-    site: Declaration, motion for preliminary injunction
+    site: Expert report, motion for preliminary injunction
     cv: Expert declaration (for motion for preliminary injunction)
   memo_enforce_pi:
-    site: Memo, motion to enforce preliminary injunction
+    site: Expert report, motion to enforce preliminary injunction
     cv: Memo (for motion to enforce preliminary injunction)
   declarations_class_cert:
     site: Declarations, motion to certify class and reply in support of motion to certify class
