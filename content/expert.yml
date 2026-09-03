@@ -27,38 +27,21 @@ intro: >-
   I provide data analysis for strategic litigation on immigration enforcement in
   the United States. Below are selected cases I have worked on.
 
-# Site texts name the posture in comma style -- "Declaration, motion for
-# preliminary injunction" -- so every stage line says what the filing was for.
-# The CV texts keep their long-standing parenthetical form.
+# One phrasing per role, shared by the site and the CV, naming the posture in
+# comma style -- "Declaration, amicus brief". The two targets used to word
+# these differently (site "Expert report" where the CV said "Expert
+# declaration (for ...)"); they were unified on the site's wording.
 roles:
-  declaration:
-    site: Declaration
-    cv: Expert declaration
-  declaration_amicus:
-    site: Declaration, amicus brief
-    cv: Expert declaration (for amicus brief)
-  report_pi:
-    site: Expert report, motion for preliminary injunction
-    cv: Expert report (for motion for preliminary injunction)
-  report_enforce_pi:
-    site: Expert report, motion to enforce preliminary injunction
-    cv: Expert report (for motion to enforce preliminary injunction)
-  declarations_class_cert:
-    site: Declarations, motion to certify class and reply in support of motion to certify class
-    cv: Expert declarations (for motion to certify class and reply in support of motion to certify class)
-  consulting_pi:
-    site: Consulting, motion for preliminary injunction
-    cv: Statistical consulting (during motion for preliminary injunction)
+  declaration: Declaration
+  declaration_amicus: Declaration, amicus brief
+  report_pi: Expert report, motion for preliminary injunction
+  report_enforce_pi: Expert report, motion to enforce preliminary injunction
+  declarations_class_cert: Declarations, motion to certify class and reply in support of motion to certify class
+  consulting_pi: Consulting, motion for preliminary injunction
   # Consulting not tied to a particular motion, so no posture (Moreno).
-  consulting:
-    site: Consulting
-    cv: Statistical consulting
-  consultant:
-    site: Statistical consultant
-    cv: Statistical consultant
-  amicus_brief:
-    site: Brief of amicus curiae
-    cv: Brief of amicus curiae
+  consulting: Consulting
+  consultant: Statistical consultant
+  amicus_brief: Brief of amicus curiae
 
 groups:
   - id: courthouse

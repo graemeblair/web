@@ -20,7 +20,7 @@
                           <p class="stage-court">{{ run.court }}</p>
                           <ul class="stage-motions">
 {% for stage in run.stages %}
-                            <li>{{ expert.roles[stage.role].site }} &middot; {{ stage.date | month_year }}{% if stage.get('caption') %} &middot; as {{ stage.caption }}{% endif %}{% if stage.get('with') %} (with {{ stage['with'] | authors }}){% endif %}{% if stage.get('documents') %} &mdash; {% for doc in stage.documents %}<a href="{{ doc.url }}">{{ doc.label }}</a>{% if not loop.last %} &middot; {% endif %}{% endfor %}{% endif %}</li>
+                            <li>{{ expert.roles[stage.role] }} &middot; {{ stage.date | month_year }}{% if stage.get('caption') %} &middot; as {{ stage.caption }}{% endif %}{% if stage.get('with') %} (with {{ stage['with'] | authors }}){% endif %}{% if stage.get('documents') %} &mdash; {% for doc in stage.documents %}<a href="{{ doc.url }}">{{ doc.label }}</a>{% if not loop.last %} &middot; {% endif %}{% endfor %}{% endif %}</li>
 {% endfor %}
                           </ul>
                         </div>
@@ -28,7 +28,7 @@
 {% set stage = run.stages[0] %}
                         <div class="case-stage">
                           <p class="stage-court">{{ stage.court }} &middot; {{ stage.date | month_year }}{% if stage.get('caption') %} &middot; as {{ stage.caption }}{% endif %}</p>
-                          <p class="stage-detail">{{ expert.roles[stage.role].site }}{% if stage.get('with') %} (with {{ stage['with'] | authors }}){% endif %}{% if stage.get('documents') %} &mdash; {% for doc in stage.documents %}<a href="{{ doc.url }}">{{ doc.label }}</a>{% if not loop.last %} &middot; {% endif %}{% endfor %}{% endif %}</p>
+                          <p class="stage-detail">{{ expert.roles[stage.role] }}{% if stage.get('with') %} (with {{ stage['with'] | authors }}){% endif %}{% if stage.get('documents') %} &mdash; {% for doc in stage.documents %}<a href="{{ doc.url }}">{{ doc.label }}</a>{% if not loop.last %} &middot; {% endif %}{% endfor %}{% endif %}</p>
                         </div>
 {% endif %}
 {% endfor %}
