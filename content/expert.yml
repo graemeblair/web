@@ -37,12 +37,12 @@ roles:
   declaration_amicus:
     site: Declaration, amicus brief
     cv: Expert declaration (for amicus brief)
-  declaration_pi:
+  report_pi:
     site: Expert report, motion for preliminary injunction
-    cv: Expert declaration (for motion for preliminary injunction)
-  memo_enforce_pi:
+    cv: Expert report (for motion for preliminary injunction)
+  report_enforce_pi:
     site: Expert report, motion to enforce preliminary injunction
-    cv: Memo (for motion to enforce preliminary injunction)
+    cv: Expert report (for motion to enforce preliminary injunction)
   declarations_class_cert:
     site: Declarations, motion to certify class and reply in support of motion to certify class
     cv: Expert declarations (for motion to certify class and reply in support of motion to certify class)
@@ -131,13 +131,13 @@ cases:
   - case: D.N.N. et al. v. Liggins et al.
     group: holdrooms
     stages:
-      - role: declaration_pi
+      - role: report_pi
         date: 2025-12
         court: U.S. District Court for the District of Maryland
         documents:
           - {label: Opinion, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.170.0_3.pdf"}
           - {label: Order, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.171.0_1.pdf"}
-      - role: memo_enforce_pi
+      - role: report_enforce_pi
         date: 2026-08
         court: U.S. District Court for the District of Maryland
         documents:
