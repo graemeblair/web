@@ -36,14 +36,19 @@ roles:
   declaration_amicus: Declaration, amicus brief
   report_pi: Expert report, motion for preliminary injunction
   report_enforce_pi: Expert report, motion to enforce preliminary injunction
-  declarations_class_cert: Declarations, motion to certify class and reply in support of motion to certify class
+  declaration_class_cert: Declaration, motion to certify class
+  declaration_class_cert_reply: Declaration, reply in support of motion to certify class
   consulting_pi: Consulting, motion for preliminary injunction
   # Consulting not tied to a particular motion, so no posture (Moreno).
   consulting: Consulting
   consultant: Statistical consultant
+  # Calderon was a solo brief; Genalo has fourteen signatories, so the plural.
   amicus_brief: Brief of amicus curiae
+  amici_brief: Brief of amici curiae
 
 groups:
+  - id: mandatory-detention
+    heading: Prolonged mandatory detention without a bond hearing (8 U.S.C. §1226(c))
   - id: courthouse
     heading: Courthouse arrests
   - id: holdrooms
@@ -59,16 +64,38 @@ groups:
   - id: cat
     heading: Evidence on torture risk in Convention Against Torture cases
 
-# Both orderings are computed rather than maintained by hand: the site orders
-# cases within a group by their latest stage, newest first, and the CV sorts
-# the flattened stages by `date`. One thing IS order-sensitive here: the CV's
-# sort is stable, so stages sharing a month keep this file's case order. Four
-# pairs tie today -- the sentencing project and D.N.N. (December 2025),
-# Stanford Daily and Khan Suri (October 2025), Mahdawi's appeal and Vasquez
-# Perdomo (August 2025), Chung and Khalil's district declaration (March 2025)
-# -- and each pair sits here in the CV's long-standing order, which is why
-# Khalil is listed after Chung despite its later appellate stage.
+# Every ordering is computed rather than maintained by hand: the site orders
+# groups by the latest stage of any case in them and cases within a group by
+# their latest stage, both newest first, and the CV sorts the flattened stages
+# by `date`. One thing IS order-sensitive here: the sorts are stable, so
+# groups or stages sharing a month keep this file's order. Among groups, the
+# Genalo, hold-room, and street-arrest groups all last moved in September
+# 2026, which is why the `groups` list above has them in that order. Among CV
+# stages, the ties are Genalo, D.N.N.'s second enforcement report, and
+# Guzmán (September 2026), D.N.N.'s first and Khalil's Fifth Circuit
+# declaration (August 2026), the sentencing project and D.N.N. (December
+# 2025), Stanford Daily and Khan Suri (October 2025), Mahdawi's appeal and
+# Vasquez Perdomo's two declarations (August 2025), and Chung and Khalil's
+# district declaration (March 2025) -- each set sits here in the CV's
+# long-standing order, which is why Khalil is listed after Chung despite its
+# later appellate stage.
 cases:
+  # Supreme Court No. 25-886, docketed as Genalo v. Black; the Court granted
+  # certiorari only as to G.M.'s case and later let him abbreviate his name.
+  # Brief of amici curiae Data and Policy Analysts in support of respondent,
+  # fourteen amici including both co-directors of the Deportation Data Project.
+  # Argument is set for October 13, 2026; add the opinion to `documents` when
+  # it issues.
+  - case: Genalo v. G.M.
+    group: mandatory-detention
+    stages:
+      - role: amici_brief
+        date: 2026-09
+        court: Supreme Court of the United States
+        documents:
+          - {label: Amicus brief, url: "https://www.supremecourt.gov/DocketPDF/25/25-886/423419/20260908155157217_Genalo%20-%20Data%20Analysts%20Amicus%20ISO%20Respondent.pdf", cv_link: true}
+          - {label: Docket, url: "https://www.supremecourt.gov/docket/docketfiles/html/public/25-886.html"}
+
   - case: Sarsour v. Swearingen
     group: foreign-policy
     stages:
@@ -77,6 +104,18 @@ cases:
         court: U.S. District Court for the Southern District of Indiana
         documents:
           - {label: Order, url: "https://www.aclu-il.org/app/uploads/2026/06/55-Order-Releasing-Salah.pdf"}
+
+  # Putative class action filed September 9, 2026, No. 1:26-cv-03579. The
+  # CourtListener docket has no documents yet; add a `documents` entry for the
+  # declaration when one is available.
+  - case: Guzmán v. U.S. Department of Homeland Security
+    group: street
+    stages:
+      - role: declaration
+        date: 2026-09
+        court: U.S. District Court for the District of Maryland
+        documents:
+          - {label: Docket, url: "https://www.courtlistener.com/docket/74769513/guzman-v-us-department-of-homeland-security/"}
 
   - case: Peralta v. Department of Homeland Security
     group: street
@@ -125,6 +164,11 @@ cases:
         court: U.S. District Court for the District of Maryland
         documents:
           - {label: Memo, url: "https://storage.courtlistener.com/recap/gov.uscourts.mdd.582507/gov.uscourts.mdd.582507.197.1.pdf"}
+      # Second report on the same motion. No public document linked yet; add
+      # a `documents` entry when one is available.
+      - role: report_enforce_pi
+        date: 2026-09
+        court: U.S. District Court for the District of Maryland
 
   # The CV omitted David Hausman here; the site credited him.
   - case: Stanford Daily Publishing Corporation et al. v. Rubio et al.
@@ -169,10 +213,17 @@ cases:
           - {label: Amicus brief, url: "https://assets.aclu.org/live/uploads/2025/04/157.2-Immigration-Lawyers-Profs-and-Scholars-Amicus-Brief.pdf", cv_link: true}
           - {label: Opinion, url: "https://ww3.ca2.uscourts.gov/decisions/OPN/25-1113_complete_opn.pdf"}
 
+  # Two declarations a few weeks apart: Exhibit 15 to the motion to certify the
+  # Suspicionless Stop Class (ECF 140, August 7, 2025) and Exhibit 1 to the
+  # reply in support (ECF 167, August 28, 2025). Neither is in RECAP yet; add
+  # a `documents` entry when one is available.
   - case: Vasquez Perdomo v. Noem
     group: street
     stages:
-      - role: declarations_class_cert
+      - role: declaration_class_cert
+        date: 2025-08
+        court: U.S. District Court for the Central District of California
+      - role: declaration_class_cert_reply
         date: 2025-08
         court: U.S. District Court for the Central District of California
 

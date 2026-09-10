@@ -234,6 +234,29 @@ def by_latest_stage_desc(cases: list[dict]) -> list[dict]:
     )
 
 
+def groups_by_latest_stage_desc(groups: list[dict], cases: list[dict]) -> list[dict]:
+    """Groups newest-first by the most recent stage of any case in them.
+
+    The same rule as `by_latest_stage_desc`, one level up: a new matter under
+    a new legal theory lands at the top of the page, not wherever its heading
+    happened to be added to the YAML. Stable within a month, so two groups
+    whose latest stages share a month keep the `groups` list's order. A group
+    with no cases sorts last (the template skips it anyway).
+    """
+    def latest(group: dict) -> str:
+        return max(
+            (
+                str(stage.get("date", ""))
+                for case in cases
+                if case.get("group") == group["id"]
+                for stage in case["stages"]
+            ),
+            default="",
+        )
+
+    return sorted(groups, key=latest, reverse=True)
+
+
 def by_date_asc(items: list[dict]) -> list[dict]:
     """Chronological, oldest first -- the order a case moved through its postures."""
     return sorted(items, key=lambda item: str(item.get("date", "")))

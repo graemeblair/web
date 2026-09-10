@@ -34,7 +34,8 @@ from .escape import raw_tex, tex_url
 from .filters import (
     authors, by_date_asc, by_date_desc, by_latest_stage_desc, by_year_desc,
     coauthors, court_runs, cv_link, cv_url, downloads, flatten_stages,
-    for_target, month_year, rcirc, starred, titlecase, volume_detail,
+    for_target, groups_by_latest_stage_desc, month_year, rcirc, starred,
+    titlecase, volume_detail,
 )
 from .markup import to_html, to_tex
 
@@ -70,6 +71,7 @@ def html_env() -> Environment:
     env.filters["by_date_desc"] = by_date_desc
     env.filters["by_date_asc"] = by_date_asc
     env.filters["by_latest_stage_desc"] = by_latest_stage_desc
+    env.filters["groups_by_latest_stage_desc"] = groups_by_latest_stage_desc
     env.filters["court_runs"] = court_runs
     env.filters["cv_link"] = cv_link
     env.filters["coauthors"] = coauthors

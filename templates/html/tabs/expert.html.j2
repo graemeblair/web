@@ -2,8 +2,9 @@
                 <div class="col-12 col-lg-8">
                   <h1>Expert work</h1>
                   <p>{{ expert.intro }}</p>
-{% for group in expert.groups %}
-{% set cases = expert.cases | for_target | selectattr('group', 'equalto', group.id) | list | by_latest_stage_desc %}
+{% set site_cases = expert.cases | for_target %}
+{% for group in expert.groups | groups_by_latest_stage_desc(site_cases) %}
+{% set cases = site_cases | selectattr('group', 'equalto', group.id) | list | by_latest_stage_desc %}
 {% if cases %}
                   <h2>{{ group.heading }}</h2>
 {% if group.get('note') %}
