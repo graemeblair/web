@@ -94,7 +94,6 @@ cases:
         court: Supreme Court of the United States
         documents:
           - {label: Amicus brief, url: "https://www.supremecourt.gov/DocketPDF/25/25-886/423419/20260908155157217_Genalo%20-%20Data%20Analysts%20Amicus%20ISO%20Respondent.pdf", cv_link: true}
-          - {label: Docket, url: "https://www.supremecourt.gov/docket/docketfiles/html/public/25-886.html"}
 
   - case: Sarsour v. Swearingen
     group: foreign-policy
@@ -105,17 +104,15 @@ cases:
         documents:
           - {label: Order, url: "https://www.aclu-il.org/app/uploads/2026/06/55-Order-Releasing-Salah.pdf"}
 
-  # Putative class action filed September 9, 2026, No. 1:26-cv-03579. The
-  # CourtListener docket has no documents yet; add a `documents` entry for the
-  # declaration when one is available.
+  # Putative class action filed September 9, 2026, No. 1:26-cv-03579 (D. Md.).
+  # Nothing is in RECAP yet; add a `documents` entry for the declaration when
+  # one is available.
   - case: Guzmán v. U.S. Department of Homeland Security
     group: street
     stages:
       - role: declaration
         date: 2026-09
         court: U.S. District Court for the District of Maryland
-        documents:
-          - {label: Docket, url: "https://www.courtlistener.com/docket/74769513/guzman-v-us-department-of-homeland-security/"}
 
   - case: Peralta v. Department of Homeland Security
     group: street
