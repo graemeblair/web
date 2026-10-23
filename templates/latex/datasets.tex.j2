@@ -1,0 +1,9 @@
+<<# One line per dataset, in YAML order, in the publication byline form rather
+    than the Software section's "name, with coauthors": the author order on the
+    codebook is a fact to keep (see content/datasets.yml). The link wraps the
+    whole citation and points at the codebook. #>>
+\begin{indnt}
+<<% for ds in datasets.datasets %>>
+\href{<<< ds.url | tex_url >>>}{<<< ds.authors | authors >>>. <<< ds.year >>>. ``<<< ds.name | titlecase >>>.'' Deportation Data Project.}<<% if not loop.last %>>\\[.75em]<<% endif +%>>
+<<% endfor %>>
+\end{indnt}

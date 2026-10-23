@@ -1,0 +1,31 @@
+# Datasets. One record per dataset feeds the CV's Datasets section.
+#
+# `authors` is the full list as the dataset's codebook on deportationdata.org
+# prints it, Graeme included, in the codebook's order. The order is a fact,
+# not a style: Hayley Labia is first author on 287(g) and second on detention
+# facilities. That is why this is a byline and not the Software section's
+# "with coauthors".
+#
+# `url` is the codebook, which is the documentation of record for the dataset.
+# `year` is when the codebook was first published.
+
+datasets:
+  - name: ICE 287(g) agreements and jurisdictions
+    authors: [Hayley Labia, Graeme Blair]
+    url: https://deportationdata.org/docs/ice/codebook-287g.html
+    year: 2026
+
+  - name: ICE detention facilities
+    authors: [Graeme Blair, Hayley Labia]
+    url: https://deportationdata.org/docs/ice/codebook-facilities.html
+    year: 2026
+
+  - name: EOIR processed case data
+    authors: [Graeme Blair, David Hausman]
+    url: https://deportationdata.org/docs/eoir/codebook-processed.html
+    year: 2026
+
+  - name: ICE processed enforcement data
+    authors: [Graeme Blair, David Hausman, Phil Neff]
+    url: https://deportationdata.org/docs/ice/codebook.html
+    year: 2025

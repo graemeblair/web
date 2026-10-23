@@ -33,32 +33,12 @@ columns:
     text: BITSS Leamer-Rosenthal Prize
     url: https://www.bitss.org/relationships/leamer-rosenthal-prize-recipient-2016/
 publications:
-- slug: codebook-0
-  kind: codebook
-  title: ICE detention facilities codebook.
-  authors:
-  - Graeme Blair
-  - Hayley Labia
-  url: https://deportationdata.org/docs/ice/codebook-facilities.html
-  draft: true
-  targets:
-  - cv
 - slug: codebook-1
   kind: codebook
   title: ICE field offices and areas of responsibility codebook.
   authors:
   - Graeme Blair
   url: https://deportationdata.org/docs/ice/codebook-offices.html
-  draft: true
-  targets:
-  - cv
-- slug: codebook-2
-  kind: codebook
-  title: EOIR processed case data codebook.
-  authors:
-  - Graeme Blair
-  - David Hausman
-  url: https://deportationdata.org/docs/eoir/codebook-processed.html
   draft: true
   targets:
   - cv
